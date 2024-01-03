@@ -1,0 +1,10 @@
+{
+  "name": "dak-hex-user",
+  "description": "Generated on Wed Jan  3 07:16:45 PM UTC 2024. This is a description of dak-hex-user.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Дід Alik",
+  "license": "Apache 2",
+  "private": true
+}
