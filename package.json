@@ -1,8 +1,8 @@
 {
   "name": "dak-hex-user",
-  "description": "Generated on Wed Jan  3 07:16:45 PM UTC 2024. This is a description of dak-hex-user.",
+  "description": "Stellar HEX: svc USER role support",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cd test && make -k all"
   },
   "author": "Дід Alik",
   "license": "Apache 2",

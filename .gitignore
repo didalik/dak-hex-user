@@ -1,0 +1,16 @@
+# Node {{{1
+node_modules
+
+# Misc {{{1
+env.*
+screenshot.*
+
+# Test {{{1
+build
+dev.fifo
+*.log
+
+# Vim {{{1
+.*.sw?
+*.session
+*.session.saved
