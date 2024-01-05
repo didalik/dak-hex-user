@@ -1,0 +1,4 @@
+[submodule "dak/util/public"]
+	path = dak/util/public
+	url = git@github.com:didalik/svc.git
+	branch = main
