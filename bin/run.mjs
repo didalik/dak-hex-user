@@ -18,21 +18,38 @@ global.window = {
   crypto, // now window.crypto can be used in both browser and node
   isNode: true,
 }
+
+const sleep = ms => new Promise(r => setTimeout(r, ms)) // {{{1
+const htmlHead = `
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>TEST 1</title>
+  </head>
+  <body>
+    <samp><p>- starting the test on ${Date()}...<br/>
+`
+const htmlTail = _ => `
+- stopping the test on ${Date()}...<br/>
+</p></samp></body></html>
+`
 async function handle_request() { // {{{1
   const rl = readline.createInterface({
     input: process.stdin,
   })
-  const sleep = ms => new Promise(r => setTimeout(r, ms))
-
   for await (const line of rl) {
     let jsoa
     try {
       jsoa = JSON.parse(line)
+      console.log(htmlHead)
       log('- handle_request jsoa', jsoa)
-      await sleep(2000)
+      await sleep(1000)
       log('- handle_request woke up!')
-      await sleep(3000)
+      await sleep(1000)
       log('- HA!', 'HA!', 'HA!')
+      console.log(htmlTail())
+      process.exit(0)
     } catch (e) {
       //console.error(e, line)
     }

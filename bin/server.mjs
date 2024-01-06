@@ -49,13 +49,20 @@ const prepareFile = async (url) => {
 
 const remote = /\/testnet\/|\/public\/|\/dynamic\// // FIXME
 
+const sleep = ms => new Promise(r => setTimeout(r, ms))
+
 http // {{{1
   .createServer(async (req, res) => {
     let statusCode = 200, mimeType = MIME_TYPES.html
     if (remote.test(req.url)) {
       res.writeHead(statusCode, { "Content-Type": mimeType })
       console.log(`{"request":{"method":"${req.method}","url":"${req.url}"}}`)
-      process.stdin.pipe(res)
+      process.stdin.pipe(res, { end: false })
+      process.stdin.on('end', async _ => {
+        res.end()
+        await sleep(1000)
+        process.exit()
+      })
     } else { // serve local file from under ./static dir
       const file = await prepareFile(req.url);
       statusCode = file.found ? 200 : 404;
@@ -63,7 +70,7 @@ http // {{{1
       req.url == '/favicon.ico' && res.writeHead(statusCode) || res.writeHead(statusCode, { "Content-Type": mimeType });
       file.stream.pipe(res);
     }
-    console.error(`${req.method} ${req.url} ${statusCode}`);
+    req.url != '/favicon.ico' && console.error(`${req.method} ${req.url} ${statusCode}`);
   })
   .listen(PORT);
 

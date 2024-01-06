@@ -8,7 +8,7 @@ all-tests := $(addsuffix .test, $(basename $(wildcard *.test-in)))
 test : $(all-tests)
 
 %.test : %.test-in %.test-cmp %.sh
-	@./$(word 3, $?) <$< | tee last.out | \
+	@./$(word 3, $?) <$< 2>&1 | tee last.out | \
 		diff -q $(word 2, $?) - >/dev/null || (echo "Test $@ failed" && exit 1)
 
 all : test 
