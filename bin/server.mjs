@@ -51,10 +51,8 @@ const remote = /\/testnet\/|\/public\/|\/dynamic\// // FIXME
 
 http // {{{1
   .createServer(async (req, res) => {
-    let statusCode, mimeType
+    let statusCode = 200, mimeType = MIME_TYPES.html
     if (remote.test(req.url)) {
-      statusCode = 200
-      mimeType = MIME_TYPES.html
       res.writeHead(statusCode, { "Content-Type": mimeType })
       console.log(`{"request":{"method":"${req.method}","url":"${req.url}"}}`)
       process.stdin.pipe(res)

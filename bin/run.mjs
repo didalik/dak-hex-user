@@ -28,13 +28,19 @@ async function handle_request() { // {{{1
     let jsoa
     try {
       jsoa = JSON.parse(line)
-      console.log('- handle_request jsoa', jsoa)
+      log('- handle_request jsoa', jsoa)
       await sleep(2000)
-      console.log('- handle_request woke up!')
+      log('- handle_request woke up!')
+      await sleep(3000)
+      log('- HA!', 'HA!', 'HA!')
     } catch (e) {
-      //console.log(line)
+      //console.error(e, line)
     }
   }
+}
+
+function log () { // {{{1
+  console.log(...arguments, '<br/>')
 }
 
 switch (process.argv[2]) { // {{{1
