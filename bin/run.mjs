@@ -11,6 +11,7 @@ import crypto from 'node:crypto' // {{{1
 import readline from "node:readline";
 import fetch from 'node-fetch'
 import { Run, } from '../lib/run.mjs'
+import { runTest, } from '../test/run.mjs'
 
 global.fetch = fetch // {{{1
 global.window = {
@@ -19,21 +20,6 @@ global.window = {
   isNode: true,
 }
 
-const sleep = ms => new Promise(r => setTimeout(r, ms)) // {{{1
-const htmlHead = `
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>TEST 1</title>
-  </head>
-  <body>
-    <samp><p>- starting the test on ${Date()}...<br/>
-`
-const htmlTail = _ => `
-- stopping the test on ${Date()}...<br/>
-</p></samp></body></html>
-`
 async function handle_request() { // {{{1
   const rl = readline.createInterface({
     input: process.stdin,
@@ -42,22 +28,17 @@ async function handle_request() { // {{{1
     let jsoa
     try {
       jsoa = JSON.parse(line)
-      console.log(htmlHead)
-      log('- handle_request jsoa', jsoa)
-      await sleep(1000)
-      log('- handle_request woke up!')
-      await sleep(1000)
-      log('- HA!', 'HA!', 'HA!')
-      console.log(htmlTail())
-      process.exit(0)
+      let url = jsoa.request.url
+      switch (true) {
+        case /\/dynamic\/test/.test(url):
+          runTest[url.split('/')[2]](url)
+        default:
+          console.log('- HUH? req', req)
+      }
     } catch (e) {
       //console.error(e, line)
     }
   }
-}
-
-function log () { // {{{1
-  console.log(...arguments, '<br/>')
 }
 
 switch (process.argv[2]) { // {{{1
@@ -73,6 +54,5 @@ switch (process.argv[2]) { // {{{1
 
 /* With thanks to: {{{1
  * - https://jonlinnell.co.uk/articles/node-stdin
- * - https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
  *
  * * */
