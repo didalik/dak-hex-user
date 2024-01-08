@@ -2,8 +2,8 @@
   "name": "dak-hex-user",
   "description": "Stellar HEX: svc USER role support",
   "scripts": {
-    "qa": "qa/loop.sh",
-    "test": "cd test && make -k all"
+    "qa": "cd qa; ./loop.sh",
+    "test": "cd test; make -k all"
   },
   "author": "Дід Alik",
   "license": "Apache 2",

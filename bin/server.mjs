@@ -30,7 +30,7 @@ const MIME_TYPES = {
   svg: "image/svg+xml",
 };
 
-const STATIC_PATH = path.join(process.cwd(), "./static");
+const STATIC_PATH = process.env.STATIC
 
 const toBool = [() => true, () => false];
 
@@ -47,7 +47,7 @@ const prepareFile = async (url) => {
   return { found, ext, stream };
 };
 
-const remote = /\/testnet\/|\/public\/|\/dynamic\// // FIXME
+const remote = /\/testnet\/|\/public\/|\/dynamic\/|\/svc\// // FIXME
 
 const sleep = ms => new Promise(r => setTimeout(r, ms))
 
