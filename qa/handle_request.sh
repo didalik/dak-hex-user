@@ -13,7 +13,10 @@ trap teardown EXIT
 
 . ../config.env # {{{1
 
+rm -f loop.log error.log; 
+touch loop.log
+
 tail -n 999999 -f loop.log &
 PID_OF_TAIL=$!
 
-$RUN_MJS handle_request >> loop.log 2>error.log # {{{1
+$RUN_MJS handle_request >> loop.log 2>$HOME/error.log # {{{1

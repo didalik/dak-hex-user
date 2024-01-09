@@ -5,7 +5,10 @@ node_modules
 env.*
 screenshot.*
 
-# Test, QA {{{1
+# QA {{{1
+qa/config.env
+
+# Test {{{1
 build
 dev.fifo
 *.log
