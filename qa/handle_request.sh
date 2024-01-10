@@ -8,6 +8,7 @@
 
 teardown () { # {{{1
   kill $PID_OF_TAIL
+  echo "- teardown killed PID_OF_TAIL $PID_OF_TAIL" >> error.log
 }
 trap teardown EXIT
 
@@ -19,4 +20,4 @@ touch loop.log
 tail -n 999999 -f loop.log &
 PID_OF_TAIL=$!
 
-$RUN_MJS handle_request >> loop.log 2>$HOME/error.log # {{{1
+$RUN_MJS handle_request >> loop.log 2>error.log # {{{1
