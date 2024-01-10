@@ -58,7 +58,7 @@ http // {{{1
       res.writeHead(statusCode, { "Content-Type": mimeType })
       console.log(`{"request":{"method":"${req.method}","url":"${req.url}"}}`)
       process.stdin.pipe(res, { end: false })
-      process.stdin.on('end', async _ => {
+      process.stdin.on('end', async _ => { // FIXME on macOS
         res.end()
         await sleep(1000)
         process.exit()
