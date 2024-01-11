@@ -14,10 +14,12 @@ loop_user_requests () { # {{{1
   local s="{ . ./.profile; cd $d; $script2run; }"
   rm -f $p; mkfifo $p
   $SERVER_MJS $@ < $p | ssh $r "$s" > $p
+  EXIT_CODE=${PIPESTATUS[1]}
 }
 
 teardown () { # {{{1
-  echo "- $0 exiting..." >&2
+  echo "- $0 exiting with EXIT_CODE $EXIT_CODE..." >&2
+  [ $EXIT_CODE -eq 0 ] && exit $EXIT_CODE
 }
 trap teardown EXIT
 

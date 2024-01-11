@@ -8,7 +8,7 @@ screenshot.*
 # QA {{{1
 qa/config.env
 
-# Test {{{1
+# QA, Test {{{1
 build
 dev.fifo
 *.log
