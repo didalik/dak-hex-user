@@ -30,6 +30,7 @@ async function handle_request() { // {{{1
       let url = jsoa.request.url
       switch (true) {
         case /\/dynamic\/test/.test(url):
+        case /\/qa\/phase/.test(url):
           await runTest[url.split('/')[2]](url)
         default:
           console.log('- HUH? url', url)
