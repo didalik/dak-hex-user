@@ -2,10 +2,12 @@
 node_modules
 
 # Misc {{{1
+dist
 env.*
 screenshot.*
 
 # QA {{{1
+qa/.pids2kill
 qa/config.env
 
 # QA, Test {{{1
