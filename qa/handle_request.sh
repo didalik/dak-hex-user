@@ -26,3 +26,8 @@ PID_OF_TAIL=$!
 [ $LOCAL_DEV_REQUESTED ] && start_local_dev index 2 && start_local_dev hex 3
 
 $RUN_MJS handle_request >> loop.log 2>>$LOCALDEV_LOG # {{{1
+
+# With thanks to: {{{1
+# - https://stackoverflow.com/questions/1521462/looping-through-the-content-of-a-file-in-bash
+#
+##
