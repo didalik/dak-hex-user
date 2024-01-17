@@ -19,7 +19,7 @@ loop_user_requests () { # {{{1
 
 teardown () { # {{{1
   echo "- $0 exiting with EXIT_CODE $EXIT_CODE..." >&2
-  [ $EXIT_CODE -eq 0 ] && exit $EXIT_CODE
+  [ $EXIT_CODE -eq 0 ] && exit # otherwise, set up QA phase$EXIT_CODE:
 }
 trap teardown EXIT
 

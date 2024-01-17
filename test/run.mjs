@@ -16,7 +16,7 @@ const htmlHead = title => `
     <title>${title}</title>
   </head>
   <body>
-    <samp><p>- starting the test on ${Date()}...<br/>
+    <samp><p>- starting ${title} on ${Date()}...<br/>
 `
 const htmlTail = _ => `
 - stopping the test on ${Date()}...<br/>
@@ -26,10 +26,12 @@ const runTest = { // {{{1
   phase0: async url => { // {{{2
     console.log(htmlHead('QA phase 0'))
     fs.existsSync('../build') || fs.mkdirSync('../build')
-    let SK_PK = await generate_keypair.call(window.crypto.subtle)
-    fs.writeFileSync('../build/keys', SK_PK)
-    log('- svc keys written to ../build/keys on REMOTE_HOST')
-    console.log(htmlTail())
+    if (!fs.existsSync('../build/keys')) {
+      let SK_PK = await generate_keypair.call(window.crypto.subtle)
+      fs.writeFileSync('../build/keys', SK_PK)
+      log('- svc keys written to ../build/keys on REMOTE_HOST')
+    }
+    //console.log(htmlTail())
     process.exit(0)
   },
   test1: async url => { // {{{2

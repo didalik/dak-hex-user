@@ -15,7 +15,7 @@ import { runTest, } from '../test/run.mjs'
 global.fetch = fetch // {{{1
 global.window = {
   CFW_URL_DEV: 'http://127.0.0.1:8787', // used in dak/util/public/lib/util.mjs
-  crypto, // now window.crypto can be used in both browser and node
+  crypto, // now window.crypto.subtle can be used in both browser and node
   isNode: true,
 }
 
