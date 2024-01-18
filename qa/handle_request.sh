@@ -28,17 +28,24 @@ end_phase () { # {{{1
 }
 
 end_phase0 () { # {{{1
-  local kind='remote'
   local keys_agent=$(cat $KEYS_AGENT)
-  local agentSK=${keys_agent% *}
-  local agentPK=${keys_agent##* }
+  export SIGNER_SK=${keys_agent% *}
+  export SIGNER_PK=${keys_agent##* }
   local keys_user=$(cat ../build/keys)
-  local userPK=${keys_user##* }
+  export USER_PK=${keys_user##* }
+  local kind='remote'
   [ $LOCAL_DEV_REQUESTED ] && kind='local'
+  
   log "&nbsp;- $0 end_phase0 $#: $@ PWD $PWD"
   log "&nbsp;- the $kind hex svc AGENT is authorizing you as a $kind hex svc USER"
-  log "&nbsp;- agentPK $agentPK"
-  log "&nbsp;- userPK $userPK"
+  log "&nbsp;- agentPK $SIGNER_PK"
+  log "&nbsp;- userPK $USER_PK"
+  log "&nbsp;- svcPK $SVC_PK"
+  echo '<pre>'
+  PORT_SVC=8788 $RUN_MJS svc $kind newuser 2>&1 #2>>$LOCALDEV_LOG
+  EXIT_CODE=$?
+  echo '</pre>'
+  log "&nbsp;- EXIT_CODE $EXIT_CODE"
 }
 
 log () { # {{{1
