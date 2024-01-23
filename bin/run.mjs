@@ -52,10 +52,12 @@ async function svc(remoteStr, svcRequestPath, nogetStr = 'get') { // {{{1
     { data2sign, privateKey, publicKey }, host, noget
   )
   if (typeof text == 'number' && +text == 400) { // user FOUND
+    console.log('- PHASE COMPLETE')
     process.exit(1)
   }
   try { // {{{3
     console.dir(JSON.parse(text), { depth: null });
+    console.log('- PHASE COMPLETE')
     return 'OK';
   } catch(e) {
     console.error(e)
@@ -84,6 +86,10 @@ async function svc_parms (remoteStr, path, e = process.env) { // {{{1
 }
 
 switch (process.argv[2]) { // {{{1
+  case 'end_phase1': { // {{{2
+    await runTest.end_phase1(process.env.HEX_CREATOR_PK)
+    break
+  }
   case 'handle_request': { // {{{2
     await handle_request()
     break

@@ -20,8 +20,11 @@ end_phase () { # {{{1
   local htmlTail="- stopping QA phase $phase on $(date)...<br/>"
   htmlTail="${htmlTail}</p></samp></body></html>"
   case $phase in
-    0) end_phase0 $@ >> loop.log; echo "$htmlTail" >> loop.log;;
-    *) echo "- HUH? phase ${phase}<br/>$htmlTail" >> loop.log
+    0) end_phase0 $@; echo "$htmlTail"
+      [ $(cat loop.log | grep 'PHASE COMPLETE' | wc -l) -eq 1 ] && phase=$EXIT_CODE;;
+    1) end_phase1 $@; echo "$htmlTail"
+      [ $(cat loop.log | grep 'PHASE COMPLETE' | wc -l) -eq 1 ] && phase=$EXIT_CODE;;
+    *) echo "- HUH? phase ${phase}<br/>$htmlTail"
       phase=0
   esac
   exit $phase
@@ -48,6 +51,17 @@ end_phase0 () { # {{{1
   log "&nbsp;- EXIT_CODE $EXIT_CODE"
 }
 
+end_phase1 () { # {{{1
+  log "&nbsp;- $0 end_phase1 $#: $@ PWD $PWD"
+  log "&nbsp;- the HEX_CREATOR account on Stellar testnet:"
+  read SK PK < ../build/testnet.keys
+  echo '<pre>'
+  HEX_CREATOR_PK=$PK PORT_SVC=8788 $RUN_MJS end_phase1 2>&1 #2>>$LOCALDEV_LOG
+  EXIT_CODE=$?
+  echo '</pre>'
+  log "&nbsp;- EXIT_CODE $EXIT_CODE"
+}
+
 log () { # {{{1
   echo "${1}<br/>"
 }
@@ -64,7 +78,7 @@ PID_OF_TAIL=$!
 
 $RUN_MJS handle_request >> loop.log 2>>$LOCALDEV_LOG # {{{1
 EXIT_CODE=$?
-end_phase $EXIT_CODE
+end_phase $EXIT_CODE >> loop.log 2>>$LOCALDEV_LOG
 
 # With thanks to: {{{1
 # - https://stackoverflow.com/questions/1521462/looping-through-the-content-of-a-file-in-bash

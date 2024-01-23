@@ -1,23 +1,27 @@
-<!--
+<!DOCTYPE html>
+<!-- {{{1
 # Copyright (c) 2023-present, Дід Alik and the Kids
 #
 # This script is licensed under the Apache License, Version 2.0, found in the
 # LICENSE file in the root directory of this source tree.
 ##
 -->
-<!DOCTYPE html>
-<html>
-  <head>
+<html> <!-- {{{1 -->
+  <head> <!-- {{{2 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>QA dak/hex/user</title>
+    <title>QA dak/hex/user phase 2</title>
   </head>
-  <body>
+  <body> <!-- {{{2 -->
     <samp>
+<h3>QA dak/hex/user phase 2</h3>
       <p>
-Click <a href='/dynamic/test1'>here</a> to have HEX_CREATOR run HEX genesis.
-File build/testnet/*.keys will hold Stellar keys for HEX issuer and HEX agent. 
-Restart QA when done.
+Click <a href='/qa/phase2'><b>here</b></a> to have HEX_CREATOR run HEX genesis.
+Files <b>build/testnet/*.keys</b> on <b>REMOTE_HOST</b> will hold Stellar keys 
+for HEX issuer and HEX agent. 
+      </p>
+      <p>
+Restart QA (with '<i>npm run qa</i>') when done.
       </p>
     </samp>
-  </body>
+    </body> <!-- }}}2 -->
 </html>

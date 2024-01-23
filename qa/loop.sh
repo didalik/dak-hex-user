@@ -10,7 +10,7 @@ loop_user_requests () { # {{{1
   echo "- loop_user_requests $#: $@ PWD $PWD" >&2
 
   local p=$1 r=$2 d=$3 script2run=$4 port=$5; shift 4
-  { sleep 1; ssh alec@m1 "open -u 'http://$HTTP_SERVER_HOST:$port'"; } &
+  { sleep 2; ssh alec@m1 "open -u 'http://$HTTP_SERVER_HOST:$port'"; } &
   local s="{ . ./.profile; cd $d; $script2run; }"
   rm -f $p; mkfifo $p
   $SERVER_MJS $@ < $p | ssh $r "$s" > $p
@@ -20,6 +20,7 @@ loop_user_requests () { # {{{1
 teardown () { # {{{1
   echo "- $0 exiting with EXIT_CODE $EXIT_CODE..." >&2
   [ $EXIT_CODE -eq 0 ] && exit # otherwise, set up QA phase$EXIT_CODE:
+  cp -a $EXIT_CODE/static/ ../
 }
 trap teardown EXIT
 

@@ -1,29 +1,32 @@
-<!--
+<!DOCTYPE html>
+<!-- {{{1
 # Copyright (c) 2023-present, Дід Alik and the Kids
 #
 # This script is licensed under the Apache License, Version 2.0, found in the
 # LICENSE file in the root directory of this source tree.
 ##
 -->
-<!DOCTYPE html>
-<html>
-  <head>
+<html> <!-- {{{1 -->
+  <head> <!-- {{{2 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>QA dak/hex/user</title>
+    <title>QA dak/hex/user phase 1</title>
   </head>
-  <body>
+  <body> <!-- {{{2 -->
     <samp>
+<h3>QA dak/hex/user phase 1</h3>
       <p>
-Click <a href='/dynamic/test1'>here</a> to generate your Stellar testnet keys.
-File build/testnet.keys will hold them. Restart QA when done.
+Click <a href='/qa/phase1'><b>here</b></a> to:
+        <ul>
+<li>generate your Stellar testnet keys - file <b>build/testnet.keys</b> on <b>REMOTE_HOST</b> will hold them;</li>
+<li>create and fund your Stellar account with XLM 10000.</li>
+        </ul>
       </p>
       <p>
-This new Stellar testnet account will be referred to as HEX_CREATOR. It will be funded
-with XLM 10000 by Stellar friendbot.
-<ol>
-  <li><a href='/dynamic/test1'>Have CREATOR run HEX genesis</li>
-</ol>
+This account will be your HEX_CREATOR account.
+      </p>
+      <p>
+Restart QA (with '<i>npm run qa</i>') when done.
       </p>
     </samp>
-  </body>
+    </body> <!-- }}}2 -->
 </html>
