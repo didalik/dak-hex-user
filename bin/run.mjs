@@ -18,6 +18,18 @@ global.window = {
   crypto, // now window.crypto.subtle can be used in both browser and node
   isNode: true,
 }
+/*
+function sign(...keypairs) {
+  keypairs.forEach(kp => console.log(kp))
+}
+
+function create(a, b, c, ...keypairs) {
+  sign(...keypairs)
+}
+
+create(1,2,3,4,5,6)
+console.log('XA')
+*/
 
 async function handle_request() { // {{{1
   const rl = readline.createInterface({
