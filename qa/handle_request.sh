@@ -24,6 +24,7 @@ end_phase () { # {{{1
       [ $(cat loop.log | grep 'PHASE COMPLETE' | wc -l) -eq 1 ] && phase=$EXIT_CODE;;
     1) end_phase1 $@; echo "$htmlTail"
       [ $(cat loop.log | grep 'PHASE COMPLETE' | wc -l) -eq 1 ] && phase=$EXIT_CODE;;
+    2) echo "$htmlTail"; phase=0;;
     *) echo "- HUH? phase ${phase}<br/>$htmlTail"
       phase=0
   esac

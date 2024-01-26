@@ -6,7 +6,7 @@
 
 import * as fs from "node:fs"; // {{{1
 import { generate_keypair, } from '../dak/util/public/lib/util.mjs'
-import { AuthClawbackEnabledFlag, AuthRevocableFlag,
+import { Asset, AuthClawbackEnabledFlag, AuthRevocableFlag,
   BASE_FEE, Keypair, Horizon, Networks, Operation, TransactionBuilder, 
 } from '@stellar/stellar-sdk'
 
@@ -74,6 +74,7 @@ const runTest = { // {{{1
     let [HEX_CREATOR_SK, HEX_CREATOR_PK] = SK_PK.split(' ')
     const server = new Horizon.Server("https://horizon-testnet.stellar.org")
     let creator = await server.loadAccount(HEX_CREATOR_PK)
+    log('- loaded creator', creator?.id)
     await genesis(keypair(HEX_CREATOR_SK), creator, server)
     process.exit(2)
   },
@@ -93,42 +94,86 @@ const runTest = { // {{{1
 async function createAccount ( // {{{1
   creator, destination, startingBalance, s, opts, ...keypairs
 ) {
-  console.log('<pre> - createAccount', destination, '</pre>')
-  const tx = new TransactionBuilder(creator, { fee: BASE_FEE }).
-    addOperation(Operation.createAccount({ destination, startingBalance })).
-    addOperation(Operation.setOptions(opts)).
-    setNetworkPassphrase(Networks.TESTNET).
-    setTimeout(30).build();
+  console.log('<pre> - createAccount', destination)
+  try {
+    let tx = new TransactionBuilder(creator, { fee: BASE_FEE }).
+      addOperation(Operation.createAccount({ destination, startingBalance })).
+      addOperation(Operation.setOptions(opts)).
+      setNetworkPassphrase(Networks.TESTNET).
+      setTimeout(30).build();
 
-  tx.sign(...keypairs)
-  return await s.submitTransaction(tx);
+    tx.sign(...keypairs)
+    tx =  await s.submitTransaction(tx).
+      catch(e => console.error(' - ERROR', e, '</pre>'));
+    console.log(' - tx.id', tx?.id, '</pre>')
+    return tx?.id;
+  } catch(e) {
+    console.error(' - *** ERROR ***', e)
+  }
+}
+
+async function fundAgent( // {{{1
+  issuer, issuerKeypair, destination, amount, s, ...assets
+) {
+  console.log('<pre> - fundAgent', destination)
+  let tx = new TransactionBuilder(issuer, // increasing the issuer's
+    {                                     //  sequence number
+      fee: BASE_FEE,
+      networkPassphrase: Networks.TESTNET,
+    }
+  ).addOperation(Operation.payment({ asset: assets[0], destination, amount })).
+    addOperation(Operation.payment({ asset: assets[1], destination, amount })).
+    addOperation(Operation.setTrustLineFlags({ 
+      asset: assets[1],
+      trustor: destination,
+      flags: {
+        clawbackEnabled: false
+      },
+    })).
+    setTimeout(30).build()
+
+  tx.sign(issuerKeypair)
+  tx =  await s.submitTransaction(tx).
+    catch(e => console.error(' - ERROR', e, '</pre>'));
+  console.log(' - tx.id', tx?.id, '</pre>')
 }
 
 async function genesis (kp, creator, server) { // {{{1
-  // Add ClawableHexa Issuer {{{2
-  let [ClawableHexa_Issuer_SK, ClawableHexa_Issuer_PK] = storeKeys('../build/testnet', 'ClawableHexa_Issuer'), tx
-  tx = await createAccount(creator, ClawableHexa_Issuer_PK, '9', server,
+  log('- starting genesis...')
+
+  // Add ClawableHexa and HEXA assets Issuer {{{2
+  let [HEX_Issuer_SK, HEX_Issuer_PK] = storeKeys('../build/testnet', 'HEX_Issuer')
+  let txId = await createAccount(creator, HEX_Issuer_PK, '9', server,
     {
       setFlags: AuthClawbackEnabledFlag | AuthRevocableFlag,
-      source: ClawableHexa_Issuer_PK,
+      source: HEX_Issuer_PK,
     },
-    kp, keypair(ClawableHexa_Issuer_SK)
+    kp, keypair(HEX_Issuer_SK)
   )
-  console.log('<pre> - tx.id', tx.id, '</pre>')
+  txId || process.exit(2)
 
-// Add HEXA Issuer {{{2
-  let [HEXA_Issuer_SK, HEXA_Issuer_PK] = storeKeys('../build/testnet', 'HEXA_Issuer')
-  tx = await createAccount(creator, HEXA_Issuer_PK, '9', server, {}, kp)
-  console.log('<pre> - tx.id', tx.id, '</pre>')
+  const ClawableHexa = new Asset('ClawableHexa', HEX_Issuer_PK)
+  const HEXA = new Asset('HEXA', HEX_Issuer_PK)
 
-// Add HEX Agent {{{2
+  // Add HEX Agent {{{2
   let [HEX_Agent_SK, HEX_Agent_PK] = storeKeys('../build/testnet', 'HEX_Agent')
-  tx - await createAccount(creator, HEX_Agent_PK, '9', server, {}, kp)
-  console.log('<pre> - tx.id', tx.id, '</pre>')
+  txId = await createAccount(creator, HEX_Agent_PK, '9', server, {}, kp)
+  txId || process.exit(2)
 
-// Have Agent trust ClawableHexa and HEXA assets
-// Fund Agent with ClawableHexa and HEXA assets 
-  // }}}2
+  // Have HEX Agent trust ClawableHexa and HEXA assets {{{2
+  let agent = await server.loadAccount(HEX_Agent_PK)
+  log('&nbsp;- loaded agent', agent?.id)
+  await trustAssets(
+    agent, keypair(HEX_Agent_SK), '10000', server, ClawableHexa, HEXA
+  )
+
+  // Fund Agent with ClawableHexa and HEXA assets, update Agent's HEXA trustline {{{2
+  let issuer = await server.loadAccount(HEX_Issuer_PK)
+  log('&nbsp;- loaded issuer', issuer?.id)
+  await fundAgent(
+    issuer, keypair(HEX_Issuer_SK), HEX_Agent_PK, '10000', server, ClawableHexa, HEXA
+  ) // }}}2
+  log('- genesis complete.')
 }
 
 function keypair (sk) { // {{{1
@@ -145,6 +190,26 @@ function storeKeys(dirname, basename) { // {{{1
   let SK_PK = pair.secret() + ' ' + pair.publicKey()
   fs.writeFileSync(`${dirname}/${basename}.keys`, SK_PK)
   return SK_PK.split(' ')
+}
+
+async function trustAssets( // {{{1
+  recipient, recipientKeypair, limit, s, ...assets
+) {
+  let codes = []; assets.forEach(a => codes.push(a.code))
+  console.log('<pre> - trustAssets', ...codes)
+  let tx = new TransactionBuilder(recipient, // increasing the recipient's
+    {                                        //  sequence number
+      fee: BASE_FEE,
+      networkPassphrase: Networks.TESTNET,
+    }
+  ).addOperation(Operation.changeTrust({ asset: assets[0], limit })).
+    addOperation(Operation.changeTrust({ asset: assets[1], limit })).
+    setTimeout(30).build()
+
+  tx.sign(recipientKeypair)
+  tx =  await s.submitTransaction(tx).
+    catch(e => console.error(' - ERROR', e, '</pre>'));
+  console.log(' - tx.id', tx?.id, '</pre>')
 }
 
 export { runTest, } // {{{1
