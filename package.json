@@ -2,6 +2,8 @@
   "name": "dak-hex-user",
   "description": "Stellar HEX: svc USER role support",
   "scripts": {
+    "prod": "cd prod/$npm_config_dir; ./${npm_config_run}.sh",
+    "prod-fix": "cd prod-fix; ./loop.sh",
     "qa": "cd qa; ./loop.sh",
     "test": "cd test; make -k all"
   },
