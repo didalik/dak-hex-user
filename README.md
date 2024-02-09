@@ -24,7 +24,7 @@ build/
 └── testnet.keys
 ```
 
-In PROD on **Stellar public network**, two separate Linux accounts - *hexo* and *hexa* - are required. For *hexo*, the **build** directory is:
+In PROD on **Stellar public network**, two separate Linux accounts - *hexo* and *hexa* - are required. This is the **build** directory for *hexo*:
 
 ```
 build/
@@ -34,7 +34,7 @@ build/
 └── public.keys
 ```
 
-For *hexa*, the **build** directory is:
+This is the **build** directory for *hexa*:
 
 ```
 build/
