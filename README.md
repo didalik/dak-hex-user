@@ -9,7 +9,7 @@ So today, Feb 8 2024, I am adding this **README.md** file - introducing the HEX 
 
 ## Stellar HEX Actors and Assets
 
-There are tree types of HEX actors - Issuer, Agent, and User. The Issuer issues two types of HEX Assets - HEXA and ClawableHexa, funds Agents with those assets, and revokes the assets from Users when needed. An Agent establishes trustlines with the Issuer for both assets, then exchanges assets with Users. Users establish trustlines with the Issuer for both assets, then exchange HEX Assets for XLM and make/take HEX offers/requests.
+There are tree types of HEX actors - Issuer, Agent, and User. The Issuer issues two types of HEX Assets - HEXA and ClawableHexa, funds Agents with those assets, and revokes the assets from Users when needed. An Agent establishes trustlines with the Issuer for both assets, then exchanges assets with Users. Users establish trustlines with the Issuer for both assets, then exchange XLM for HEXA and make/take HEX offers/requests.
 
 ## Stellar HEX in QA and PROD
 
