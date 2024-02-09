@@ -13,7 +13,7 @@ There are tree types of HEX actors - Issuer, Agent, and User. The Issuer issues 
 
 ## Stellar HEX in QA and PROD
 
-In QA on **Stellar test network**, the *testnet creator* creates one Issuer and one Agent. All their Stellar keypairs are being kept together under the ==build== directory:
+In QA on **Stellar test network**, the *testnet creator* creates one Issuer and one Agent. All their Stellar keypairs are being kept together under the **build** directory:
 
 ```
 build/
@@ -24,7 +24,7 @@ build/
 └── testnet.keys
 ```
 
-In PROD on **Stellar public network**, two separate Linux accounts - *hexo* and *hexa* - are required. For *hexo*, the ==build== directory is:
+In PROD on **Stellar public network**, two separate Linux accounts - *hexo* and *hexa* - are required. For *hexo*, the **build** directory is:
 
 ```
 build/
@@ -34,7 +34,7 @@ build/
 └── public.keys
 ```
 
-For *hexa*, the ==build== directory is:
+For *hexa*, the **build** directory is:
 
 ```
 build/
