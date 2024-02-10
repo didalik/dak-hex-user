@@ -5,7 +5,7 @@ Presently, the name of this project is misleading: at its inception, it was clea
 - the HEX codebase, used by all HEX actors (User, Agent, Issuer), MUST be made public;
 - the actors need some introduction/description.
 
-So today, Feb 8 2024, I am adding this **README.md** file - introducing the HEX actors to the public. Am also considering renaming this project to **dak-hex-codebase** - but this can wait...
+So today, on Feb 8 2024, I am adding this **README.md** file - introducing the HEX actors to the public. Am also considering renaming this project to **dak-hex-codebase** - but this can wait...
 
 ## Stellar HEX Actors and Assets
 
@@ -53,6 +53,6 @@ In DEV and QA, testing is done via a browser, for example:
                                         +----+                   +-----+
 ```
 
-The tester sends a request to the HTTP server on **m1:8000** to test *prod/fix* in *dev*. This DEV request gets passed via SSH to **hexa@u22**. The stream of results floats back from **hexa@u22** through **m1:8000** to the tester.
+The tester sends a request to the HTTP server on **m1:8000** to test *prod/fixissuer* in *dev*. This DEV request gets passed via SSH to **hexa@u22**. The stream of results floats back from **hexa@u22** through **m1:8000** to the tester.
 
 If the tester uses browser on m1, she runs `npm run dev --dir=prod/fix --run=issuer` to make this request from her default browser and see the results.
