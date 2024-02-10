@@ -53,6 +53,6 @@ In DEV and QA, testing is done via a browser, for example:
                                         +----+                   +-----+
 ```
 
-The tester sends a request to the HTTP server on **m1:8000** to test *prod/fixissuer* in *dev*. This DEV request gets passed via SSH to **hexa@u22**. The stream of results floats back from **hexa@u22** through **m1:8000** to the tester.
+The tester sends a request to the HTTP server on **m1:8000** to test *prod/fix/issuer* in *dev*. This DEV request gets passed via SSH to **hexa@u22**. The stream of results floats back from **hexa@u22** through **m1:8000** to the tester.
 
 If the tester uses browser on m1, she runs `npm run dev --dir=prod/fix --run=issuer` to make this request from her default browser and see the results.
