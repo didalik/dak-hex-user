@@ -2,8 +2,10 @@
   "name": "dak-hex-user",
   "description": "Stellar HEX: svc USER role support",
   "scripts": {
-    "auth": "[ $USER = hexa ] || { echo 'NOT AUTHORIZED'; exit 1; }",
-    "prod": "npm run auth && { cd prod/$npm_config_dir; ./${npm_config_run}.sh; }",
+    "auth_dev": "[ $HOME = /Users/alec ] || { echo 'NOT AUTHORIZED'; exit 1; }",
+    "auth_prod": "[ $USER = hexa ] || { echo 'NOT AUTHORIZED'; exit 1; }",
+    "dev": "npm run auth_dev && { cd prod/$npm_config_dir; ./${npm_config_run}.sh; }",
+    "prod": "npm run auth_prod && { cd prod/$npm_config_dir; ./${npm_config_run}.sh; }",
     "qa": "cd qa; ./loop.sh",
     "test": "cd test; make -k all"
   },
