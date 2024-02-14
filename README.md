@@ -48,7 +48,7 @@ In DEV and QA, testing is done via a browser, for example:
 ```
  o  http://m1:8000/dev/prod/fix/issuer  +----+ ssh hexa@u22 ...  +-----+
 -+- ----------------------------------->| m1 |------------------>| u22 |
- |                              results |    |           results |     |
+ $                              results |    |           results |     |
 / \ <-----------------------------------|    |<------------------|     |
                                         +----+                   +-----+
 ```

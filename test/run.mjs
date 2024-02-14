@@ -72,6 +72,7 @@ const runTest = { // {{{1
     console.log(htmlHead('QA phase 2'))
     let SK_PK = fs.readFileSync('../build/testnet.keys').toString()
     let [HEX_CREATOR_SK, HEX_CREATOR_PK] = SK_PK.split(' ')
+    log('- HEX_CREATOR_PK', HEX_CREATOR_PK)
     const server = new Horizon.Server("https://horizon-testnet.stellar.org")
     let creator = await server.loadAccount(HEX_CREATOR_PK)
     log('- loaded creator', creator?.id)
