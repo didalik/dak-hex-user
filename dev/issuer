@@ -29,6 +29,7 @@ trap teardown EXIT
 
 echo "- $0 $#: $@ PWD $PWD" >&2
 $RUN_MJS setup $(basename $0) $@
+cd $1; ./$0
 EXIT_CODE=$?
 exit
 

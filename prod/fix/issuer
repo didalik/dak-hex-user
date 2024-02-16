@@ -27,9 +27,9 @@ trap teardown EXIT
 . ../../config.env # {{{1
 . config.env
 
-echo "- $0 $#: $@"
-echo "- RUN $RUN STATIC $STATIC"
-EXIT_CODE=0; exit
+echo "- $0 $#: $@ PWD $PWD" >&2
+$RUN_MJS run $(basename $0) $@
+EXIT_CODE=$?; exit
 
 loop_user_requests \
   ".${RUN}.fifo" \

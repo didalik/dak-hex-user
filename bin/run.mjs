@@ -35,6 +35,26 @@ create(1,2,3,4,5,6)
 console.log('XA')
 */
 
+const execute = { // {{{1
+  issuer: async _ => {
+    let issuer = JSON.parse(fs.readFileSync('issuer.json').toString())
+    console.log('- issuer', issuer, 'merging to creator...')
+    const server = new Horizon.Server(
+      issuer.public ? "https://horizon.stellar.org" 
+      : "https://horizon-testnet.stellar.org"
+    )
+    let [C_SK, C_PK] = loadKeys(issuer.creator_keys)
+    let [I_SK, I_PK] = loadKeys(issuer.keys)
+    let txId = await mergeAccount(
+      await server.loadAccount(I_PK), C_PK,
+      issuer.public ? Networks.PUBLIC : Networks.TESTNET, server,
+      Keypair.fromSecret(I_SK)
+    )
+    console.log('- txId', txId)
+  },
+  run: async (script, ...args) => await execute[script](...args),
+}
+
 async function createAccount ( // {{{1
   creator, destination, startingBalance, s, opts, ...keypairs
 ) {
@@ -153,8 +173,10 @@ async function genesis (kp, creator, server, log) { // {{{1
   return [server, log];
 }
 
-function loadKeys (dirname, basename) { // {{{1
-  let SK_PK = fs.readFileSync(`${dirname}/${basename}.keys`)
+function loadKeys (dirname, basename = null) { // {{{1
+  let SK_PK = fs.readFileSync(
+    basename ? `${dirname}/${basename}.keys` : dirname
+  )
   return SK_PK.toString().split(' ');
 }
 
@@ -183,6 +205,24 @@ async function loadNewCreator (log) { // {{{1
   return [Keypair.fromSecret(HEX_CREATOR_SK), creator, server, log];
 }
 
+async function mergeAccount ( // {{{1
+  source, destination, networkPassphrase, server, ...keypairs
+) {
+  try {
+    let tx = new TransactionBuilder(source, { fee: BASE_FEE }).
+      addOperation(Operation.accountMerge({ destination })).
+      setNetworkPassphrase(networkPassphrase).
+      setTimeout(30).build();
+
+    tx.sign(...keypairs)
+    tx =  await server.submitTransaction(tx).
+      catch(e => console.error(' - ERROR', e));
+    return tx?.id;
+  } catch(e) {
+    console.error(' - *** ERROR ***', e)
+  }
+}
+
 async function setupProdFix (exe, server, log) { // {{{1
   switch (exe) {
     case 'issuer': {
@@ -202,7 +242,13 @@ async function setupProdFix (exe, server, log) { // {{{1
     default:
       throw new Error('- invalid', exe)
   }
-  log('- setup complete.')
+  let [SK, PK] = loadKeys('build/testnet', 'HEX_Issuer_todelete')
+  let issuer = { 
+    creator_keys: `${process.env.PWD}/build/testnet.keys`, 
+    keys: `${process.env.PWD}/build/testnet/HEX_Issuer_todelete.keys` 
+  }
+  fs.writeFileSync('prod/fix/issuer.json', JSON.stringify(issuer))
+  log('- setup complete; issuer', issuer)
 }
 
 function storeKeys (dirname, basename) { // {{{1
@@ -306,7 +352,7 @@ switch (process.argv[2]) { // {{{1
     break
   }
   default: // {{{2
-    throw new Error(`- invalid ${process.argv[2]}`);
+    await execute[process.argv[2]](process.argv[3], ...process.argv);
   // }}}2
 }
 
