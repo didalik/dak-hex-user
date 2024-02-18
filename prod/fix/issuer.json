@@ -1,1 +1,1 @@
-{"creator_keys":"/home/alik/people/didalik/dak/hex/user/dev/build/testnet.keys","keys":"/home/alik/people/didalik/dak/hex/user/dev/build/testnet/HEX_Issuer_todelete.keys"}
+{"agent_keys":"/home/alik/people/didalik/dak/hex/user/dev/build/testnet/HEX_Agent.keys","creator_keys":"/home/alik/people/didalik/dak/hex/user/dev/build/testnet.keys","keys":"/home/alik/people/didalik/dak/hex/user/dev/build/testnet/HEX_Issuer.keys","limit":"100000","todelete_keys":"/home/alik/people/didalik/dak/hex/user/dev/build/testnet/HEX_Issuer_todelete.keys"}

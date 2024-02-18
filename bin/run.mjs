@@ -36,29 +36,54 @@ console.log('XA')
 */
 
 const execute = { // {{{1
-  issuer: async _ => {
+  issuer: async log => { // {{{2
     let issuer = JSON.parse(fs.readFileSync('issuer.json').toString())
-    console.log('- issuer', issuer, 'merging to creator...')
     const server = new Horizon.Server(
       issuer.public ? "https://horizon.stellar.org" 
       : "https://horizon-testnet.stellar.org"
     )
     let [C_SK, C_PK] = loadKeys(issuer.creator_keys)
-    let [I_SK, I_PK] = loadKeys(issuer.keys)
+    let [I_SK, I_PK] = loadKeys(issuer.todelete_keys)
+    log('- issuer', issuer, I_PK, ': merging to creator...')
     let txId = await mergeAccount(
       await server.loadAccount(I_PK), C_PK,
       issuer.public ? Networks.PUBLIC : Networks.TESTNET, server,
       Keypair.fromSecret(I_SK)
     )
-    console.log('- txId', txId)
+    log('- issuer merged to', C_PK, ': txId', txId)
+
+    let [HEX_Issuer_SK, HEX_Issuer_PK] = loadKeys(issuer.keys)
+    let [HEX_Agent_SK, HEX_Agent_PK] = loadKeys(issuer.agent_keys)
+    const ClawableHexa = new Asset('ClawableHexa', HEX_Issuer_PK)
+    const HEXA = new Asset('HEXA', HEX_Issuer_PK)
+
+    // Have HEX Agent trust ClawableHexa and HEXA assets
+    let agent = await server.loadAccount(HEX_Agent_PK), limit = issuer.limit
+    log('- loaded agent', agent?.id)
+    txId = await trustAssets(
+      agent, Keypair.fromSecret(HEX_Agent_SK), limit, 
+      issuer.public ? Networks.PUBLIC : Networks.TESTNET, server, ClawableHexa, HEXA
+    )
+    log('- agent trusts: ClawableHexa, HEXA; limit', limit, 'txId', txId)
+
+    // Fund Agent with ClawableHexa and HEXA assets, update Agent's HEXA trustline
+    issuer = await server.loadAccount(HEX_Issuer_PK)
+    log('- loaded issuer', issuer?.id)
+    txId = await fundAgent(
+      issuer, Keypair.fromSecret(HEX_Issuer_SK), HEX_Agent_PK, limit, 
+      issuer.public ? Networks.PUBLIC : Networks.TESTNET, server, ClawableHexa, HEXA
+    )
+    log('- agent funded: ClawableHexa, HEXA; amount', limit, 'txId', txId)
   },
-  run: async (script, ...args) => await execute[script](...args),
+
+  run: async (script, ...args) => await execute[script](console.log, ...args), // {{{2
+
+  // }}}2
 }
 
 async function createAccount ( // {{{1
   creator, destination, startingBalance, s, opts, ...keypairs
 ) {
-  //console.log('<pre> - createAccount', destination)
   try {
     let tx = new TransactionBuilder(creator, { fee: BASE_FEE }).
       addOperation(Operation.createAccount({ destination, startingBalance })).
@@ -67,23 +92,22 @@ async function createAccount ( // {{{1
       setTimeout(30).build();
 
     tx.sign(...keypairs)
-    tx =  await s.submitTransaction(tx).
-      catch(e => console.error(' - ERROR', e, '</pre>'));
-    //console.log(' - tx.id', tx?.id, '</pre>')
+    tx =  await s.submitTransaction(tx).catch(e => {
+      console.error(' - *** ERROR ***', e.response.data); throw Error()
+    })
     return tx?.id;
   } catch(e) {
-    console.error(' - *** ERROR ***', e)
+    console.error(' - *** ERROR ***', e); throw Error()
   }
 }
 
 async function fundAgent( // {{{1
-  issuer, issuerKeypair, destination, amount, s, ...assets
+  issuer, issuerKeypair, destination, amount, nw, s, ...assets
 ) {
-  //console.log('<pre> - fundAgent', destination)
   let tx = new TransactionBuilder(issuer, // increasing the issuer's
     {                                     //  sequence number
       fee: BASE_FEE,
-      networkPassphrase: Networks.TESTNET,
+      networkPassphrase: nw,
     }
   ).addOperation(Operation.payment({ asset: assets[0], destination, amount })).
     addOperation(Operation.payment({ asset: assets[1], destination, amount })).
@@ -97,9 +121,8 @@ async function fundAgent( // {{{1
     setTimeout(30).build()
 
   tx.sign(issuerKeypair)
-  tx =  await s.submitTransaction(tx).
-    catch(e => console.error(' - *** ERROR ***', e));
-  //console.log(' - tx.id', tx?.id, '</pre>')
+  tx =  await s.submitTransaction(tx).catch(e => console.error(' - *** ERROR ***', e.response.data));
+  return tx?.id;
 }
 
 async function handle_request() { // {{{1
@@ -147,7 +170,6 @@ async function genesis (kp, creator, server, log) { // {{{1
   if (fs.existsSync('build/testnet/HEX_Agent.keys')) {
     return [server, log];
   }
-
   const ClawableHexa = new Asset('ClawableHexa', HEX_Issuer_PK)
   const HEXA = new Asset('HEXA', HEX_Issuer_PK)
 
@@ -157,6 +179,7 @@ async function genesis (kp, creator, server, log) { // {{{1
   txId || process.exit(2)
 
   // Have HEX Agent trust ClawableHexa and HEXA assets {{{2
+  // Baptism?
   let agent = await server.loadAccount(HEX_Agent_PK)
   log('- loaded agent', agent?.id)
   await trustAssets(
@@ -164,6 +187,7 @@ async function genesis (kp, creator, server, log) { // {{{1
   )
 
   // Fund Agent with ClawableHexa and HEXA assets, update Agent's HEXA trustline {{{2
+  // Immersion?
   let issuer = await server.loadAccount(HEX_Issuer_PK)
   log('- loaded issuer', issuer?.id)
   await fundAgent(
@@ -216,11 +240,45 @@ async function mergeAccount ( // {{{1
 
     tx.sign(...keypairs)
     tx =  await server.submitTransaction(tx).
-      catch(e => console.error(' - ERROR', e));
+      catch(e => console.error(' - ERROR', e.response.data));
     return tx?.id;
   } catch(e) {
     console.error(' - *** ERROR ***', e)
   }
+}
+
+async function setup (kp, creator, server, log) { // {{{1
+
+  // Add ClawableHexa and HEXA assets Issuer {{{2
+  let HEX_Issuer_SK, HEX_Issuer_PK, txId
+  if (fs.existsSync('build/testnet/HEX_Issuer.keys')) {
+    let [SK, PK] = loadKeys('build/testnet', 'HEX_Issuer')
+    HEX_Issuer_SK = SK; HEX_Issuer_PK = PK
+  } else {
+    log('- starting setup...')
+    let [SK, PK] = storeKeys('build/testnet', 'HEX_Issuer')
+    HEX_Issuer_SK = SK; HEX_Issuer_PK = PK
+    txId = await createAccount(creator, HEX_Issuer_PK, '9', server,
+      {
+        setFlags: AuthClawbackEnabledFlag | AuthRevocableFlag,
+        source: HEX_Issuer_PK,
+      },
+      kp, Keypair.fromSecret(HEX_Issuer_SK)
+    )
+    log('- setup created HEX_Issuer', HEX_Issuer_PK, ': txId', txId)
+  }
+
+  // Add HEX Agent {{{2
+  if (fs.existsSync('build/testnet/HEX_Agent.keys')) {
+    return [server, log];
+  }
+  let [HEX_Agent_SK, HEX_Agent_PK] = storeKeys('build/testnet', 'HEX_Agent')
+  txId = await createAccount(creator, HEX_Agent_PK, '9', server, {}, kp)
+  log('- setup created HEX_Agent', HEX_Agent_PK, ': txId', txId)
+
+  // }}}2
+  log('- setup complete.')
+  return [server, log];
 }
 
 async function setupProdFix (exe, server, log) { // {{{1
@@ -228,24 +286,25 @@ async function setupProdFix (exe, server, log) { // {{{1
     case 'issuer': {
       let HEX_I2D_SK, HEX_I2D_PK, txId
       if (!fs.existsSync('build/testnet/HEX_Issuer_todelete.keys')) {
-        log('- completing setup...')
         let [SK, PK] = storeKeys('build/testnet', 'HEX_Issuer_todelete')
         let [C_SK, C_PK] = loadKeys('build', 'testnet')
         let creator = await server.loadAccount(C_PK)
         let txId = await createAccount(
           creator, PK, '9', server, {}, Keypair.fromSecret(C_SK)
         )
-        log('- HEX_Issuer_todelete txId', txId)
+        log('- HEX_Issuer_todelete', PK, ': txId', txId)
       }
       break
     }
     default:
-      throw new Error('- invalid', exe)
+      throw new Error(`- invalid ${exe}`)
   }
-  let [SK, PK] = loadKeys('build/testnet', 'HEX_Issuer_todelete')
   let issuer = { 
+    agent_keys: `${process.env.PWD}/build/testnet/HEX_Agent.keys`,
     creator_keys: `${process.env.PWD}/build/testnet.keys`, 
-    keys: `${process.env.PWD}/build/testnet/HEX_Issuer_todelete.keys` 
+    keys: `${process.env.PWD}/build/testnet/HEX_Issuer.keys`,
+    limit: '100000',
+    todelete_keys: `${process.env.PWD}/build/testnet/HEX_Issuer_todelete.keys` 
   }
   fs.writeFileSync('prod/fix/issuer.json', JSON.stringify(issuer))
   log('- setup complete; issuer', issuer)
@@ -304,23 +363,20 @@ async function svc_parms (remoteStr, path, e = process.env) { // {{{1
 }
 
 async function trustAssets( // {{{1
-  recipient, recipientKeypair, limit, s, ...assets
+  recipient, recipientKeypair, limit, nw, s, ...assets
 ) {
-  let codes = []; assets.forEach(a => codes.push(a.code))
-  //console.log('<pre> - trustAssets', ...codes)
   let tx = new TransactionBuilder(recipient, // increasing the recipient's
     {                                        //  sequence number
       fee: BASE_FEE,
-      networkPassphrase: Networks.TESTNET,
+      networkPassphrase: nw,
     }
   ).addOperation(Operation.changeTrust({ asset: assets[0], limit })).
     addOperation(Operation.changeTrust({ asset: assets[1], limit })).
     setTimeout(30).build()
 
   tx.sign(recipientKeypair)
-  tx =  await s.submitTransaction(tx).
-    catch(e => console.error(' - *** ERROR ***', e));
-  //console.log(' - tx.id', tx?.id, '</pre>')
+  tx =  await s.submitTransaction(tx).catch(e => console.error(' - *** ERROR ***', e.response.data));
+  return tx?.id;
 }
 
 switch (process.argv[2]) { // {{{1
@@ -336,12 +392,12 @@ switch (process.argv[2]) { // {{{1
     //console.log('- setup process.argv', process.argv, 'process.env', process.env)
     switch (process.argv[4]) {
       case 'prod/fix': { // {{{3
-        let baseline = await genesis(...await loadNewCreator(console.log))
+        let baseline = await setup(...await loadNewCreator(console.log))
         await setupProdFix(process.argv[3], ...baseline)
         break
       }
       default: // {{{3
-        throw new Error(`- invalid ${process.argv[3]}`); // }}}3
+        throw new Error(`- invalid dir '${process.argv[4]}'`); // }}}3
     }
     break
   }
