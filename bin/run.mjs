@@ -35,6 +35,23 @@ create(1,2,3,4,5,6)
 console.log('XA')
 */
 
+const _htmlHead = (title, intro) => `
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>${title}</title>
+  </head>
+  <body>
+    <samp>${intro}</samp>
+    <pre>
+`
+const _htmlTail = _ => `
+</pre></body></html>
+`
+
+const _sleep = ms => new Promise(r => setTimeout(r, ms))
+
 const execute = { // {{{1
   issuer: async log => { // {{{2
     let issuer = JSON.parse(fs.readFileSync('issuer.json').toString())
@@ -78,8 +95,52 @@ const execute = { // {{{1
 
   run: async (script, ...args) => await execute[script](console.log, ...args), // {{{2
 
+  setup_it: async _ => { // {{{2
+  const rl = readline.createInterface({
+    input: process.stdin,
+  })
+  for await (const line of rl) {
+    let jsoa
+    try {
+      jsoa = JSON.parse(line)
+      let url = jsoa.request.url
+      switch (true) {
+        case /\/dynamic\/test/.test(url):
+        case /\/qa\/phase/.test(url):
+          await runTest[url.split('/')[2]](url)
+        default:
+          console.log(_htmlHead('TESTS', 
+            `<h3>Integration tests started on ${Date()}</h3>`
+          ))
+          console.log('- HUH? url', url)
+          //console.log(_htmlTail())
+          //await _sleep(500) // for visual effect only
+          process.exit(0)
+      }
+    } catch (e) {
+      console.error(e, line)
+    }
+  }
+  },
+
   // }}}2
 }
+
+const htmlHead = title => `
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>${title}</title>
+  </head>
+  <body>
+    <pre>
+`
+const htmlTail = _ => `
+</pre></body></html>
+`
+
+const sleep = ms => new Promise(r => setTimeout(r, ms))
 
 async function createAccount ( // {{{1
   creator, destination, startingBalance, s, opts, ...keypairs
@@ -139,7 +200,11 @@ async function handle_request() { // {{{1
         case /\/qa\/phase/.test(url):
           await runTest[url.split('/')[2]](url)
         default:
+          console.log(htmlHead('INVALID'))
           console.log('- HUH? url', url)
+          console.log(htmlTail())
+          await sleep(500) // for visual effect only
+          process.exit(0)
       }
     } catch (e) {
       //console.error(e, line)

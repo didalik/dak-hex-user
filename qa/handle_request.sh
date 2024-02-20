@@ -75,7 +75,8 @@ PID_OF_TAIL=$!
 . ../config.env
 . config.env
 . ../dak/util/public/lib/util.sh
-[ $LOCAL_DEV_REQUESTED ] && start_local_dev index 2 && start_local_dev hex 3
+log "- LOCAL_DEV_REQUESTED $LOCAL_DEV_REQUESTED"
+#[ $LOCAL_DEV_REQUESTED ] && start_local_dev index 2 && start_local_dev hex 3
 
 $RUN_MJS handle_request >> loop.log 2>>$LOCALDEV_LOG # {{{1
 EXIT_CODE=$?
