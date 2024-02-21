@@ -50,7 +50,7 @@ const _htmlTail = _ => `
 </pre></body></html>
 `
 
-const _sleep = ms => new Promise(r => setTimeout(r, ms))
+const _sleep = ms => new Promise(r => setTimeout(r, ms)) // {{{1
 
 const execute = { // {{{1
   issuer: async log => { // {{{2
@@ -96,31 +96,31 @@ const execute = { // {{{1
   run: async (script, ...args) => await execute[script](console.log, ...args), // {{{2
 
   setup_it: async _ => { // {{{2
-  const rl = readline.createInterface({
-    input: process.stdin,
-  })
-  for await (const line of rl) {
-    let jsoa
-    try {
-      jsoa = JSON.parse(line)
-      let url = jsoa.request.url
-      switch (true) {
-        case /\/dynamic\/test/.test(url):
-        case /\/qa\/phase/.test(url):
-          await runTest[url.split('/')[2]](url)
-        default:
-          console.log(_htmlHead('TESTS', 
-            `<h3>Integration tests started on ${Date()}</h3>`
-          ))
-          console.log('- HUH? url', url)
-          //console.log(_htmlTail())
-          //await _sleep(500) // for visual effect only
-          process.exit(0)
+    const rl = readline.createInterface({
+      input: process.stdin,
+    })
+    for await (const line of rl) {
+      let jsoa
+      try {
+        jsoa = JSON.parse(line)
+        let url = jsoa.request.url
+        switch (true) {
+          case /\/dynamic\/test/.test(url):
+          case /\/qa\/phase/.test(url):
+            await runTest[url.split('/')[2]](url)
+          default:
+            console.log(_htmlHead('TESTS', 
+              `<h3>Integration tests started on ${Date()}</h3>`
+            ))
+            console.log('- HUH? url', url)
+            //console.log(_htmlTail())
+            //await _sleep(500) // for visual effect only
+            process.exit(0)
+        }
+      } catch (e) {
+        console.error(e, line)
       }
-    } catch (e) {
-      console.error(e, line)
     }
-  }
   },
 
   // }}}2

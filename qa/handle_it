@@ -22,7 +22,6 @@ PID_OF_TAIL=$!
 
 . ../config.env
 
-#$RUN_MJS handle_request >> loop.log 2>>$LOCALDEV_LOG # {{{1
 $RUN_MJS setup_it >> loop.log 2>>$LOCALDEV_LOG # {{{1
 
 cd ..
