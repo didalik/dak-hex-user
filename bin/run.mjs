@@ -265,6 +265,15 @@ async function genesis (kp, creator, server, log) { // {{{1
 function issuerValidate (s, log) { // {{{1
   let issuer = JSON.parse(s)
   issuer.public = s.split('public').length == 5
+  let [C_SK, C_PK] = loadKeys(issuer.creator_keys)
+  let [I2d_SK, I2d_PK] = loadKeys(issuer.todelete_keys)
+  let [HEX_Issuer_SK, HEX_Issuer_PK] = loadKeys(issuer.keys)
+  let [HEX_Agent_SK, HEX_Agent_PK] = loadKeys(issuer.agent_keys)
+
+  log('- issuerValidate [C_SK, C_PK]', ...[C_SK, C_PK])
+  log('- issuerValidate [I2d_SK, I2d_PK]', ...[I2d_SK, I2d_PK])
+  log('- issuerValidate [HEX_Issuer_SK, HEX_Issuer_PK]', ...[HEX_Issuer_SK, HEX_Issuer_PK])
+  log('- issuerValidate [HEX_Agent_SK, HEX_Agent_PK]', ...[HEX_Agent_SK, HEX_Agent_PK])
   log('- issuerValidate issuer', issuer)
 
   process.exit(9)
