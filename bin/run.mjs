@@ -54,7 +54,7 @@ const _sleep = ms => new Promise(r => setTimeout(r, ms)) // {{{1
 
 const execute = { // {{{1
   issuer: async log => { // {{{2
-    let issuer = JSON.parse(fs.readFileSync('issuer.json').toString())
+    let issuer = issuerValidate(fs.readFileSync('issuer.json').toString(), log)
     const server = new Horizon.Server(
       issuer.public ? "https://horizon.stellar.org" 
       : "https://horizon-testnet.stellar.org"
@@ -260,6 +260,16 @@ async function genesis (kp, creator, server, log) { // {{{1
   ) // }}}2
   log('- genesis complete.')
   return [server, log];
+}
+
+function issuerValidate (s, log) { // {{{1
+  let issuer = JSON.parse(s)
+  issuer.public = s.split('public').length == 5
+  log('- issuerValidate issuer', issuer)
+
+  process.exit(9)
+
+  return issuer;
 }
 
 function loadKeys (dirname, basename = null) { // {{{1
