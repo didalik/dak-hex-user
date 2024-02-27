@@ -61,9 +61,9 @@ const execute = { // {{{1
     )
     let [C_SK, C_PK] = loadKeys(issuer.creator_keys)
     let [I_SK, I_PK] = loadKeys(issuer.todelete_keys)
-    log('- issuer', issuer, I_PK, ': merging to creator...')
-    let txId = await mergeAccount(
-      await server.loadAccount(I_PK), C_PK,
+    let i2d = await server.loadAccount(I_PK)
+    log('- issuer', issuer, i2d.id, ': merging to creator...')
+    let txId = await mergeAccount(i2d, C_PK,
       issuer.public ? Networks.PUBLIC : Networks.TESTNET, server,
       Keypair.fromSecret(I_SK)
     )
