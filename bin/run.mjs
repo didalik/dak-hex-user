@@ -286,7 +286,8 @@ function loadKeys (dirname, basename = null) { // {{{1
   let SK_PK = fs.readFileSync(
     basename ? `${dirname}/${basename}.keys` : dirname
   )
-  return SK_PK.toString().split(' ');
+  let pair = SK_PK.toString().split(' ')
+  return [pair[0].trim(), pair[1].trim();
 }
 
 async function loadNewCreator (log) { // {{{1
@@ -400,7 +401,8 @@ function storeKeys (dirname, basename) { // {{{1
   let pair = Keypair.random()
   let SK_PK = pair.secret() + ' ' + pair.publicKey()
   fs.writeFileSync(`${dirname}/${basename}.keys`, SK_PK)
-  return SK_PK.split(' ')
+  let p = SK_PK.toString().split(' ')
+  return [p[0].trim(), p[1].trim();
 }
 
 async function svc(remoteStr, svcRequestPath, nogetStr = 'get') { // {{{1
