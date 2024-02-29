@@ -16,10 +16,22 @@ loop_user_requests () { # {{{1
   $SERVER_MJS $@ < $p | ssh $r "$s" > $p
 }
 
+loop_requests () { # {{{1
+  echo "- loop_requests $#: $@ PWD $PWD" >&2
+
+  local p=$1 r=$2 d=$3 script2run=$4 port=$5; shift 4
+  rm -f $p; mkfifo $p
+  local q='.q.fifo'; rm -f $q; mkfifo $q
+  { read <$q; ssh alec@m1 "open -u 'http://u22:$port/dynamic/$2'"; cat <$q; } &
+  #{ read <$q;echo "$REPLY - SERVER_MJS bound"; } &
+  local s="{ . ./.profile; cd $d; $script2run; }"
+  $SERVER_MJS $@ <$p 2>$q | ssh $r "$s" >$p
+}
+
 . ../config.env # {{{1
 
 rm -f loop.log error.log; touch loop.log
-loop_user_requests \
+loop_requests \
   .test.fifo \
   'alik@localhost' \
   "$DAK_HOME/hex/user/test" \

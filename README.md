@@ -11,7 +11,7 @@ So today, on Feb 8 2024, I am adding this **README.md** file - introducing the H
 
 There are tree types of HEX actors - Issuer, Agent, and User. The Issuer issues two types of HEX Assets - HEXA and ClawableHexa, funds Agents with those assets, and revokes the assets from Users when needed. An Agent establishes trustlines with the Issuer for both assets, then exchanges assets with Users. Users establish trustlines with the Issuer for both assets, then exchange XLM for HEXA and make/take HEX offers/requests.
 
-## Stellar HEX in DEV, QA and PROD
+## Stellar HEX in TEST -> DEV -> QA -> PROD
 
 In QA on **Stellar test network**, the *testnet creator* creates one Issuer and one Agent. All their Stellar keypairs are being kept together under the **build** directory:
 
@@ -56,6 +56,21 @@ In DEV and QA, testing is done via a browser, for example:
 The tester sends a request to the HTTP server on **m1:8000** to test *prod/fix/issuer* in *dev*. This DEV request gets passed via SSH to **hexa@u22**. The stream of results floats back from **hexa@u22** through **m1:8000** to the tester.
 
 If the tester uses browser on m1, she runs `npm run dev --dir=prod/fix --run=issuer` to make this request from her default browser and see the results.
+
+Another example:
+
+```
+npm run test
+   |   A
+   V   |
+npm run dev --dir=prod/fix --run=fund
+   |
+   V
+npm run qa
+   |
+   V
+npm run prod --dir=fix --run=fund
+```
 
 ## SSH on GitHub
 

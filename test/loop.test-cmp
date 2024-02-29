@@ -1,3 +1,2 @@
-- loop_user_requests 6: .test.fifo alik@localhost /home/alik/people/didalik/dak/hex/user/test ./handle_request.sh 8000 test1 PWD /home/alik/people/didalik/dak/hex/user/test
-Server running at http://127.0.0.1:8000/
+- loop_requests 6: .test.fifo alik@localhost /home/alik/people/didalik/dak/hex/user/test ./handle_request.sh 8000 test1 PWD /home/alik/people/didalik/dak/hex/user/test
 GET /dynamic/test1 200

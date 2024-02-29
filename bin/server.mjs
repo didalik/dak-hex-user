@@ -72,9 +72,7 @@ http // {{{1
     }
     req.url != '/favicon.ico' && console.error(`${req.method} ${req.url} ${statusCode}`);
   })
-  .listen(PORT);
-
-console.error(`Server running at http://127.0.0.1:${PORT}/`);
+  .listen(PORT, _ => console.error(`Server running at http://127.0.0.1:${PORT}/`));
 
 /* More thanks: {{{1
  * - https://jonlinnell.co.uk/articles/node-stdin

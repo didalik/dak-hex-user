@@ -84,11 +84,11 @@ const execute = { // {{{1
     log('- agent trusts: ClawableHexa, HEXA; limit', limit, 'txId', txId)
 
     // Fund Agent with ClawableHexa and HEXA assets, update Agent's HEXA trustline
-    issuer = await server.loadAccount(HEX_Issuer_PK)
-    log('- loaded issuer', issuer?.id)
-    txId = await fundAgent(
-      issuer, Keypair.fromSecret(HEX_Issuer_SK), HEX_Agent_PK, limit, 
-      issuer.public ? Networks.PUBLIC : Networks.TESTNET, server, ClawableHexa, HEXA
+    let i2use = await server.loadAccount(HEX_Issuer_PK)
+    log('- loaded issuer', i2use?.id)
+    txId = await fundAgent(i2use, Keypair.fromSecret(HEX_Issuer_SK), HEX_Agent_PK,
+      limit, issuer.public ? Networks.PUBLIC : Networks.TESTNET, 
+      server, ClawableHexa, HEXA
     )
     log('- agent funded: ClawableHexa, HEXA; amount', limit, 'txId', txId)
   },
