@@ -6,16 +6,6 @@
 # LICENSE file in the root directory of this source tree.
 ##
 
-loop_user_requests () { # {{{1
-  echo "- loop_user_requests $#: $@ PWD $PWD" >&2
-
-  local p=$1 r=$2 d=$3 script2run=$4 port=$5; shift 4
-  { sleep 1; ssh alec@m1 "open -u 'http://u22:$port/dynamic/$2'"; } &
-  local s="{ . ./.profile; cd $d; $script2run; }"
-  rm -f $p; mkfifo $p
-  $SERVER_MJS $@ < $p | ssh $r "$s" > $p
-}
-
 loop_requests () { # {{{1
   echo "- loop_requests $#: $@ PWD $PWD" >&2
 

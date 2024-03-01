@@ -63,13 +63,13 @@ Another example:
 npm run test
    |   A
    V   |
-npm run dev --dir=prod/fix --run=fund
+npm run dev --dir=prod/fix --run=fund_agent
    |
    V
 npm run qa
    |
    V
-npm run prod --dir=fix --run=fund
+npm run prod --dir=fix --run=fund_agent
 ```
 
 ## SSH on GitHub
