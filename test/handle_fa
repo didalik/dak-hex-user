@@ -6,32 +6,37 @@
 # LICENSE file in the root directory of this source tree.
 ##
 
-LOCALDEV_LOG=error.log # {{{1
+ERR=err.log # {{{1
+OUT=out.log
 
 teardown () { # {{{1
   [ -e .pids2kill ] && while read;do kill $REPLY;done <.pids2kill
   kill $PID_OF_TAIL
-  echo "- teardown killed PID_OF_TAIL $PID_OF_TAIL" >> $LOCALDEV_LOG
+  echo "- teardown killed PID_OF_TAIL $PID_OF_TAIL" >> $ERR
 }
 trap teardown EXIT
 
-rm -f .pids2kill loop.log $LOCALDEV_LOG # {{{1 
-touch loop.log
-tail -n 999999 -f loop.log &
+rm -f .pids2kill $OUT $ERR # {{{1 
+touch $OUT
+tail -n 999999 -f $OUT &
 PID_OF_TAIL=$!
 
 . ../config.env
+DIR=$(dirname $1)
+RUN=$(basename $1)
 
-$RUN_MJS setup_it >> loop.log 2>>$LOCALDEV_LOG # {{{1
-
+$RUN_MJS setup_ut $@ >> $OUT 2>>$ERR # {{{1
+shift
 cd ..
 rm -rf dev/build
-npm run dev --dir=prod/fix --run=fund_agent >> qa/loop.log 2>>qa/$LOCALDEV_LOG
+echo "- $0 $? $#: $@" >>test/$ERR
+
+npm run dev --dir=$DIR --run=$RUN -- $@ >> test/$OUT 2>>test/$ERR
 cd -
 
-cat >> loop.log << HTML_TAIL
+cat >> $OUT << HTML_TAIL
 
-</pre><samp><h3>Integration tests stopped on $(date)</h3></samp></body></html> 
+</pre><samp><h3>DEV test stopped on $(date)</h3></samp></body></html> 
 HTML_TAIL
 EXIT_CODE=$?
 exit $EXIT_CODE

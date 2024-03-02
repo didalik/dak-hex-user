@@ -60,7 +60,7 @@ If the tester uses browser on m1, she runs `npm run dev --dir=prod/fix --run=iss
 Another example:
 
 ```
-npm run test
+npm test
    |   A
    V   |
 npm run dev --dir=prod/fix --run=fund_agent

@@ -113,8 +113,34 @@ const execute = { // {{{1
               `<h3>Integration tests started on ${Date()}</h3>`
             ))
             console.log('- HUH? url', url)
-            //console.log(_htmlTail())
-            //await _sleep(500) // for visual effect only
+            process.exit(0)
+        }
+      } catch (e) {
+        console.error(e, line)
+      }
+    }
+  },
+
+  setup_ut: async (...args) => { // {{{2
+    const rl = readline.createInterface({
+      input: process.stdin,
+    })
+    for await (const line of rl) {
+      let jsoa
+      try {
+        jsoa = JSON.parse(line)
+        let url = jsoa.request.url
+        switch (true) {
+          case /\/dynamic\/test/.test(url):
+          case /\/qa\/phase/.test(url):
+            await runTest[url.split('/')[2]](url)
+          default:
+            console.log(_htmlHead('DEV TEST', 
+              `<h3>DEV test started on ${Date()}</h3>`
+            ))
+            //console.log('- HUH? url', url)
+            console.log('- setup_ut args', args)
+
             process.exit(0)
         }
       } catch (e) {
@@ -476,7 +502,7 @@ switch (process.argv[2]) { // {{{1
     break
   }
   case 'setup': { // {{{2
-    //console.log('- setup process.argv', process.argv, 'process.env', process.env)
+    console.log('- setup process.argv', process.argv, 'process.env', process.env)
     switch (process.argv[4]) {
       case 'prod/fix': { // {{{3
         let baseline = await setup(...await loadNewCreator(console.log))
@@ -484,7 +510,7 @@ switch (process.argv[2]) { // {{{1
         break
       }
       default: // {{{3
-        throw new Error(`- invalid dir '${process.argv[4]}'`); // }}}3
+        throw new Error(`invalid dir '${process.argv[4]}'`); // }}}3
     }
     break
   }

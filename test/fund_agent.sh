@@ -8,13 +8,13 @@
 
 utest () { # {{{1
   echo "- utest $#: $@ PWD $PWD" >&2
-  local p=$1 r=$2 d=$3 script2run=$4 port=$5; shift 4
+  local p=$1 r=$2 d=$3 script2run=$4 port=$5; shift 5
   rm -f $p; mkfifo $p
   local q='.q.fifo'; rm -f $q; mkfifo $q
-  local hp="$HTTP_SERVER_HOST:$port" ut="test/$2"
+  local hp="$HTTP_SERVER_HOST:$port" ut="test/$1"
   { read <$q; ssh alec@m1 "open -u 'http://$hp/$ut'"; cat <$q; } &
-  local s="{ . ./.profile; cd $d; $script2run; }"
-  $SERVER_MJS $@ <$p 2>$q | ssh $r "$s" >$p
+  local s="{ . ./.profile; cd $d; $script2run $@; }"
+  $SERVER_MJS $port $@ <$p 2>$q | ssh $r "$s" >$p
   EXIT_CODE=${PIPESTATUS[1]}
 }
 
@@ -32,4 +32,4 @@ utest \
   "$REMOTE_ACCOUNT" \
   "$REMOTE_PWD" \
   './handle_fa' \
-  $PORT fund_agent
+  $PORT prod/fix/fund_agent fa_argv1 fa_argv2

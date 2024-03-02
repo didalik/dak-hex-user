@@ -3,14 +3,17 @@
 
 SHELL := /bin/bash
 all-tests := $(addsuffix .test, $(basename $(wildcard *.test-in)))
-.PHONY : test all %.test
+.PHONY : clean test all %.test
 
 test : $(all-tests)
 
 %.test : %.test-in %.test-cmp %.sh
-	@./$(word 3, $?) <$< 2>&1 | tee last.out | \
+	@./$(word 3, $?) <$< 2>&1 | tee -a all.out | \
 		diff -q $(word 2, $?) - >/dev/null || (echo "Test $@ failed" && exit 1)
 
 all : test 
 	@echo "Success, all tests passed."
+
+clean :
+	@rm -f all.out
 
