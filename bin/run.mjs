@@ -67,16 +67,6 @@ const execute = { // {{{1
       config.public ? "https://horizon.stellar.org" 
       : "https://horizon-testnet.stellar.org"
     )
-    /*let [C_SK, C_PK] = loadKeys(config.creator_keys)
-    let [I_SK, I_PK] = loadKeys(config.todelete_keys)
-    let i2d = await server.loadAccount(I_PK)
-    log('- issuer', issuer, i2d.id, ': merging to creator...')
-    let txId = await mergeAccount(i2d, C_PK,
-      issuer.public ? Networks.PUBLIC : Networks.TESTNET, server,
-      Keypair.fromSecret(I_SK)
-    )
-    log('- issuer merged to', C_PK, ': txId', txId)
-*/
     let [HEX_Issuer_SK, HEX_Issuer_PK] = loadKeys(config.keys)
     let [HEX_Agent_SK, HEX_Agent_PK] = loadKeys(config.agent_keys)
     const ClawableHexa = new Asset('ClawableHexa', HEX_Issuer_PK)
@@ -286,56 +276,6 @@ async function handle_request() { // {{{1
   }
 }
 
-/*async function genesis (kp, creator, server, log) { // {{{1
-
-  // Add ClawableHexa and HEXA assets Issuer {{{2
-  let HEX_Issuer_SK, HEX_Issuer_PK, txId
-  if (fs.existsSync('build/testnet/HEX_Issuer.keys')) {
-    let [SK, PK] = loadKeys('build/testnet', 'HEX_Issuer')
-    HEX_Issuer_SK = SK; HEX_Issuer_PK = PK
-  } else {
-    log('- starting genesis...')
-    let [SK, PK] = storeKeys('build/testnet', 'HEX_Issuer')
-    HEX_Issuer_SK = SK; HEX_Issuer_PK = PK
-    txId = await createAccount(creator, HEX_Issuer_PK, '9', server,
-      {
-        setFlags: AuthClawbackEnabledFlag | AuthRevocableFlag,
-        source: HEX_Issuer_PK,
-      },
-      kp, Keypair.fromSecret(HEX_Issuer_SK)
-    )
-    txId || process.exit(2)
-  }
-  if (fs.existsSync('build/testnet/HEX_Agent.keys')) {
-    return [server, log];
-  }
-  const ClawableHexa = new Asset('ClawableHexa', HEX_Issuer_PK)
-  const HEXA = new Asset('HEXA', HEX_Issuer_PK)
-
-  // Add HEX Agent {{{2
-  let [HEX_Agent_SK, HEX_Agent_PK] = storeKeys('build/testnet', 'HEX_Agent')
-  txId = await createAccount(creator, HEX_Agent_PK, '9', server, {}, kp)
-  txId || process.exit(2)
-
-  // Have HEX Agent trust ClawableHexa and HEXA assets {{{2
-  // Baptism?
-  let agent = await server.loadAccount(HEX_Agent_PK)
-  log('- loaded agent', agent?.id)
-  await trustAssets(
-    agent, Keypair.fromSecret(HEX_Agent_SK), '10000', server, ClawableHexa, HEXA
-  )
-
-  // Fund Agent with ClawableHexa and HEXA assets, update Agent's HEXA trustline {{{2
-  // Immersion?
-  let issuer = await server.loadAccount(HEX_Issuer_PK)
-  log('- loaded issuer', issuer?.id)
-  await fundAgent(
-    issuer, Keypair.fromSecret(HEX_Issuer_SK), HEX_Agent_PK, '10000', server, ClawableHexa, HEXA
-  ) // }}}2
-  log('- genesis complete.')
-  return [server, log];
-}
-*/
 function configValidate (s, log) { // {{{1
   let config = JSON.parse(s)
   config.public = s.indexOf('/public/') > -1
