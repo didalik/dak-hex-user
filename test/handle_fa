@@ -32,13 +32,13 @@ rm -rf dev/build
 echo "- $0 $? $#: $@" >>test/$ERR
 
 npm run dev --dir=$DIR --run=$RUN -- $@ >> test/$OUT 2>>test/$ERR
+EXIT_CODE=$?
 cd -
 
 cat >> $OUT << HTML_TAIL
 
 </pre><samp><h3>DEV test stopped on $(date)</h3></samp></body></html> 
 HTML_TAIL
-EXIT_CODE=$?
 exit $EXIT_CODE
 
 # With thanks to: {{{1

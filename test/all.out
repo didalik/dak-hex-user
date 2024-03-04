@@ -1,0 +1,5 @@
+- utest 8: .p.fifo alik@u22 hex/user/test ./handle_fa 8000 prod/fix/fund_agent fa_argv1 fa_argv2 PWD /home/alik/people/didalik/dak/hex/user/test
+GET /test/prod/fix/fund_agent 200
+- ./fund_agent.sh exiting with EXIT_CODE 0...
+- loop_requests 6: .test.fifo alik@localhost /home/alik/people/didalik/dak/hex/user/test ./handle_request.sh 8000 test1 PWD /home/alik/people/didalik/dak/hex/user/test
+GET /dynamic/test1 200

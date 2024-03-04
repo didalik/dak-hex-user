@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Copyright (c) 2023-present, Дід Alik and the Kids {{{1
+#
+# This script is licensed under the Apache License, Version 2.0, found in the
+# LICENSE file in the root directory of this source tree.
+##
+
+teardown () { # {{{1
+  echo "- $0 exiting with EXIT_CODE $EXIT_CODE..." >&2
+  [ $EXIT_CODE -eq 0 ] && exit # otherwise, set up QA phase$EXIT_CODE:
+  #cp -a $EXIT_CODE/static/ ../
+  exit $EXIT_CODE
+}
+trap teardown EXIT
+
+. ../../config.env # {{{1
+. config.env
+
+echo "- $0 $#: $@ PWD $PWD" >&2
+$RUN_MJS run $(basename $0) $@
+EXIT_CODE=$?

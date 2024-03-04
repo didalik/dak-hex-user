@@ -42,6 +42,14 @@ const _htmlHead = (title, intro) => `
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>${title}</title>
   </head>
+  <script>
+    let scroll = _ => window.scrollTo(0,document.body.scrollHeight)
+    let id = setInterval(scroll, 100)
+    window.onload = _ => {
+      scroll()
+      clearInterval(id)
+    }
+  </script>
   <body>
     <samp>${intro}</samp>
     <pre>
@@ -53,14 +61,14 @@ const _htmlTail = _ => `
 const _sleep = ms => new Promise(r => setTimeout(r, ms)) // {{{1
 
 const execute = { // {{{1
-  issuer: async log => { // {{{2
-    let issuer = issuerValidate(fs.readFileSync('issuer.json').toString(), log)
+  fund_agent: async log => { // {{{2
+    let config = configValidate(fs.readFileSync('fund_agent.json').toString(), log)
     const server = new Horizon.Server(
-      issuer.public ? "https://horizon.stellar.org" 
+      config.public ? "https://horizon.stellar.org" 
       : "https://horizon-testnet.stellar.org"
     )
-    let [C_SK, C_PK] = loadKeys(issuer.creator_keys)
-    let [I_SK, I_PK] = loadKeys(issuer.todelete_keys)
+    /*let [C_SK, C_PK] = loadKeys(config.creator_keys)
+    let [I_SK, I_PK] = loadKeys(config.todelete_keys)
     let i2d = await server.loadAccount(I_PK)
     log('- issuer', issuer, i2d.id, ': merging to creator...')
     let txId = await mergeAccount(i2d, C_PK,
@@ -68,18 +76,18 @@ const execute = { // {{{1
       Keypair.fromSecret(I_SK)
     )
     log('- issuer merged to', C_PK, ': txId', txId)
-
-    let [HEX_Issuer_SK, HEX_Issuer_PK] = loadKeys(issuer.keys)
-    let [HEX_Agent_SK, HEX_Agent_PK] = loadKeys(issuer.agent_keys)
+*/
+    let [HEX_Issuer_SK, HEX_Issuer_PK] = loadKeys(config.keys)
+    let [HEX_Agent_SK, HEX_Agent_PK] = loadKeys(config.agent_keys)
     const ClawableHexa = new Asset('ClawableHexa', HEX_Issuer_PK)
     const HEXA = new Asset('HEXA', HEX_Issuer_PK)
 
     // Have HEX Agent trust ClawableHexa and HEXA assets
-    let agent = await server.loadAccount(HEX_Agent_PK), limit = issuer.limit
+    let agent = await server.loadAccount(HEX_Agent_PK), limit = config.limit
     log('- loaded agent', agent?.id)
-    txId = await trustAssets(
+    let txId = await trustAssets(
       agent, Keypair.fromSecret(HEX_Agent_SK), limit, 
-      issuer.public ? Networks.PUBLIC : Networks.TESTNET, server, ClawableHexa, HEXA
+      config.public ? Networks.PUBLIC : Networks.TESTNET, server, ClawableHexa, HEXA
     )
     log('- agent trusts: ClawableHexa, HEXA; limit', limit, 'txId', txId)
 
@@ -87,7 +95,47 @@ const execute = { // {{{1
     let i2use = await server.loadAccount(HEX_Issuer_PK)
     log('- loaded issuer', i2use?.id)
     txId = await fundAgent(i2use, Keypair.fromSecret(HEX_Issuer_SK), HEX_Agent_PK,
-      limit, issuer.public ? Networks.PUBLIC : Networks.TESTNET, 
+      limit, config.public ? Networks.PUBLIC : Networks.TESTNET, 
+      server, ClawableHexa, HEXA
+    )
+    log('- agent funded: ClawableHexa, HEXA; amount', limit, 'txId', txId)
+  },
+
+  issuer: async log => { // {{{2
+    let config = configValidate(fs.readFileSync('issuer.json').toString(), log)
+    const server = new Horizon.Server(
+      config.public ? "https://horizon.stellar.org" 
+      : "https://horizon-testnet.stellar.org"
+    )
+    let [C_SK, C_PK] = loadKeys(config.creator_keys)
+    let [I_SK, I_PK] = loadKeys(config.todelete_keys)
+    let i2d = await server.loadAccount(I_PK)
+    log('- issuer', config, i2d.id, ': merging to creator...')
+    let txId = await mergeAccount(i2d, C_PK,
+      config.public ? Networks.PUBLIC : Networks.TESTNET, server,
+      Keypair.fromSecret(I_SK)
+    )
+    log('- issuer merged to', C_PK, ': txId', txId)
+
+    let [HEX_Issuer_SK, HEX_Issuer_PK] = loadKeys(config.keys)
+    let [HEX_Agent_SK, HEX_Agent_PK] = loadKeys(config.agent_keys)
+    const ClawableHexa = new Asset('ClawableHexa', HEX_Issuer_PK)
+    const HEXA = new Asset('HEXA', HEX_Issuer_PK)
+
+    // Have HEX Agent trust ClawableHexa and HEXA assets
+    let agent = await server.loadAccount(HEX_Agent_PK), limit = config.limit
+    log('- loaded agent', agent?.id)
+    txId = await trustAssets(
+      agent, Keypair.fromSecret(HEX_Agent_SK), limit, 
+      config.public ? Networks.PUBLIC : Networks.TESTNET, server, ClawableHexa, HEXA
+    )
+    log('- agent trusts: ClawableHexa, HEXA; limit', limit, 'txId', txId)
+
+    // Fund Agent with ClawableHexa and HEXA assets, update Agent's HEXA trustline
+    let i2use = await server.loadAccount(HEX_Issuer_PK)
+    log('- loaded issuer', i2use?.id)
+    txId = await fundAgent(i2use, Keypair.fromSecret(HEX_Issuer_SK), HEX_Agent_PK,
+      limit, config.public ? Networks.PUBLIC : Networks.TESTNET, 
       server, ClawableHexa, HEXA
     )
     log('- agent funded: ClawableHexa, HEXA; amount', limit, 'txId', txId)
@@ -238,7 +286,7 @@ async function handle_request() { // {{{1
   }
 }
 
-async function genesis (kp, creator, server, log) { // {{{1
+/*async function genesis (kp, creator, server, log) { // {{{1
 
   // Add ClawableHexa and HEXA assets Issuer {{{2
   let HEX_Issuer_SK, HEX_Issuer_PK, txId
@@ -287,25 +335,11 @@ async function genesis (kp, creator, server, log) { // {{{1
   log('- genesis complete.')
   return [server, log];
 }
-
-function issuerValidate (s, log) { // {{{1
-  let issuer = JSON.parse(s)
-  issuer.public = s.split('public').length == 5
-/*
-  let [C_SK, C_PK] = loadKeys(issuer.creator_keys)
-  let [I2d_SK, I2d_PK] = loadKeys(issuer.todelete_keys)
-  let [HEX_Issuer_SK, HEX_Issuer_PK] = loadKeys(issuer.keys)
-  let [HEX_Agent_SK, HEX_Agent_PK] = loadKeys(issuer.agent_keys)
-
-  log('- issuerValidate [C_SK, C_PK]', ...[C_SK, C_PK])
-  log('- issuerValidate [I2d_SK, I2d_PK]', ...[I2d_SK, I2d_PK])
-  log('- issuerValidate [HEX_Issuer_SK, HEX_Issuer_PK]', ...[HEX_Issuer_SK, HEX_Issuer_PK])
-  log('- issuerValidate [HEX_Agent_SK, HEX_Agent_PK]', ...[HEX_Agent_SK, HEX_Agent_PK])
-  log('- issuerValidate issuer', issuer)
-
-  process.exit(9)
 */
-  return issuer;
+function configValidate (s, log) { // {{{1
+  let config = JSON.parse(s)
+  config.public = s.indexOf('/public/') > -1
+  return config;
 }
 
 function loadKeys (dirname, basename = null) { // {{{1
@@ -394,6 +428,12 @@ async function setup (kp, creator, server, log) { // {{{1
 }
 
 async function setupProdFix (exe, server, log) { // {{{1
+  let config = { 
+    agent_keys: `${process.env.PWD}/build/testnet/HEX_Agent.keys`,
+    creator_keys: `${process.env.PWD}/build/testnet.keys`, 
+    keys: `${process.env.PWD}/build/testnet/HEX_Issuer.keys`,
+    limit: '100000',
+  }
   switch (exe) {
     case 'issuer': {
       let HEX_I2D_SK, HEX_I2D_PK, txId
@@ -406,20 +446,16 @@ async function setupProdFix (exe, server, log) { // {{{1
         )
         log('- HEX_Issuer_todelete', PK, ': txId', txId)
       }
+      config.todelete_keys = `${process.env.PWD}/build/testnet/HEX_Issuer_todelete.keys` 
       break
     }
+    case 'fund_agent':
+      break
     default:
       throw new Error(`- invalid ${exe}`)
   }
-  let issuer = { 
-    agent_keys: `${process.env.PWD}/build/testnet/HEX_Agent.keys`,
-    creator_keys: `${process.env.PWD}/build/testnet.keys`, 
-    keys: `${process.env.PWD}/build/testnet/HEX_Issuer.keys`,
-    limit: '100000',
-    todelete_keys: `${process.env.PWD}/build/testnet/HEX_Issuer_todelete.keys` 
-  }
-  fs.writeFileSync('prod/fix/issuer.json', JSON.stringify(issuer))
-  log('- setup complete; issuer', issuer)
+  fs.writeFileSync(`prod/fix/${exe}.json`, JSON.stringify(config))
+  log('- setup config', config, 'written to', `${process.env.PWD}/prod/fix/${exe}.json`)
 }
 
 function storeKeys (dirname, basename) { // {{{1
@@ -502,7 +538,7 @@ switch (process.argv[2]) { // {{{1
     break
   }
   case 'setup': { // {{{2
-    console.log('- setup process.argv', process.argv, 'process.env', process.env)
+    //console.log('- setup process.argv', process.argv, 'process.env', process.env)
     switch (process.argv[4]) {
       case 'prod/fix': { // {{{3
         let baseline = await setup(...await loadNewCreator(console.log))
@@ -521,7 +557,7 @@ switch (process.argv[2]) { // {{{1
     break
   }
   default: // {{{2
-    await execute[process.argv[2]](process.argv[3], ...process.argv);
+    await execute[process.argv[2]](process.argv[3], ...process.argv)
   // }}}2
 }
 
