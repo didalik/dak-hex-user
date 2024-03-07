@@ -47,7 +47,7 @@ const prepareFile = async (url) => {
   return { found, ext, stream };
 };
 
-const remote = /\/test\/|\/public\/|\/dynamic\/|\/qa\// // FIXME
+const remote = /\/test\/|\/public\/|\/dynamic\/|\/qa\/|\/poc\// // FIXME
 
 const sleep = ms => new Promise(r => setTimeout(r, ms))
 
