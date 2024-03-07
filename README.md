@@ -72,6 +72,8 @@ npm run qa
 npm run prod --dir=fix --run=fund_agent
 ```
 
+Boils down to running `STATIC=static bin/server.mjs 8000`.
+
 ## SSH on GitHub
 
 To use SSH on GitHub, authorize your public key there:
