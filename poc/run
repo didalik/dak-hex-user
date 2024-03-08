@@ -22,7 +22,7 @@ touch $OUT
 tail -n 999999 -f $OUT &
 PID_OF_TAIL=$!
 
-../bin/run.mjs run $@ >> $OUT 2>>$ERR # {{{1
+../bin/run.mjs $@ >> $OUT 2>>$ERR # {{{1
 EXIT_CODE=$?
 
 cat >> $OUT << HTML_TAIL
