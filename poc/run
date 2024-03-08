@@ -7,7 +7,7 @@
 ##
 
 ERR=err.log # {{{1
-OUT=out.log
+OUT=latest_test.html
 
 teardown () { # {{{1
   [ -e .pids2kill ] && while read;do kill $REPLY;done <.pids2kill

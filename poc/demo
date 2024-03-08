@@ -20,7 +20,7 @@ teardown () { # {{{1
   exit $EXIT_CODE
 }
 
-trap teardown EXIT # {{{1
+trap teardown EXIT # }}}1
 
 setup \
   .p.fifo \

@@ -35,7 +35,8 @@ create(1,2,3,4,5,6)
 console.log('XA')
 */
 
-const _htmlHead = (title, intro) => `
+const _htmlHead = (title, intro) => // {{{1
+`
 <!DOCTYPE html>
 <html>
   <head>
@@ -196,7 +197,8 @@ const execute = { // {{{1
   // }}}2
 }
 
-const htmlHead = title => `
+const htmlHead = // {{{1
+  title => `
 <!DOCTYPE html>
 <html>
   <head>
