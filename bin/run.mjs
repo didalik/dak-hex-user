@@ -132,6 +132,11 @@ const execute = { // {{{1
     log('- agent funded: ClawableHexa, HEXA; amount', limit, 'txId', txId)
   },
 
+  poc: async (log, ...args) => { // {{{2
+    log(_htmlHead('Stellar HEX PoC', `<h3>The PoC demo started on ${Date()}</h3>`))
+    log('- poc: args', args)
+  },
+
   run: async (script, ...args) => await execute[script](console.log, ...args), // {{{2
 
   setup_it: async _ => { // {{{2

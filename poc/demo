@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# Copyright (c) 2023-present, Дід Alik and the Kids {{{1
+#
+# This script is licensed under the Apache License, Version 2.0, found in the
+# LICENSE file in the root directory of this source tree.
+##
+
+setup () { # {{{1
+  echo "- setup $#: $@ PWD $PWD" >&2
+  local p=$1 r=$2 d=$3 run=$4 port=$5; shift 5
+  rm -f $p; mkfifo $p
+  local s="{ cd $d; $run $@; }"
+  STATIC=../static ../bin/server.mjs 8000 $@ <$p | ssh $r "$s" >$p
+  EXIT_CODE=${PIPESTATUS[1]}
+}
+
+teardown () { # {{{1
+  echo "- $0 exiting with EXIT_CODE $EXIT_CODE..." >&2
+  exit $EXIT_CODE
+}
+
+trap teardown EXIT # {{{1
+
+setup \
+  .p.fifo \
+  "$USER@localhost" \
+  "$PWD" \
+  './run' \
+  8000 poc demo

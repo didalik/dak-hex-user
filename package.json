@@ -5,7 +5,7 @@
     "auth_dev": "[ $USER = alec -o $USER = alik -o $USER = hexo ] || { echo 'NOT AUTHORIZED'; exit 1; }",
     "auth_prod": "[ $USER = hexo ] || { echo 'NOT AUTHORIZED'; exit 1; }",
     "dev": "npm run auth_dev || exit 1; cd dev; ./$npm_config_run $npm_config_dir",
-    "poc": "STATIC=static bin/server.mjs 8000",
+    "poc": "cd poc; ./demo",
     "prod": "npm run auth_prod || exit 1; cd prod/$npm_config_dir; ./$npm_config_run",
     "qa": "cd qa; ./integration_tests",
     "test": "npm run auth_dev || exit 1; cd test; make clean; make -k all"
