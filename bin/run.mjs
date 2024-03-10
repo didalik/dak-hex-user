@@ -394,12 +394,7 @@ async function setup (kp, creator, server, log) { // {{{1
     return [server, log, HEX_Issuer_SK, HEX_Issuer_PK];
   }
   let [HEX_Agent_SK, HEX_Agent_PK] = storeKeys('build/testnet', 'HEX_Agent')
-  txId = await createAccount(creator, HEX_Agent_PK, '9', server,
-    {
-      homeDomain: 'hex.didalik.workers.dev',
-    },
-    kp
-  )
+  txId = await createAccount(creator, HEX_Agent_PK, '9', server, {}, kp)
   log('- setup created HEX_Agent', HEX_Agent_PK, ': txId', txId)
 
   // }}}2
