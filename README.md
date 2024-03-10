@@ -85,7 +85,7 @@ You now can communicate with GitHub via SSH.
 
 ## The Proof of Concept Demo
 
-Create an Ubuntu 22 VM (**u22**) on your [Mac](https://docs.getutm.app/guides/ubuntu/) or [Windows](https://learn.microsoft.com/en-us/windows/wsl/install) desktop. Run there
+Create an Ubuntu 22 VM (**u22**) on your [Mac](https://docs.getutm.app/guides/ubuntu/) or [Windows](https://learn.microsoft.com/en-us/windows/wsl/install) desktop. Run
 
 ```
 git clone -b main --recurse-submodules git@github.com:didalik/dak-hex-user.git dak/hex/user

@@ -136,6 +136,10 @@ const execute = { // {{{1
   poc: async (log, ...args) => { // {{{2
     log(_htmlHead('Stellar HEX PoC', `<h3>The PoC demo started on ${Date()}</h3>`))
     log('- poc: args', args)
+    let baseline = await setup(...await loadNewCreator(log))
+    log('- agent funded: ClawableHexa, HEXA; amount',
+      ...await pocFundAgent('10000', ...baseline)
+    )
   },
 
   run: async (script, ...args) => await execute[script](console.log, ...args), // {{{2
@@ -341,6 +345,28 @@ async function mergeAccount ( // {{{1
   }
 }
 
+async function pocFundAgent ( // {{{1
+  limit, server, log, HEX_Issuer_SK, HEX_Issuer_PK, HEX_Agent_SK, HEX_Agent_PK
+) {
+  const ClawableHexa = new Asset('ClawableHexa', HEX_Issuer_PK)
+  const HEXA = new Asset('HEXA', HEX_Issuer_PK)
+
+  // Have HEX Agent trust ClawableHexa and HEXA assets
+  let agent = await server.loadAccount(HEX_Agent_PK)
+  log('- loaded agent', agent?.id)
+  let txId = await trustAssets( agent, Keypair.fromSecret(HEX_Agent_SK), limit, 
+    Networks.TESTNET, server, ClawableHexa, HEXA
+  )
+  log('- agent trusts: ClawableHexa, HEXA; limit', limit, 'txId', txId)
+
+  // Fund Agent with ClawableHexa and HEXA assets, update Agent's HEXA trustline
+  let i2use = await server.loadAccount(HEX_Issuer_PK)
+  log('- loaded issuer', i2use?.id)
+  return [limit, 'txId', await fundAgent(i2use, Keypair.fromSecret(HEX_Issuer_SK),
+    HEX_Agent_PK, limit, Networks.TESTNET, server, ClawableHexa, HEXA
+  )];
+}
+
 async function setup (kp, creator, server, log) { // {{{1
 
   // Add ClawableHexa and HEXA assets Issuer {{{2
@@ -354,6 +380,7 @@ async function setup (kp, creator, server, log) { // {{{1
     HEX_Issuer_SK = SK; HEX_Issuer_PK = PK
     txId = await createAccount(creator, HEX_Issuer_PK, '9', server,
       {
+        homeDomain: 'hex.didalik.workers.dev',
         setFlags: AuthClawbackEnabledFlag | AuthRevocableFlag,
         source: HEX_Issuer_PK,
       },
@@ -364,15 +391,20 @@ async function setup (kp, creator, server, log) { // {{{1
 
   // Add HEX Agent {{{2
   if (fs.existsSync('build/testnet/HEX_Agent.keys')) {
-    return [server, log];
+    return [server, log, HEX_Issuer_SK, HEX_Issuer_PK];
   }
   let [HEX_Agent_SK, HEX_Agent_PK] = storeKeys('build/testnet', 'HEX_Agent')
-  txId = await createAccount(creator, HEX_Agent_PK, '9', server, {}, kp)
+  txId = await createAccount(creator, HEX_Agent_PK, '9', server,
+    {
+      homeDomain: 'hex.didalik.workers.dev',
+    },
+    kp
+  )
   log('- setup created HEX_Agent', HEX_Agent_PK, ': txId', txId)
 
   // }}}2
   log('- setup complete.')
-  return [server, log];
+  return [server, log, HEX_Issuer_SK, HEX_Issuer_PK, HEX_Agent_SK, HEX_Agent_PK];
 }
 
 async function setupProdFix (exe, server, log) { // {{{1
