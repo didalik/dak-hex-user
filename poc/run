@@ -22,8 +22,8 @@ touch $OUT
 tail -n 999999 -f $OUT &
 PID_OF_TAIL=$!
 
-rm -rf build # {{{1
-
+#rm -rf build #  TODO uncomment when done with DEV        # {{{1
+             ## Comment out to use the current poc build ##
 ../bin/run.mjs $@ >> $OUT 2>>$ERR # {{{1
 EXIT_CODE=$?
 
@@ -35,5 +35,7 @@ exit $EXIT_CODE
 
 # With thanks to: {{{1
 # - https://stackoverflow.com/questions/1521462/looping-through-the-content-of-a-file-in-bash
+# - https://stellar.stackexchange.com/questions/5847/tx-too-late-error-on-every-transaction-with-a-set-timeout
+# - https://tecadmin.net/setup-time-synchronisation-ntp-server-on-ubuntu-linuxmint/
 #
 ##
