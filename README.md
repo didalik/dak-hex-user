@@ -85,12 +85,13 @@ You now can communicate with GitHub via SSH.
 
 ## The Proof of Concept Demo
 
-Create an Ubuntu 22 VM (**u22**) on your [Mac](https://docs.getutm.app/guides/ubuntu/) or [Windows](https://learn.microsoft.com/en-us/windows/wsl/install) desktop. Run
+Create an Ubuntu 22 VM (**u22**) on your [Mac](https://docs.getutm.app/guides/ubuntu/) or [Windows](https://learn.microsoft.com/en-us/windows/wsl/install) desktop. [Install ntp](https://tecadmin.net/setup-time-synchronisation-ntp-server-on-ubuntu-linuxmint/). Run
 
 ```
 git clone -b main --recurse-submodules git@github.com:didalik/dak-hex-user.git dak/hex/user
 cd dak/hex/user
 npm i
+sudo systemctl restart ntp
 npm run poc
 ```
 
