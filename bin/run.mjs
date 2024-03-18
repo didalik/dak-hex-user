@@ -15,7 +15,7 @@ import { Asset, AuthClawbackEnabledFlag, AuthRevocableFlag,
 } from '@stellar/stellar-sdk'
 import { runTest, } from '../test/run.mjs'
 import { pGET, pGET_parms, timestamp, } from '../dak/util/public/lib/util.mjs'
-import { Orderbook, offerCreated, offerDeleted, } from '../lib/hex.mjs'
+import { Orderbook, offerMade, offerDeleted, } from '../lib/hex.mjs'
 
 global.fetch = fetch // {{{1
 global.window = {
@@ -365,7 +365,7 @@ async function makeBuyOffer( // {{{1
     '*** ERROR ***', e.response.data.extras.result_codes
   ))
   let made = buyAmount == '0' || +offerId > 0 ? offerDeleted(tx.result_xdr)
-  : offerCreated(tx.result_xdr)
+  : offerMade(tx.result_xdr)
   log('- makeBuyOffer', account.id, tx.id, made.offer.id)
   return Promise.resolve([tx.id, made.offer.id]);
 }
@@ -386,7 +386,7 @@ async function makeSellOffer( // {{{1
   tx =  await server.submitTransaction(tx).catch(e => console.error(
     '*** ERROR ***', e.response.data.extras.result_codes
   ))
-  let made = offerCreated(tx.result_xdr, 'manageSellOfferResult')
+  let made = offerMade(tx.result_xdr, 'manageSellOfferResult')
   return Promise.resolve([tx.id, made.offer.id]);
 }
 
@@ -408,6 +408,12 @@ async function mergeAccount ( // {{{1
   }
 }
 
+function pocAgentEffects (e, resolve) { // {{{1
+  let [server, log, agent, poc, ClawableHexa, HEXA] = this.env
+  console.dir({ e }, { depth: null })
+  resolve(e)
+}
+
 async function pocAgentSellHEXA ( // {{{1
   server, log, HEX_Issuer_SK, HEX_Issuer_PK, HEX_Agent_SK, HEX_Agent_PK,
   limit, streams, opt
@@ -416,7 +422,7 @@ async function pocAgentSellHEXA ( // {{{1
   let close = server.orderbook(opt.HEXA, opt.XLM).stream({
     onerror:   e => console.error(e),
     onmessage: b => {
-      let ob = new Orderbook(b)
+      //let ob = new Orderbook(b)
       //log(ob.line())
       console.dir(b, { depth: null })
     }
@@ -436,6 +442,18 @@ async function pocAgentSellHEXA ( // {{{1
     }, 
     opt.HEXA, opt.XLM, limit, 1
   )];
+}
+
+function pocAnn () { // {{{1
+  let [server, log, agent, poc, ClawableHexa, HEXA] = this.env
+}
+
+function pocBob () { // {{{1
+  let [server, log, agent, poc, ClawableHexa, HEXA] = this.env
+}
+
+function pocCyn () { // {{{1
+  let [server, log, agent, poc, ClawableHexa, HEXA] = this.env
 }
 
 async function pocFundAgent ( // {{{1
@@ -517,6 +535,24 @@ async function setupPoC ( // {{{1
       }
     },
     run: async _ => {
+      //console.dir({ poc }, { depth: null })
+      let env = { env: [
+         server, log, opt.agent, poc, opt.ClawableHexa, opt.HEXA
+      ] }
+      let demo = new Promise((resolve, reject) => {
+        streams.push({ tag: "agent's effects",
+          close: server.effects().forAccount(HEX_Agent_PK).stream({
+            onerror:   e => reject(e),
+            onmessage: e => pocAgentEffects.call(env, e, resolve)
+          })
+        })
+      })
+      for (let act of [pocAnn, pocBob, pocCyn]) {
+        act.call(env)
+      }
+      await demo.catch(e => console.error(
+        '*** ERROR ***', e.response.data.extras.result_codes
+      ))
       return poc;
     },
   }
@@ -534,7 +570,7 @@ async function setupPoC ( // {{{1
       txId = await createAccount(
         creator, poc[tag].keys[1], '2000', server, {}, kp
       )
-      log('- setupPoC created', tag, poc[tag].keys[1], 'txId', txId)
+      log('- setupPoC created', tag, 'txId', txId)
     }
     poc[tag].account = await server.loadAccount(poc[tag].keys[1])
     log('- setupPoC loaded', tag, poc[tag].account?.id)
