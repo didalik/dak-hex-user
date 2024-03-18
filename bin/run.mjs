@@ -14,7 +14,8 @@ import { Asset, AuthClawbackEnabledFlag, AuthRevocableFlag,
   BASE_FEE, Keypair, Horizon, Networks, Operation, TransactionBuilder, 
 } from '@stellar/stellar-sdk'
 import { runTest, } from '../test/run.mjs'
-import { pGET, pGET_parms, } from '../dak/util/public/lib/util.mjs'
+import { pGET, pGET_parms, timestamp, } from '../dak/util/public/lib/util.mjs'
+import { Orderbook, offerCreated, offerDeleted, } from '../lib/hex.mjs'
 
 global.fetch = fetch // {{{1
 global.window = {
@@ -61,6 +62,12 @@ const _htmlTail = _ => `
 `
 
 const _sleep = ms => new Promise(r => setTimeout(r, ms)) // {{{1
+
+const _ts = (...a) => { // {{{1
+  let tv = timestamp()
+  let prefix = tv > 1674128077678 ? '-' : `+ ${tv} ms:`
+  console.log(prefix, ...a)
+}
 
 const execute = { // {{{1
   fund_agent: async log => { // {{{2
@@ -135,10 +142,18 @@ const execute = { // {{{1
 
   poc: async (log, ...args) => { // {{{2
     log(_htmlHead('Stellar HEX PoC', `<h3>The PoC demo started on ${Date()}</h3>`))
-    log('- poc: args', args)
+    let baseline = await setup(...await loadCreator(log))
+    baseline.push('10000', [], {}) //limit, streams, opt
+    log('- agent funded ClawableHexa, HEXA', ...await pocFundAgent(...baseline))
+    log('- agent is selling HEXA', ...await pocAgentSellHEXA(...baseline))
+    await setupPoC(...baseline).
+      then(poc => poc.run()).then(ns => ns.cleanup()).
+      catch(e => { throw e; })
   },
 
   run: async (script, ...args) => await execute[script](console.log, ...args), // {{{2
+
+  //run: async (script, ...args) => await execute[script](_ts, ...args), // {{{2
 
   setup_it: async _ => { // {{{2
     const rl = readline.createInterface({
@@ -227,6 +242,7 @@ async function createAccount ( // {{{1
     tx.sign(...keypairs)
     tx =  await s.submitTransaction(tx).catch(e => {
       console.error(' - *** ERROR ***', e.response.data); throw Error()
+      // TODO retry on 'tx_too_late'
     })
     return tx?.id;
   } catch(e) {
@@ -254,7 +270,9 @@ async function fundAgent( // {{{1
     setTimeout(30).build()
 
   tx.sign(issuerKeypair)
-  tx =  await s.submitTransaction(tx).catch(e => console.error(' - *** ERROR ***', e.response.data));
+  tx =  await s.submitTransaction(tx).catch(e => console.error(
+    '*** ERROR ***', e.response.data.extras.result_codes
+  ))
   return tx?.id;
 }
 
@@ -290,16 +308,9 @@ function configValidate (s, log) { // {{{1
   return config;
 }
 
-function loadKeys (dirname, basename = null) { // {{{1
-  let SK_PK = fs.readFileSync(
-    basename ? `${dirname}/${basename}.keys` : dirname
-  )
-  let pair = SK_PK.toString().split(' ')
-  return [pair[0].trim(), pair[1].trim()];
-}
-
-async function loadNewCreator (log) { // {{{1
-  let HEX_CREATOR_SK, HEX_CREATOR_PK
+async function loadCreator (log, server = null, doLoad = false) { // {{{1
+  server ??= new Horizon.Server("https://horizon-testnet.stellar.org")
+  let HEX_CREATOR_SK, HEX_CREATOR_PK, creator = null
   if (fs.existsSync('build/testnet.keys')) {
     let [SK, PK] = loadKeys('build', 'testnet')
     HEX_CREATOR_SK = SK; HEX_CREATOR_PK = PK
@@ -313,14 +324,70 @@ async function loadNewCreator (log) { // {{{1
       );
       const responseJSON = await response.json();
       log('- the HEX_CREATOR account created: txId', responseJSON.id)
+      doLoad = true
     } catch (e) {
       console.error("ERROR!", e);
     }
   }
-  const server = new Horizon.Server("https://horizon-testnet.stellar.org")
-  let creator = await server.loadAccount(HEX_CREATOR_PK)
-  log('- loaded creator', creator?.id)
+  if (doLoad) {
+    creator = await server.loadAccount(HEX_CREATOR_PK)
+    log('- loaded creator', creator?.id)
+  }
   return [Keypair.fromSecret(HEX_CREATOR_SK), creator, server, log];
+}
+
+function loadKeys (dirname, basename = null) { // {{{1
+  let SK_PK = fs.readFileSync(
+    basename ? `${dirname}/${basename}.keys` : dirname
+  )
+  let pair = SK_PK.toString().split(' ')
+  return [pair[0].trim(), pair[1].trim()];
+}
+
+async function makeBuyOffer( // {{{1
+  buying, selling, buyAmount, price, offerId = 0
+) {
+  let [nw, server, log, kp, account] = this.env
+  log('- makeBuyOffer', account.id, 'buying', buying.code,
+    'selling', selling.code, 'buyAmount', buyAmount, 'price', price,
+    'offerId', offerId
+  )
+  let tx = new TransactionBuilder(account, // increasing account's
+    {                                      //  sequence number
+      fee: BASE_FEE, networkPassphrase: nw,
+    }
+  ).addOperation(Operation.manageBuyOffer({
+    selling, buying, buyAmount, price, offerId
+  })).setTimeout(30).build()
+
+  tx.sign(kp)
+  tx =  await server.submitTransaction(tx).catch(e => console.error(
+    '*** ERROR ***', e.response.data.extras.result_codes
+  ))
+  let made = buyAmount == '0' || +offerId > 0 ? offerDeleted(tx.result_xdr)
+  : offerCreated(tx.result_xdr)
+  log('- makeBuyOffer', account.id, tx.id, made.offer.id)
+  return Promise.resolve([tx.id, made.offer.id]);
+}
+
+async function makeSellOffer( // {{{1
+  selling, buying, amount, price, offerId = 0
+) {
+  let [nw, server, log, kp, account] = this.env
+  let tx = new TransactionBuilder(account, // increasing account's
+    {                                      //  sequence number
+      fee: BASE_FEE, networkPassphrase: nw,
+    }
+  ).addOperation(Operation.manageSellOffer({
+    selling, buying, amount, price, offerId
+  })).setTimeout(30).build()
+
+  tx.sign(kp)
+  tx =  await server.submitTransaction(tx).catch(e => console.error(
+    '*** ERROR ***', e.response.data.extras.result_codes
+  ))
+  let made = offerCreated(tx.result_xdr, 'manageSellOfferResult')
+  return Promise.resolve([tx.id, made.offer.id]);
 }
 
 async function mergeAccount ( // {{{1
@@ -341,6 +408,65 @@ async function mergeAccount ( // {{{1
   }
 }
 
+async function pocAgentSellHEXA ( // {{{1
+  server, log, HEX_Issuer_SK, HEX_Issuer_PK, HEX_Agent_SK, HEX_Agent_PK,
+  limit, streams, opt
+) {
+  opt.XLM = new Asset('XLM', null)
+  let close = server.orderbook(opt.HEXA, opt.XLM).stream({
+    onerror:   e => console.error(e),
+    onmessage: b => {
+      let ob = new Orderbook(b)
+      //log(ob.line())
+      console.dir(b, { depth: null })
+    }
+  })
+  streams.push({ close, tag: 'orderbook' })
+
+  if (opt.agent.balances.find(
+    b => b.asset_type == 'native' && +b.buying_liabilities > 0
+  )) {
+    return [limit, null];
+  }
+  return [limit, ...await makeSellOffer.call(
+    {
+      env: [
+        Networks.TESTNET, server, log, Keypair.fromSecret(HEX_Agent_SK), opt.agent
+      ]
+    }, 
+    opt.HEXA, opt.XLM, limit, 1
+  )];
+}
+
+async function pocFundAgent ( // {{{1
+  server, log, HEX_Issuer_SK, HEX_Issuer_PK, HEX_Agent_SK, HEX_Agent_PK, 
+  limit, streams, opt
+) {
+  const ClawableHexa = new Asset('ClawableHexa', HEX_Issuer_PK)
+  opt.ClawableHexa = ClawableHexa
+  const HEXA = new Asset('HEXA', HEX_Issuer_PK)
+  opt.HEXA = HEXA
+
+  // Have HEX Agent trust ClawableHexa and HEXA assets
+  let agent = await server.loadAccount(HEX_Agent_PK)
+  opt.agent = agent
+  log('- loaded agent', agent?.id)
+  if (agent.balances.length == 3) {
+    return [limit, 'txId', null];
+  }
+  let txId = await trustAssets( agent, Keypair.fromSecret(HEX_Agent_SK), limit, 
+    Networks.TESTNET, server, ClawableHexa, HEXA
+  )
+  log('- agent trusts: ClawableHexa, HEXA; limit', limit, 'txId', txId)
+
+  // Fund Agent with ClawableHexa and HEXA assets, update Agent's HEXA trustline
+  let i2use = await server.loadAccount(HEX_Issuer_PK)
+  log('- loaded issuer', i2use?.id)
+  return [limit, 'txId', await fundAgent(i2use, Keypair.fromSecret(HEX_Issuer_SK),
+    HEX_Agent_PK, limit, Networks.TESTNET, server, ClawableHexa, HEXA
+  )];
+}
+
 async function setup (kp, creator, server, log) { // {{{1
 
   // Add ClawableHexa and HEXA assets Issuer {{{2
@@ -354,6 +480,7 @@ async function setup (kp, creator, server, log) { // {{{1
     HEX_Issuer_SK = SK; HEX_Issuer_PK = PK
     txId = await createAccount(creator, HEX_Issuer_PK, '9', server,
       {
+        homeDomain: 'hex.didalik.workers.dev',
         setFlags: AuthClawbackEnabledFlag | AuthRevocableFlag,
         source: HEX_Issuer_PK,
       },
@@ -364,7 +491,8 @@ async function setup (kp, creator, server, log) { // {{{1
 
   // Add HEX Agent {{{2
   if (fs.existsSync('build/testnet/HEX_Agent.keys')) {
-    return [server, log];
+    let [HEX_Agent_SK, HEX_Agent_PK] = loadKeys('build/testnet', 'HEX_Agent')
+    return [server, log, HEX_Issuer_SK, HEX_Issuer_PK, HEX_Agent_SK, HEX_Agent_PK];
   }
   let [HEX_Agent_SK, HEX_Agent_PK] = storeKeys('build/testnet', 'HEX_Agent')
   txId = await createAccount(creator, HEX_Agent_PK, '9', server, {}, kp)
@@ -372,7 +500,95 @@ async function setup (kp, creator, server, log) { // {{{1
 
   // }}}2
   log('- setup complete.')
-  return [server, log];
+  return [server, log, HEX_Issuer_SK, HEX_Issuer_PK, HEX_Agent_SK, HEX_Agent_PK];
+}
+
+async function setupPoC ( // {{{1
+  server, log, HEX_Issuer_SK, HEX_Issuer_PK, HEX_Agent_SK, HEX_Agent_PK,
+  limit, streams, opt
+) {
+  let poc = { // {{{2
+    Ann: {}, Bob: {}, Cyn: {},
+    cleanup: async _ => {
+      log('- poc.cleanup closing', streams.length, 'streams...')
+      for (let stream of streams) {
+        stream.close()
+        log('- poc.cleanup closed stream', stream.tag)
+      }
+    },
+    run: async _ => {
+      return poc;
+    },
+  }
+
+  // Create and load Stellar accounts for Ann, Bob, and Cyn: {{{2
+  // - fund each account with XLM 2000;
+  // - have each account trust ClawableHexa and HEXA;
+  // - update each account's HEXA trustline.
+  let [kp, creator, s2, l2] = await loadCreator(log, server, true), txId
+  for (let tag of ['Ann', 'Bob', 'Cyn']) {
+    if (fs.existsSync(`build/testnet/${tag}.keys`)) {
+      poc[tag].keys = loadKeys('build/testnet', tag)
+    } else {
+      poc[tag].keys = storeKeys('build/testnet', tag)
+      txId = await createAccount(
+        creator, poc[tag].keys[1], '2000', server, {}, kp
+      )
+      log('- setupPoC created', tag, poc[tag].keys[1], 'txId', txId)
+    }
+    poc[tag].account = await server.loadAccount(poc[tag].keys[1])
+    log('- setupPoC loaded', tag, poc[tag].account?.id)
+    if (txId) { // trust assets, update trustline
+      txId = await trustAssets(
+        poc[tag].account, Keypair.fromSecret(poc[tag].keys[0]), limit, 
+        Networks.TESTNET, server, opt.ClawableHexa, opt.HEXA
+      )
+      log('-', tag, 'trusts: ClawableHexa, HEXA; limit', limit, 'txId', txId)
+      let i2use = await server.loadAccount(HEX_Issuer_PK)
+      txId = await updateTrustline(
+        i2use, Keypair.fromSecret(HEX_Issuer_SK), poc[tag].keys[1],
+        Networks.TESTNET, server, opt.HEXA
+      )
+      log('-', tag, ': HEXA trustline updated', 'txId', txId)
+    }
+  }
+
+  // Have Ann and Cyn buy HEXA 1200 {{{2
+  let trades = []
+  for (let tag of ['Ann', 'Bob', 'Cyn']) {
+    let accountId = poc[tag].account.id
+    let trade = new Promise((resolve, reject) => {
+      streams.push({ tag: tag + "'s offers",
+        close: server.offers().forAccount(accountId).stream({
+          onerror:   e => reject(e),
+          onmessage: o => console.dir(o, { depth: null })
+        })
+      }, { tag: tag + "'s trades",
+        close: server.effects().forAccount(accountId).stream({
+          onerror:   e => reject(e),
+          onmessage: e => e.type == 'trade' && console.dir(e, { depth: null })
+        })
+      })
+      let env = { env: [
+        Networks.TESTNET, server, log, 
+        Keypair.fromSecret(poc[tag].keys[0]), poc[tag].account
+      ] }
+      makeBuyOffer.call(
+        env,
+        opt.HEXA, opt.XLM, '1200', 0.9
+      ).then(r => setTimeout(_ => makeBuyOffer.call(
+        env,
+        opt.HEXA, opt.XLM, tag == 'Bob' ? '0' : '1200', 1, r[1]
+      ).then(r => resolve(r)), 1000 * (1 + Math.random())))
+    })
+    trades.push(trade)
+  }
+  await Promise.all(trades).then(tIds => log('- setupPoC tradeIds', tIds)).
+    catch(e => console.error(
+      '*** ERROR ***', e.response.data.extras.result_codes
+    )); // }}}2
+
+  return poc;
 }
 
 async function setupProdFix (exe, server, log) { // {{{1
@@ -472,7 +688,31 @@ async function trustAssets( // {{{1
     setTimeout(30).build()
 
   tx.sign(recipientKeypair)
-  tx =  await s.submitTransaction(tx).catch(e => console.error(' - *** ERROR ***', e.response.data));
+  tx =  await s.submitTransaction(tx).catch(e => console.error(
+    '*** ERROR ***', e.response.data.extras.result_codes
+  ))
+  return tx?.id;
+}
+
+async function updateTrustline( // {{{1
+  issuer, issuerKeypair, trustor, nw, s, asset
+) {
+  let tx = new TransactionBuilder(issuer, // increasing the issuer's
+    {                                     //  sequence number
+      fee: BASE_FEE,
+      networkPassphrase: nw,
+    }
+  ).addOperation(Operation.setTrustLineFlags({ asset, trustor,
+      flags: {
+        clawbackEnabled: false
+      },
+    })).
+    setTimeout(30).build()
+
+  tx.sign(issuerKeypair)
+  tx =  await s.submitTransaction(tx).catch(e => console.error(
+    '*** ERROR ***', e.response.data.extras.result_codes
+  ))
   return tx?.id;
 }
 
@@ -489,7 +729,7 @@ switch (process.argv[2]) { // {{{1
     //console.log('- setup process.argv', process.argv, 'process.env', process.env)
     switch (process.argv[4]) {
       case 'prod/fix': { // {{{3
-        let baseline = await setup(...await loadNewCreator(console.log))
+        let baseline = await setup(...await loadCreator(console.log))
         await setupProdFix(process.argv[3], ...baseline)
         break
       }

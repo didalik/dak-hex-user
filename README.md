@@ -82,3 +82,17 @@ To use SSH on GitHub, authorize your public key there:
 - Settings -> SSH and GPG keys -> New SSH key.
 
 You now can communicate with GitHub via SSH.
+
+## The Proof of Concept Demo
+
+Create an Ubuntu 22 VM (**u22**) on your [Mac](https://docs.getutm.app/guides/ubuntu/) or [Windows](https://learn.microsoft.com/en-us/windows/wsl/install) desktop. [Install ntp](https://tecadmin.net/setup-time-synchronisation-ntp-server-on-ubuntu-linuxmint/). Run
+
+```
+git clone -b main --recurse-submodules git@github.com:didalik/dak-hex-user.git dak/hex/user
+cd dak/hex/user
+npm i
+sudo systemctl restart ntp
+npm run poc
+```
+
+to start the HTTP server on **u22**, then point your desktop browser to [http://u22:8000](/static/index.html) and run the demo.
