@@ -408,10 +408,16 @@ async function mergeAccount ( // {{{1
   }
 }
 
-function pocAgentEffects (e, resolve) { // {{{1
+function pocIssuerEffects (e, resolve) { // {{{1
   let [server, log, agent, poc, ClawableHexa, HEXA] = this.env
-  console.dir({ e }, { depth: null })
-  resolve(e)
+  poc.issuerEffectsCount = poc.issuerEffectsCount ? ++poc.issuerEffectsCount : 1
+  for (let tag of ['Ann', 'Bob', 'Cyn']) {
+    poc[tag].onIssuerEffect(e, resolve)
+  }
+  //console.dir({ issuerEffectsCount: poc.issuerEffectsCount, e }, { depth: null })
+  poc.issuerEffectsCount == 1 && setTimeout(
+    resolve, 6000 //, poc
+  )
 }
 
 async function pocAgentSellHEXA ( // {{{1
@@ -419,7 +425,7 @@ async function pocAgentSellHEXA ( // {{{1
   limit, streams, opt
 ) {
   opt.XLM = new Asset('XLM', null)
-  let close = server.orderbook(opt.HEXA, opt.XLM).stream({
+  /*let close = server.orderbook(opt.HEXA, opt.XLM).cursor('now').stream({
     onerror:   e => console.error(e),
     onmessage: b => {
       //let ob = new Orderbook(b)
@@ -428,7 +434,7 @@ async function pocAgentSellHEXA ( // {{{1
     }
   })
   streams.push({ close, tag: 'orderbook' })
-
+  */
   if (opt.agent.balances.find(
     b => b.asset_type == 'native' && +b.buying_liabilities > 0
   )) {
@@ -446,14 +452,68 @@ async function pocAgentSellHEXA ( // {{{1
 
 function pocAnn () { // {{{1
   let [server, log, agent, poc, ClawableHexa, HEXA] = this.env
+  let effectCallbacks = []
+  poc.Ann.onIssuerEffect = (e, r) => { // {{{2
+    if (!poc.Ann.isActing) {
+      return;
+    }
+    console.dir({ e }, { depth: null })
+  }
+  poc.Ann.onEffect = e => { // {{{2
+    e.type == 'trade' && console.dir({ e }, { depth: null })
+    if (!poc.Ann.isActing) {
+      return;
+    }
+    for (let cb of effectCallbacks) {
+      let [f, d] = cb
+      f.call(d, e)
+    }
+  } // }}}2
+  //poc.Ann.isActing = true
 }
 
 function pocBob () { // {{{1
   let [server, log, agent, poc, ClawableHexa, HEXA] = this.env
+  let effectCallbacks = []
+  poc.Bob.onIssuerEffect = (e, r) => { // {{{2
+    if (!poc.Bob.isActing) {
+      return;
+    }
+    console.dir({ e }, { depth: null })
+  }
+  poc.Bob.onEffect = e => { // {{{2
+    if (!poc.Bob.isActing) {
+      return;
+    }
+    for (let cb of effectCallbacks) {
+      let [f, d] = cb
+      f.call(d, e)
+    }
+    console.dir({ e }, { depth: null })
+  } // }}}2
+  //poc.Bob.isActing = true
 }
 
 function pocCyn () { // {{{1
   let [server, log, agent, poc, ClawableHexa, HEXA] = this.env
+  let effectCallbacks = []
+  poc.Cyn.onIssuerEffect = (e, r) => { // {{{2
+    if (!poc.Cyn.isActing) {
+      return;
+    }
+    console.dir({ e }, { depth: null })
+  }
+  poc.Cyn.onEffect = e => { // {{{2
+    e.type == 'trade' && console.dir({ e }, { depth: null })
+    if (!poc.Cyn.isActing) {
+      return;
+    }
+    for (let cb of effectCallbacks) {
+      let [f, d] = cb
+      f.call(d, e)
+    }
+  } // }}}2
+  //poc.Cyn.isActing = true
 }
 
 async function pocFundAgent ( // {{{1
@@ -540,18 +600,20 @@ async function setupPoC ( // {{{1
          server, log, opt.agent, poc, opt.ClawableHexa, opt.HEXA
       ] }
       let demo = new Promise((resolve, reject) => {
-        streams.push({ tag: "agent's effects",
-          close: server.effects().forAccount(HEX_Agent_PK).stream({
+        streams.push({ tag: "issuer's effects",
+          close: server.effects().forAccount(HEX_Issuer_PK).//cursor('now').
+                   stream({
             onerror:   e => reject(e),
-            onmessage: e => pocAgentEffects.call(env, e, resolve)
+            onmessage: e => pocIssuerEffects.call(env, e, resolve)
           })
         })
       })
       for (let act of [pocAnn, pocBob, pocCyn]) {
         act.call(env)
       }
-      await demo.catch(e => console.error(
-        '*** ERROR ***', e.response.data.extras.result_codes
+      await demo.then(r => console.dir(r, { depth: null })).
+        catch(e => console.error(
+          '*** ERROR ***', e.response.data.extras.result_codes
       ))
       return poc;
     },
@@ -590,19 +652,19 @@ async function setupPoC ( // {{{1
   }
 
   // Have Ann and Cyn buy HEXA 1200 {{{2
-  let trades = []
+  let trades = [], traded = (tag, e) => {
+    console.dir({ tag, e }, { depth: null })
+    poc[tag].traded = true
+  }
   for (let tag of ['Ann', 'Bob', 'Cyn']) {
     let accountId = poc[tag].account.id
     let trade = new Promise((resolve, reject) => {
-      streams.push({ tag: tag + "'s offers",
-        close: server.offers().forAccount(accountId).stream({
-          onerror:   e => reject(e),
-          onmessage: o => console.dir(o, { depth: null })
-        })
-      }, { tag: tag + "'s trades",
+      streams.push(
+      { tag: tag + "'s effects",
         close: server.effects().forAccount(accountId).stream({
           onerror:   e => reject(e),
-          onmessage: e => e.type == 'trade' && console.dir(e, { depth: null })
+          onmessage: e => poc[tag].onEffect ? poc[tag].onEffect(e)
+          : e.type == 'trade' && traded(tag, e)
         })
       })
       let env = { env: [

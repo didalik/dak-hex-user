@@ -92,6 +92,8 @@ git clone -b main --recurse-submodules git@github.com:didalik/dak-hex-user.git d
 cd dak/hex/user
 npm i
 sudo systemctl restart ntp
+sleep 4
+ntpq -p
 npm run poc
 ```
 
