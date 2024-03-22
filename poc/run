@@ -22,9 +22,9 @@ touch $OUT
 tail -n 999999 -f $OUT &
 PID_OF_TAIL=$!
 
-rm -rf build #  TODO uncomment when done with DEV        # {{{1
+#rm -rf build #  TODO uncomment when done with DEV        # {{{1
              ## Comment out to use the current poc build ##
-../bin/run.mjs $@ >> $OUT 2>>$ERR # {{{1
+../bin/poc.mjs $@ >> $OUT 2>>$ERR # {{{1
 EXIT_CODE=$?
 
 cat >> $OUT << HTML_TAIL

@@ -416,7 +416,7 @@ function pocIssuerEffects (e, resolve) { // {{{1
   }
   //console.dir({ issuerEffectsCount: poc.issuerEffectsCount, e }, { depth: null })
   poc.issuerEffectsCount == 1 && setTimeout(
-    resolve, 6000 //, poc
+    a => poc.started || resolve(a), 6000, { poc, timeout: '6s' }
   )
 }
 
@@ -451,43 +451,57 @@ async function pocAgentSellHEXA ( // {{{1
 }
 
 function pocAnn () { // {{{1
+  //poc.started = true
   let [server, log, agent, poc, ClawableHexa, HEXA] = this.env
-  let effectCallbacks = []
+  let isActing = _ => { return poc.Ann.isActing = true; }
+  let issuerEffectCallbacks = []
+  let d = { issuerEffectCallbacks, env: this.env }
+  let desc = 'Fresh red snapper for 4 persons GGS. HEXA 1000'
+  poc.Ann.traded && isActing() && makeRequest.call(d, desc)
   poc.Ann.onIssuerEffect = (e, r) => { // {{{2
     if (!poc.Ann.isActing) {
       return;
     }
     console.dir({ e }, { depth: null })
-  }
-  poc.Ann.onEffect = e => { // {{{2
-    e.type == 'trade' && console.dir({ e }, { depth: null })
-    if (!poc.Ann.isActing) {
-      return;
-    }
-    for (let cb of effectCallbacks) {
+    for (let cb of issuerEffectCallbacks) {
       let [f, d] = cb
       f.call(d, e)
     }
+  }
+  poc.Ann.onEffect = e => { // {{{2
+    switch (e.type) {
+      case 'trade': {
+        if (poc.Ann.traded) {
+          throw Error('UNEXPECTED')
+        }
+        isActing() && makeRequest.call(d, desc)
+        break
+      }
+      default:
+        console.dir({ e }, { depth: null })
+    }
+    if (!poc.Ann.isActing) {
+      return;
+    }
   } // }}}2
-  //poc.Ann.isActing = true
 }
 
 function pocBob () { // {{{1
   let [server, log, agent, poc, ClawableHexa, HEXA] = this.env
-  let effectCallbacks = []
+  let issuerEffectCallbacks = []
   poc.Bob.onIssuerEffect = (e, r) => { // {{{2
     if (!poc.Bob.isActing) {
       return;
     }
     console.dir({ e }, { depth: null })
+    for (let cb of issuerEffectCallbacks) {
+      let [f, d] = cb
+      f.call(d, e)
+    }
   }
   poc.Bob.onEffect = e => { // {{{2
     if (!poc.Bob.isActing) {
       return;
-    }
-    for (let cb of effectCallbacks) {
-      let [f, d] = cb
-      f.call(d, e)
     }
     console.dir({ e }, { depth: null })
   } // }}}2
@@ -496,21 +510,21 @@ function pocBob () { // {{{1
 
 function pocCyn () { // {{{1
   let [server, log, agent, poc, ClawableHexa, HEXA] = this.env
-  let effectCallbacks = []
+  let issuerEffectCallbacks = []
   poc.Cyn.onIssuerEffect = (e, r) => { // {{{2
     if (!poc.Cyn.isActing) {
       return;
     }
     console.dir({ e }, { depth: null })
+    for (let cb of issuerEffectCallbacks) {
+      let [f, d] = cb
+      f.call(d, e)
+    }
   }
   poc.Cyn.onEffect = e => { // {{{2
     e.type == 'trade' && console.dir({ e }, { depth: null })
     if (!poc.Cyn.isActing) {
       return;
-    }
-    for (let cb of effectCallbacks) {
-      let [f, d] = cb
-      f.call(d, e)
     }
   } // }}}2
   //poc.Cyn.isActing = true
