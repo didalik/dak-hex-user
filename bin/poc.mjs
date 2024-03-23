@@ -9,6 +9,7 @@
 import { // {{{1
   addHEX_CREATOR, addHEX_Agent, addHEX_Issuer, 
 } from '../lib/sdk.mjs'
+import { pocAgentSellHEXA, pocSetup, } from '../lib/poc.mjs'
 import { timestamp, } from '../dak/util/public/lib/util.mjs'
 
 const htmlHead = (title, intro) => // {{{1
@@ -41,9 +42,15 @@ const ts = (...a) => { // {{{1
 const execute =  { // {{{1
   poc: async (log, ...args) => { // {{{2
     log(args)
-    let secd = await addHEX_CREATOR(log)
+    let secd = await addHEX_CREATOR(log), amountHEXA = '10000'
     await addHEX_Issuer.call(secd, 'hex.didalik.workers.dev')
-    await addHEX_Agent.call(secd, '10000')
+    await addHEX_Agent.call(secd, amountHEXA)
+    await pocAgentSellHEXA.call(secd)
+    await pocSetup.call(secd).
+      then(poc => poc.run.call(secd)).then(ns => ns.cleanup.call(secd)).
+      catch(e => { throw e; })
+    /*
+      */
     secd.c.account != null && console.dir(secd, { depth: null })
     log('ready')
   },
