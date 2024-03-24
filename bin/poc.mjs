@@ -49,8 +49,6 @@ const execute =  { // {{{1
     await pocSetup.call(secd).
       then(poc => poc.run.call(secd)).then(ns => ns.cleanup.call(secd)).
       catch(e => { throw e; })
-    /*
-      */
     secd.c.account != null && console.dir(secd, { depth: null })
     log('ready')
   },

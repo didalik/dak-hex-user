@@ -14,7 +14,7 @@
     }
   </script>
   <body>
-    <samp><h3>The PoC demo started on Sat Mar 23 2024 20:55:01 GMT+0000 (Coordinated Universal Time)</h3></samp>
+    <samp><h3>The PoC demo started on Sun Mar 24 2024 21:40:09 GMT+0000 (Coordinated Universal Time)</h3></samp>
     <pre>
 
 - process.argv [
@@ -24,357 +24,60 @@
   'poc',
   'demo'
 ]
-+ 256 ms: addHEX_Agent loaded agent GAYZWAGT3MGZDIV4FIZYKUNXQ5ULKTMIX2I5SIDRZ3UYONIJLDBCZI6R
-+ 155 ms: addHEX_Agent loaded issuer GAEFDTCJHXC6R22RDNTQ4ZOOGSMWCGVUHAGUVT57TUK7AVVIPMG7MR5Z
-+ 165 ms: pocSetup loaded Ann GCZVMGXC4KLDNVGCZJYZEX5G4RWLTQG5Y2DN7S4YNA7KOFYACZRTVRM3
-+ 221 ms: pocSetup loaded Bob GDWDESLFAG2Z6QBYAG5CSRU47G5MZRJHDT75FQTWCR2H6XLBRDQLRI3L
-+ 172 ms: pocSetup loaded Cyn GDEZ5WZD7I2JMNQRN2MD2QOET2KZ744PYUL73FNHOX634XTXRSYNDSPW
++ 249 ms: addHEX_Agent loaded agent GCUYRLQWYKDKE64WCWCROW4BPVNYBN3NGBYYY3P6OWNX7YKBR7BAAXCS
++ 165 ms: addHEX_Agent loaded issuer GDIOHMPWIKBSAD5NIRENIQDAYOGS6UPYJ2QQFUZQLJKTBNP22Y6I3AM7
++ 217 ms: pocSetup loaded Ann GCRDAJOQMXDZR5OJH6LYAZ3ISLCEBDHHC4DAVUNM243CG5GMSU5XPFUD
++ 161 ms: pocSetup loaded Bob GA3HGZOKAK6ONQJOI5G4CII5S2P3RNTJAZYO5AVOMONBBDA2DV3YTY74
++ 154 ms: pocSetup loaded Cyn GC5YZZUBVFONUTSTLBGIKCM22NND6LAUNQPKPDB2XYEESN67M7TE727R
 {
-  poc: {
-    Ann: {
-      keys: [
-        'SCZYRQ7TA7Q4GHLDURC4Z4APFP5BU2BI5NBOZOX67BG4T2HQ7KUTTVKG',
-        'GCZVMGXC4KLDNVGCZJYZEX5G4RWLTQG5Y2DN7S4YNA7KOFYACZRTVRM3'
-      ],
-      account: AccountResponse {
-        _baseAccount: Account {
-          _accountId: 'GCZVMGXC4KLDNVGCZJYZEX5G4RWLTQG5Y2DN7S4YNA7KOFYACZRTVRM3',
-          sequence: BigNumber { s: 1, e: 15, c: [ 32, 57792823558145 ] }
-        },
-        _links: {
-          self: {
-            href: 'https://horizon-testnet.stellar.org/accounts/GCZVMGXC4KLDNVGCZJYZEX5G4RWLTQG5Y2DN7S4YNA7KOFYACZRTVRM3'
-          },
-          transactions: {
-            href: 'https://horizon-testnet.stellar.org/accounts/GCZVMGXC4KLDNVGCZJYZEX5G4RWLTQG5Y2DN7S4YNA7KOFYACZRTVRM3/transactions{?cursor,limit,order}',
-            templated: true
-          },
-          operations: {
-            href: 'https://horizon-testnet.stellar.org/accounts/GCZVMGXC4KLDNVGCZJYZEX5G4RWLTQG5Y2DN7S4YNA7KOFYACZRTVRM3/operations{?cursor,limit,order}',
-            templated: true
-          },
-          payments: {
-            href: 'https://horizon-testnet.stellar.org/accounts/GCZVMGXC4KLDNVGCZJYZEX5G4RWLTQG5Y2DN7S4YNA7KOFYACZRTVRM3/payments{?cursor,limit,order}',
-            templated: true
-          },
-          effects: {
-            href: 'https://horizon-testnet.stellar.org/accounts/GCZVMGXC4KLDNVGCZJYZEX5G4RWLTQG5Y2DN7S4YNA7KOFYACZRTVRM3/effects{?cursor,limit,order}',
-            templated: true
-          },
-          offers: {
-            href: 'https://horizon-testnet.stellar.org/accounts/GCZVMGXC4KLDNVGCZJYZEX5G4RWLTQG5Y2DN7S4YNA7KOFYACZRTVRM3/offers{?cursor,limit,order}',
-            templated: true
-          },
-          trades: {
-            href: 'https://horizon-testnet.stellar.org/accounts/GCZVMGXC4KLDNVGCZJYZEX5G4RWLTQG5Y2DN7S4YNA7KOFYACZRTVRM3/trades{?cursor,limit,order}',
-            templated: true
-          },
-          data: {
-            href: 'https://horizon-testnet.stellar.org/accounts/GCZVMGXC4KLDNVGCZJYZEX5G4RWLTQG5Y2DN7S4YNA7KOFYACZRTVRM3/data/{key}',
-            templated: true
-          }
-        },
-        id: 'GCZVMGXC4KLDNVGCZJYZEX5G4RWLTQG5Y2DN7S4YNA7KOFYACZRTVRM3',
-        account_id: 'GCZVMGXC4KLDNVGCZJYZEX5G4RWLTQG5Y2DN7S4YNA7KOFYACZRTVRM3',
-        sequence: '3257792823558145',
-        sequence_ledger: 758515,
-        sequence_time: '1711227187',
-        subentry_count: 2,
-        last_modified_ledger: 758515,
-        last_modified_time: '2024-03-23T20:53:07Z',
-        thresholds: { low_threshold: 0, med_threshold: 0, high_threshold: 0 },
-        flags: {
-          auth_required: false,
-          auth_revocable: false,
-          auth_immutable: false,
-          auth_clawback_enabled: false
-        },
-        balances: [
-          {
-            balance: '0.0000000',
-            limit: '10000.0000000',
-            buying_liabilities: '0.0000000',
-            selling_liabilities: '0.0000000',
-            last_modified_ledger: 758515,
-            is_authorized: true,
-            is_authorized_to_maintain_liabilities: true,
-            is_clawback_enabled: true,
-            asset_type: 'credit_alphanum12',
-            asset_code: 'ClawableHexa',
-            asset_issuer: 'GAEFDTCJHXC6R22RDNTQ4ZOOGSMWCGVUHAGUVT57TUK7AVVIPMG7MR5Z'
-          },
-          {
-            balance: '0.0000000',
-            limit: '10000.0000000',
-            buying_liabilities: '0.0000000',
-            selling_liabilities: '0.0000000',
-            last_modified_ledger: 758516,
-            is_authorized: true,
-            is_authorized_to_maintain_liabilities: true,
-            asset_type: 'credit_alphanum4',
-            asset_code: 'HEXA',
-            asset_issuer: 'GAEFDTCJHXC6R22RDNTQ4ZOOGSMWCGVUHAGUVT57TUK7AVVIPMG7MR5Z'
-          },
-          {
-            balance: '1999.9999800',
-            buying_liabilities: '0.0000000',
-            selling_liabilities: '0.0000000',
-            asset_type: 'native'
-          }
-        ],
-        signers: [
-          {
-            weight: 1,
-            key: 'GCZVMGXC4KLDNVGCZJYZEX5G4RWLTQG5Y2DN7S4YNA7KOFYACZRTVRM3',
-            type: 'ed25519_public_key'
-          }
-        ],
-        data: [Function (anonymous)],
-        num_sponsoring: 0,
-        num_sponsored: 0,
-        paging_token: 'GCZVMGXC4KLDNVGCZJYZEX5G4RWLTQG5Y2DN7S4YNA7KOFYACZRTVRM3',
-        self: [Function (anonymous)],
-        transactions: [Function (anonymous)],
-        operations: [Function (anonymous)],
-        payments: [Function (anonymous)],
-        effects: [Function (anonymous)],
-        offers: [Function (anonymous)],
-        trades: [Function (anonymous)],
-        data_attr: {}
-      }
-    },
-    Bob: {
-      keys: [
-        'SAHDL7G4AX3IAIBJIYZ6HLVVVVIDFF7ZJGCHSEOU3F3TQGECFP7WLJ2U',
-        'GDWDESLFAG2Z6QBYAG5CSRU47G5MZRJHDT75FQTWCR2H6XLBRDQLRI3L'
-      ],
-      account: AccountResponse {
-        _baseAccount: Account {
-          _accountId: 'GDWDESLFAG2Z6QBYAG5CSRU47G5MZRJHDT75FQTWCR2H6XLBRDQLRI3L',
-          sequence: BigNumber { s: 1, e: 15, c: [ 32, 57805708460033 ] }
-        },
-        _links: {
-          self: {
-            href: 'https://horizon-testnet.stellar.org/accounts/GDWDESLFAG2Z6QBYAG5CSRU47G5MZRJHDT75FQTWCR2H6XLBRDQLRI3L'
-          },
-          transactions: {
-            href: 'https://horizon-testnet.stellar.org/accounts/GDWDESLFAG2Z6QBYAG5CSRU47G5MZRJHDT75FQTWCR2H6XLBRDQLRI3L/transactions{?cursor,limit,order}',
-            templated: true
-          },
-          operations: {
-            href: 'https://horizon-testnet.stellar.org/accounts/GDWDESLFAG2Z6QBYAG5CSRU47G5MZRJHDT75FQTWCR2H6XLBRDQLRI3L/operations{?cursor,limit,order}',
-            templated: true
-          },
-          payments: {
-            href: 'https://horizon-testnet.stellar.org/accounts/GDWDESLFAG2Z6QBYAG5CSRU47G5MZRJHDT75FQTWCR2H6XLBRDQLRI3L/payments{?cursor,limit,order}',
-            templated: true
-          },
-          effects: {
-            href: 'https://horizon-testnet.stellar.org/accounts/GDWDESLFAG2Z6QBYAG5CSRU47G5MZRJHDT75FQTWCR2H6XLBRDQLRI3L/effects{?cursor,limit,order}',
-            templated: true
-          },
-          offers: {
-            href: 'https://horizon-testnet.stellar.org/accounts/GDWDESLFAG2Z6QBYAG5CSRU47G5MZRJHDT75FQTWCR2H6XLBRDQLRI3L/offers{?cursor,limit,order}',
-            templated: true
-          },
-          trades: {
-            href: 'https://horizon-testnet.stellar.org/accounts/GDWDESLFAG2Z6QBYAG5CSRU47G5MZRJHDT75FQTWCR2H6XLBRDQLRI3L/trades{?cursor,limit,order}',
-            templated: true
-          },
-          data: {
-            href: 'https://horizon-testnet.stellar.org/accounts/GDWDESLFAG2Z6QBYAG5CSRU47G5MZRJHDT75FQTWCR2H6XLBRDQLRI3L/data/{key}',
-            templated: true
-          }
-        },
-        id: 'GDWDESLFAG2Z6QBYAG5CSRU47G5MZRJHDT75FQTWCR2H6XLBRDQLRI3L',
-        account_id: 'GDWDESLFAG2Z6QBYAG5CSRU47G5MZRJHDT75FQTWCR2H6XLBRDQLRI3L',
-        sequence: '3257805708460033',
-        sequence_ledger: 758518,
-        sequence_time: '1711227202',
-        subentry_count: 2,
-        last_modified_ledger: 758518,
-        last_modified_time: '2024-03-23T20:53:22Z',
-        thresholds: { low_threshold: 0, med_threshold: 0, high_threshold: 0 },
-        flags: {
-          auth_required: false,
-          auth_revocable: false,
-          auth_immutable: false,
-          auth_clawback_enabled: false
-        },
-        balances: [
-          {
-            balance: '0.0000000',
-            limit: '10000.0000000',
-            buying_liabilities: '0.0000000',
-            selling_liabilities: '0.0000000',
-            last_modified_ledger: 758518,
-            is_authorized: true,
-            is_authorized_to_maintain_liabilities: true,
-            is_clawback_enabled: true,
-            asset_type: 'credit_alphanum12',
-            asset_code: 'ClawableHexa',
-            asset_issuer: 'GAEFDTCJHXC6R22RDNTQ4ZOOGSMWCGVUHAGUVT57TUK7AVVIPMG7MR5Z'
-          },
-          {
-            balance: '0.0000000',
-            limit: '10000.0000000',
-            buying_liabilities: '0.0000000',
-            selling_liabilities: '0.0000000',
-            last_modified_ledger: 758519,
-            is_authorized: true,
-            is_authorized_to_maintain_liabilities: true,
-            asset_type: 'credit_alphanum4',
-            asset_code: 'HEXA',
-            asset_issuer: 'GAEFDTCJHXC6R22RDNTQ4ZOOGSMWCGVUHAGUVT57TUK7AVVIPMG7MR5Z'
-          },
-          {
-            balance: '1999.9999800',
-            buying_liabilities: '0.0000000',
-            selling_liabilities: '0.0000000',
-            asset_type: 'native'
-          }
-        ],
-        signers: [
-          {
-            weight: 1,
-            key: 'GDWDESLFAG2Z6QBYAG5CSRU47G5MZRJHDT75FQTWCR2H6XLBRDQLRI3L',
-            type: 'ed25519_public_key'
-          }
-        ],
-        data: [Function (anonymous)],
-        num_sponsoring: 0,
-        num_sponsored: 0,
-        paging_token: 'GDWDESLFAG2Z6QBYAG5CSRU47G5MZRJHDT75FQTWCR2H6XLBRDQLRI3L',
-        self: [Function (anonymous)],
-        transactions: [Function (anonymous)],
-        operations: [Function (anonymous)],
-        payments: [Function (anonymous)],
-        effects: [Function (anonymous)],
-        offers: [Function (anonymous)],
-        trades: [Function (anonymous)],
-        data_attr: {}
-      }
-    },
-    Cyn: {
-      keys: [
-        'SBNDC3VP6GWAVFW7C434UXIMTRFIEJ6L3P4OUXV63BN3NHRUUS2UX7VX',
-        'GDEZ5WZD7I2JMNQRN2MD2QOET2KZ744PYUL73FNHOX634XTXRSYNDSPW'
-      ],
-      account: AccountResponse {
-        _baseAccount: Account {
-          _accountId: 'GDEZ5WZD7I2JMNQRN2MD2QOET2KZ744PYUL73FNHOX634XTXRSYNDSPW',
-          sequence: BigNumber { s: 1, e: 15, c: [ 32, 57818593361921 ] }
-        },
-        _links: {
-          self: {
-            href: 'https://horizon-testnet.stellar.org/accounts/GDEZ5WZD7I2JMNQRN2MD2QOET2KZ744PYUL73FNHOX634XTXRSYNDSPW'
-          },
-          transactions: {
-            href: 'https://horizon-testnet.stellar.org/accounts/GDEZ5WZD7I2JMNQRN2MD2QOET2KZ744PYUL73FNHOX634XTXRSYNDSPW/transactions{?cursor,limit,order}',
-            templated: true
-          },
-          operations: {
-            href: 'https://horizon-testnet.stellar.org/accounts/GDEZ5WZD7I2JMNQRN2MD2QOET2KZ744PYUL73FNHOX634XTXRSYNDSPW/operations{?cursor,limit,order}',
-            templated: true
-          },
-          payments: {
-            href: 'https://horizon-testnet.stellar.org/accounts/GDEZ5WZD7I2JMNQRN2MD2QOET2KZ744PYUL73FNHOX634XTXRSYNDSPW/payments{?cursor,limit,order}',
-            templated: true
-          },
-          effects: {
-            href: 'https://horizon-testnet.stellar.org/accounts/GDEZ5WZD7I2JMNQRN2MD2QOET2KZ744PYUL73FNHOX634XTXRSYNDSPW/effects{?cursor,limit,order}',
-            templated: true
-          },
-          offers: {
-            href: 'https://horizon-testnet.stellar.org/accounts/GDEZ5WZD7I2JMNQRN2MD2QOET2KZ744PYUL73FNHOX634XTXRSYNDSPW/offers{?cursor,limit,order}',
-            templated: true
-          },
-          trades: {
-            href: 'https://horizon-testnet.stellar.org/accounts/GDEZ5WZD7I2JMNQRN2MD2QOET2KZ744PYUL73FNHOX634XTXRSYNDSPW/trades{?cursor,limit,order}',
-            templated: true
-          },
-          data: {
-            href: 'https://horizon-testnet.stellar.org/accounts/GDEZ5WZD7I2JMNQRN2MD2QOET2KZ744PYUL73FNHOX634XTXRSYNDSPW/data/{key}',
-            templated: true
-          }
-        },
-        id: 'GDEZ5WZD7I2JMNQRN2MD2QOET2KZ744PYUL73FNHOX634XTXRSYNDSPW',
-        account_id: 'GDEZ5WZD7I2JMNQRN2MD2QOET2KZ744PYUL73FNHOX634XTXRSYNDSPW',
-        sequence: '3257818593361921',
-        sequence_ledger: 758521,
-        sequence_time: '1711227218',
-        subentry_count: 2,
-        last_modified_ledger: 758521,
-        last_modified_time: '2024-03-23T20:53:38Z',
-        thresholds: { low_threshold: 0, med_threshold: 0, high_threshold: 0 },
-        flags: {
-          auth_required: false,
-          auth_revocable: false,
-          auth_immutable: false,
-          auth_clawback_enabled: false
-        },
-        balances: [
-          {
-            balance: '0.0000000',
-            limit: '10000.0000000',
-            buying_liabilities: '0.0000000',
-            selling_liabilities: '0.0000000',
-            last_modified_ledger: 758521,
-            is_authorized: true,
-            is_authorized_to_maintain_liabilities: true,
-            is_clawback_enabled: true,
-            asset_type: 'credit_alphanum12',
-            asset_code: 'ClawableHexa',
-            asset_issuer: 'GAEFDTCJHXC6R22RDNTQ4ZOOGSMWCGVUHAGUVT57TUK7AVVIPMG7MR5Z'
-          },
-          {
-            balance: '0.0000000',
-            limit: '10000.0000000',
-            buying_liabilities: '0.0000000',
-            selling_liabilities: '0.0000000',
-            last_modified_ledger: 758522,
-            is_authorized: true,
-            is_authorized_to_maintain_liabilities: true,
-            asset_type: 'credit_alphanum4',
-            asset_code: 'HEXA',
-            asset_issuer: 'GAEFDTCJHXC6R22RDNTQ4ZOOGSMWCGVUHAGUVT57TUK7AVVIPMG7MR5Z'
-          },
-          {
-            balance: '1999.9999800',
-            buying_liabilities: '0.0000000',
-            selling_liabilities: '0.0000000',
-            asset_type: 'native'
-          }
-        ],
-        signers: [
-          {
-            weight: 1,
-            key: 'GDEZ5WZD7I2JMNQRN2MD2QOET2KZ744PYUL73FNHOX634XTXRSYNDSPW',
-            type: 'ed25519_public_key'
-          }
-        ],
-        data: [Function (anonymous)],
-        num_sponsoring: 0,
-        num_sponsored: 0,
-        paging_token: 'GDEZ5WZD7I2JMNQRN2MD2QOET2KZ744PYUL73FNHOX634XTXRSYNDSPW',
-        self: [Function (anonymous)],
-        transactions: [Function (anonymous)],
-        operations: [Function (anonymous)],
-        payments: [Function (anonymous)],
-        effects: [Function (anonymous)],
-        offers: [Function (anonymous)],
-        trades: [Function (anonymous)],
-        data_attr: {}
-      }
-    },
-    cleanup: [AsyncFunction: cleanup],
-    run: [AsyncFunction: run],
-    issuerEffectsCount: 9
-  },
-  timeout: '6s'
+  tag: 'Ann',
+  r: {
+    balance: '1200.0000000',
+    limit: '10000.0000000',
+    buying_liabilities: '0.0000000',
+    selling_liabilities: '0.0000000',
+    last_modified_ledger: 774247,
+    is_authorized: true,
+    is_authorized_to_maintain_liabilities: true,
+    asset_type: 'credit_alphanum4',
+    asset_code: 'HEXA',
+    asset_issuer: 'GDIOHMPWIKBSAD5NIRENIQDAYOGS6UPYJ2QQFUZQLJKTBNP22Y6I3AM7'
+  }
 }
-+ 6250 ms: poc.cleanup closing 1 streams...
++ 15 ms: pocBob buying HEXA 1200
++ 1 ms: Bob buyingHEXA 1200
++ 0 ms: makeBuyOffer GA3HGZOKAK6ONQJOI5G4CII5S2P3RNTJAZYO5AVOMONBBDA2DV3YTY74 buying HEXA selling XLM buyAmount 1200 price 0.9 offerId 0
+{
+  tag: 'Cyn',
+  r: {
+    balance: '1200.0000000',
+    limit: '10000.0000000',
+    buying_liabilities: '0.0000000',
+    selling_liabilities: '0.0000000',
+    last_modified_ledger: 774247,
+    is_authorized: true,
+    is_authorized_to_maintain_liabilities: true,
+    asset_type: 'credit_alphanum4',
+    asset_code: 'HEXA',
+    asset_issuer: 'GDIOHMPWIKBSAD5NIRENIQDAYOGS6UPYJ2QQFUZQLJKTBNP22Y6I3AM7'
+  }
+}
++ 7647 ms: makeBuyOffer GA3HGZOKAK6ONQJOI5G4CII5S2P3RNTJAZYO5AVOMONBBDA2DV3YTY74 94d43ec0d80cf3527239a2ee66bbb3365be1c6c0b04752934c7a0d1b480f3d07 35290
++ 1672 ms: makeBuyOffer GA3HGZOKAK6ONQJOI5G4CII5S2P3RNTJAZYO5AVOMONBBDA2DV3YTY74 buying HEXA selling XLM buyAmount 0 price 1 offerId 35290
++ 3375 ms: makeBuyOffer GA3HGZOKAK6ONQJOI5G4CII5S2P3RNTJAZYO5AVOMONBBDA2DV3YTY74 06b826366e0f6142d72a753292a7fe93d2868719f192c4214c3735b1a530c44e null
+{
+  tag: 'Bob',
+  r: [
+    '06b826366e0f6142d72a753292a7fe93d2868719f192c4214c3735b1a530c44e',
+    null
+  ]
+}
+{ timeout: '26s' }
++ 13569 ms: poc.cleanup closing 4 streams...
 + 1 ms: poc.cleanup closed stream issuer's effects
-+ 0 ms: ready
++ 1 ms: poc.cleanup closed stream Ann's effects
++ 1 ms: poc.cleanup closed stream Bob's effects
++ 0 ms: poc.cleanup closed stream Cyn's effects
++ 1 ms: ready
 
-</pre><samp><h3>The PoC demo stopped on Sat Mar 23 08:55:08 PM UTC 2024</h3></samp></body></html> 
+</pre><samp><h3>The PoC demo stopped on Sun Mar 24 09:40:36 PM UTC 2024</h3></samp></body></html> 
