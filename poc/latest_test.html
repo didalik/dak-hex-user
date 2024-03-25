@@ -14,7 +14,7 @@
     }
   </script>
   <body>
-    <samp><h3>The PoC demo started on Sun Mar 24 2024 21:40:09 GMT+0000 (Coordinated Universal Time)</h3></samp>
+    <samp><h3>The PoC demo started on Mon Mar 25 2024 13:46:43 GMT+0000 (Coordinated Universal Time)</h3></samp>
     <pre>
 
 - process.argv [
@@ -24,60 +24,31 @@
   'poc',
   'demo'
 ]
-+ 249 ms: addHEX_Agent loaded agent GCUYRLQWYKDKE64WCWCROW4BPVNYBN3NGBYYY3P6OWNX7YKBR7BAAXCS
-+ 165 ms: addHEX_Agent loaded issuer GDIOHMPWIKBSAD5NIRENIQDAYOGS6UPYJ2QQFUZQLJKTBNP22Y6I3AM7
-+ 217 ms: pocSetup loaded Ann GCRDAJOQMXDZR5OJH6LYAZ3ISLCEBDHHC4DAVUNM243CG5GMSU5XPFUD
-+ 161 ms: pocSetup loaded Bob GA3HGZOKAK6ONQJOI5G4CII5S2P3RNTJAZYO5AVOMONBBDA2DV3YTY74
-+ 154 ms: pocSetup loaded Cyn GC5YZZUBVFONUTSTLBGIKCM22NND6LAUNQPKPDB2XYEESN67M7TE727R
-{
-  tag: 'Ann',
-  r: {
-    balance: '1200.0000000',
-    limit: '10000.0000000',
-    buying_liabilities: '0.0000000',
-    selling_liabilities: '0.0000000',
-    last_modified_ledger: 774247,
-    is_authorized: true,
-    is_authorized_to_maintain_liabilities: true,
-    asset_type: 'credit_alphanum4',
-    asset_code: 'HEXA',
-    asset_issuer: 'GDIOHMPWIKBSAD5NIRENIQDAYOGS6UPYJ2QQFUZQLJKTBNP22Y6I3AM7'
-  }
-}
-+ 15 ms: pocBob buying HEXA 1200
-+ 1 ms: Bob buyingHEXA 1200
++ 280 ms: addHEX_Agent loaded agent GCUYRLQWYKDKE64WCWCROW4BPVNYBN3NGBYYY3P6OWNX7YKBR7BAAXCS
++ 155 ms: addHEX_Agent loaded issuer GDIOHMPWIKBSAD5NIRENIQDAYOGS6UPYJ2QQFUZQLJKTBNP22Y6I3AM7
++ 176 ms: pocSetup loaded Ann GCRDAJOQMXDZR5OJH6LYAZ3ISLCEBDHHC4DAVUNM243CG5GMSU5XPFUD
++ 222 ms: pocSetup loaded Bob GA3HGZOKAK6ONQJOI5G4CII5S2P3RNTJAZYO5AVOMONBBDA2DV3YTY74
++ 175 ms: pocSetup loaded Cyn GC5YZZUBVFONUTSTLBGIKCM22NND6LAUNQPKPDB2XYEESN67M7TE727R
+{ tag: 'Ann', r: { balance: '1200.0000000' } }
++ 17 ms: Bob buyingHEXA 1200
 + 0 ms: makeBuyOffer GA3HGZOKAK6ONQJOI5G4CII5S2P3RNTJAZYO5AVOMONBBDA2DV3YTY74 buying HEXA selling XLM buyAmount 1200 price 0.9 offerId 0
-{
-  tag: 'Cyn',
-  r: {
-    balance: '1200.0000000',
-    limit: '10000.0000000',
-    buying_liabilities: '0.0000000',
-    selling_liabilities: '0.0000000',
-    last_modified_ledger: 774247,
-    is_authorized: true,
-    is_authorized_to_maintain_liabilities: true,
-    asset_type: 'credit_alphanum4',
-    asset_code: 'HEXA',
-    asset_issuer: 'GDIOHMPWIKBSAD5NIRENIQDAYOGS6UPYJ2QQFUZQLJKTBNP22Y6I3AM7'
-  }
-}
-+ 7647 ms: makeBuyOffer GA3HGZOKAK6ONQJOI5G4CII5S2P3RNTJAZYO5AVOMONBBDA2DV3YTY74 94d43ec0d80cf3527239a2ee66bbb3365be1c6c0b04752934c7a0d1b480f3d07 35290
-+ 1672 ms: makeBuyOffer GA3HGZOKAK6ONQJOI5G4CII5S2P3RNTJAZYO5AVOMONBBDA2DV3YTY74 buying HEXA selling XLM buyAmount 0 price 1 offerId 35290
-+ 3375 ms: makeBuyOffer GA3HGZOKAK6ONQJOI5G4CII5S2P3RNTJAZYO5AVOMONBBDA2DV3YTY74 06b826366e0f6142d72a753292a7fe93d2868719f192c4214c3735b1a530c44e null
+{ tag: 'Cyn', r: { balance: '1200.0000000' } }
++ 1599 ms: makeBuyOffer GA3HGZOKAK6ONQJOI5G4CII5S2P3RNTJAZYO5AVOMONBBDA2DV3YTY74 568e1ffffed5d7ccaa93282e1dbaf416bd9195fbdf1bf59d7a4c911649c3ff80 35732
++ 1355 ms: makeBuyOffer GA3HGZOKAK6ONQJOI5G4CII5S2P3RNTJAZYO5AVOMONBBDA2DV3YTY74 buying HEXA selling XLM buyAmount 0 price 1 offerId 35732
++ 3748 ms: makeBuyOffer GA3HGZOKAK6ONQJOI5G4CII5S2P3RNTJAZYO5AVOMONBBDA2DV3YTY74 96a5e7123d3135726a8c89b61332914b18dee0020657f1d31f43898375558147 null
 {
   tag: 'Bob',
   r: [
-    '06b826366e0f6142d72a753292a7fe93d2868719f192c4214c3735b1a530c44e',
+    '96a5e7123d3135726a8c89b61332914b18dee0020657f1d31f43898375558147',
     null
   ]
 }
-{ timeout: '26s' }
-+ 13569 ms: poc.cleanup closing 4 streams...
+[ { tag: 'Ann' }, { tag: 'Bob' }, { tag: 'Cyn' } ]
++ 2 ms: poc.cleanup closing 4 streams...
 + 1 ms: poc.cleanup closed stream issuer's effects
 + 1 ms: poc.cleanup closed stream Ann's effects
 + 1 ms: poc.cleanup closed stream Bob's effects
 + 0 ms: poc.cleanup closed stream Cyn's effects
-+ 1 ms: ready
++ 0 ms: ready
 
-</pre><samp><h3>The PoC demo stopped on Sun Mar 24 09:40:36 PM UTC 2024</h3></samp></body></html> 
+</pre><samp><h3>The PoC demo stopped on Mon Mar 25 01:46:51 PM UTC 2024</h3></samp></body></html> 
