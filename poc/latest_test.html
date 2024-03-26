@@ -14,7 +14,7 @@
     }
   </script>
   <body>
-    <samp><h3>The PoC demo started on Mon Mar 25 2024 13:46:43 GMT+0000 (Coordinated Universal Time)</h3></samp>
+    <samp><h3>The PoC demo started on Tue Mar 26 2024 21:37:39 GMT+0000 (Coordinated Universal Time)</h3></samp>
     <pre>
 
 - process.argv [
@@ -24,31 +24,547 @@
   'poc',
   'demo'
 ]
-+ 280 ms: addHEX_Agent loaded agent GCUYRLQWYKDKE64WCWCROW4BPVNYBN3NGBYYY3P6OWNX7YKBR7BAAXCS
-+ 155 ms: addHEX_Agent loaded issuer GDIOHMPWIKBSAD5NIRENIQDAYOGS6UPYJ2QQFUZQLJKTBNP22Y6I3AM7
-+ 176 ms: pocSetup loaded Ann GCRDAJOQMXDZR5OJH6LYAZ3ISLCEBDHHC4DAVUNM243CG5GMSU5XPFUD
-+ 222 ms: pocSetup loaded Bob GA3HGZOKAK6ONQJOI5G4CII5S2P3RNTJAZYO5AVOMONBBDA2DV3YTY74
-+ 175 ms: pocSetup loaded Cyn GC5YZZUBVFONUTSTLBGIKCM22NND6LAUNQPKPDB2XYEESN67M7TE727R
-{ tag: 'Ann', r: { balance: '1200.0000000' } }
-+ 17 ms: Bob buyingHEXA 1200
-+ 0 ms: makeBuyOffer GA3HGZOKAK6ONQJOI5G4CII5S2P3RNTJAZYO5AVOMONBBDA2DV3YTY74 buying HEXA selling XLM buyAmount 1200 price 0.9 offerId 0
-{ tag: 'Cyn', r: { balance: '1200.0000000' } }
-+ 1599 ms: makeBuyOffer GA3HGZOKAK6ONQJOI5G4CII5S2P3RNTJAZYO5AVOMONBBDA2DV3YTY74 568e1ffffed5d7ccaa93282e1dbaf416bd9195fbdf1bf59d7a4c911649c3ff80 35732
-+ 1355 ms: makeBuyOffer GA3HGZOKAK6ONQJOI5G4CII5S2P3RNTJAZYO5AVOMONBBDA2DV3YTY74 buying HEXA selling XLM buyAmount 0 price 1 offerId 35732
-+ 3748 ms: makeBuyOffer GA3HGZOKAK6ONQJOI5G4CII5S2P3RNTJAZYO5AVOMONBBDA2DV3YTY74 96a5e7123d3135726a8c89b61332914b18dee0020657f1d31f43898375558147 null
-{
-  tag: 'Bob',
-  r: [
-    '96a5e7123d3135726a8c89b61332914b18dee0020657f1d31f43898375558147',
-    null
-  ]
++ 7022 ms: the HEX_CREATOR account created txId e3541d49b7187a7bb7c85884b85205fc2e676547350a5bddc71e1132d335628c
++ 264 ms: loaded HEX_CREATOR GB6NRTT5OMBBKTB53FXDZAPBEG2VDP3TINCKTLXBCFV3OX3WPMLOJZE4
++ 2 ms: addHEX_Issuer...
++ 4809 ms: addHEX_Issuer GB7O3UDAZGSQM3ECKZU5KMBLJUPG2MHRZC3QDLB346UNHMMQTN4VLE64 txId cbfd587fbaac7d6e7e987e8c6f248869de8599d99af0edbc0259dc451758ebad
++ 2 ms: addHEX_Agent...
++ 4914 ms: addHEX_Agent GC77UAN4XCUPBOOJ4BZ3JWMV4FAK2RUZOIFPKPGYY7EC4UCTGA4B67JF txId dc2be9ff77384833c6a73cc1d0eec7314a3254fedca31396e60991b05b54d27e
++ 176 ms: addHEX_Agent loaded agent GC77UAN4XCUPBOOJ4BZ3JWMV4FAK2RUZOIFPKPGYY7EC4UCTGA4B67JF
++ 171 ms: addHEX_Agent loaded issuer GB7O3UDAZGSQM3ECKZU5KMBLJUPG2MHRZC3QDLB346UNHMMQTN4VLE64
++ 5692 ms: addHEX_Agent agent trusts HEXA limit 10000 txId 8ea85576fe5c8cd7e934a17b2a320e96d7acc8170c5fe130040b0723b678938b
++ 10039 ms: pocAgentSellHEXA is selling HEXA 10000 046b8662d8aad3e7d9168ba9c770c6b3bcdd4dc0e535f9058c6c022e7a653386 36261
++ 5933 ms: pocSetup created Ann txId 79ee5e32e1099ca85140c0d0c3e90922c6712cb7270141e662ecaae234b373ef
++ 213 ms: pocSetup loaded Ann GB6D4WE675PNXH6BAEPZDYGRWZKN4SZCPADR665X2EZHTAS2MCAVBXTM
++ 4805 ms: Ann trusts ClawableHexa, HEXA: limit 10000 txId 9e1586558ca9b750e95ef097ab615a4516902ef894e5dfce03fa6e4b4ff3858f
++ 4914 ms: Ann : HEXA trustline updated, txId 2ed248632e51cb54481e9375bb187b3668659aed02c90515e7c83f4c96f9c764
++ 5125 ms: pocSetup created Bob txId 83d648f00c92e07b88c59ccd3c9013980344bd549b511a5267c6d51f18574c42
++ 162 ms: pocSetup loaded Bob GDHYYSYIV7BC7TOYIDAIOEJSKSPWORPI73OMVXKSMHIUOT57FVMHGRXM
++ 4897 ms: Bob trusts ClawableHexa, HEXA: limit 10000 txId 01199e13d961a5ba64e2ec589e31a352e46963e1650a9175ca08743fe31376d9
++ 5894 ms: Bob : HEXA trustline updated, txId 72b99798659de1514944da9efb22218b2d23d2dc251c1ca74205526a3e983ce2
++ 4915 ms: pocSetup created Cyn txId 9f8ba966a79ede20aa0e040eabf2bc412ae88217b58b7905fe218a66eeef50ce
++ 219 ms: pocSetup loaded Cyn GC5AXMJFHU7LZNJUSKYP5RNBFJX2TJORZNHEZLVBVR7H5BY5NTPJP6GW
++ 4802 ms: Cyn trusts ClawableHexa, HEXA: limit 10000 txId bf6147af68941ce5e11b181f97710f7cc2957717e29714e9a6c28a2a26fec30d
++ 6145 ms: Cyn : HEXA trustline updated, txId 384149cb49e936a19abd0c264b7ca70e62c96ad5262502ea5455e147f3e32ec1
++ 13 ms: Ann buyingHEXA 1200
++ 0 ms: makeBuyOffer GB6D4WE675PNXH6BAEPZDYGRWZKN4SZCPADR665X2EZHTAS2MCAVBXTM buying HEXA selling XLM buyAmount 1200 price 0.9 offerId 0
++ 4 ms: Bob buyingHEXA 1000
++ 0 ms: makeBuyOffer GDHYYSYIV7BC7TOYIDAIOEJSKSPWORPI73OMVXKSMHIUOT57FVMHGRXM buying HEXA selling XLM buyAmount 1000 price 0.9 offerId 0
++ 3 ms: Cyn buyingHEXA 1200
++ 0 ms: makeBuyOffer GC5AXMJFHU7LZNJUSKYP5RNBFJX2TJORZNHEZLVBVR7H5BY5NTPJP6GW buying HEXA selling XLM buyAmount 1200 price 0.9 offerId 0
++ 4899 ms: makeBuyOffer GB6D4WE675PNXH6BAEPZDYGRWZKN4SZCPADR665X2EZHTAS2MCAVBXTM f6a585b442c2d23958b3751fa8d868c2d844857540a08db4111729486b3b0b87 36264
++ 2 ms: makeBuyOffer GDHYYSYIV7BC7TOYIDAIOEJSKSPWORPI73OMVXKSMHIUOT57FVMHGRXM 79f18d00d2a06bf88f4a4c9d1c1b02ce1eb0d3db864f3ebbad6d87e49e345e95 36262
++ 2 ms: makeBuyOffer GC5AXMJFHU7LZNJUSKYP5RNBFJX2TJORZNHEZLVBVR7H5BY5NTPJP6GW ce2c47abc9683a44a12ff15b3600b40b05c2eb0f7151244ddfe0add4405d6431 36263
++ 1096 ms: makeBuyOffer GB6D4WE675PNXH6BAEPZDYGRWZKN4SZCPADR665X2EZHTAS2MCAVBXTM buying HEXA selling XLM buyAmount 1200 price 1 offerId 36264
++ 36 ms: makeBuyOffer GC5AXMJFHU7LZNJUSKYP5RNBFJX2TJORZNHEZLVBVR7H5BY5NTPJP6GW buying HEXA selling XLM buyAmount 1200 price 1 offerId 36263
++ 598 ms: makeBuyOffer GDHYYSYIV7BC7TOYIDAIOEJSKSPWORPI73OMVXKSMHIUOT57FVMHGRXM buying HEXA selling XLM buyAmount 0 price 1 offerId 36262
++ 4203 ms: makeBuyOffer GDHYYSYIV7BC7TOYIDAIOEJSKSPWORPI73OMVXKSMHIUOT57FVMHGRXM 76656d06085ad3c8380890c479eece277700038cc21ee21302ca3d69bfb19d13 null
++ 3 ms: makeBuyOffer GB6D4WE675PNXH6BAEPZDYGRWZKN4SZCPADR665X2EZHTAS2MCAVBXTM 9d18bad33392f2bfaf3cfcb761091e340ff5ee41d7a0173d850fc42003d0acee null
++ 14 ms: makeBuyOffer GC5AXMJFHU7LZNJUSKYP5RNBFJX2TJORZNHEZLVBVR7H5BY5NTPJP6GW 75578f934e0105e0a48031cb9eb61e536e16a4630891d89381b788531a39cfab null
++ 6018 ms: {
+  request: 'Fresh red snapper for 4 persons GGS. HEXA 1000',
+  balanceId: '00000000d19479e1eb1e3c39cf857802fd5c969cf018e82a1969b69b08294f4e9f017caa',
+  txId: 'e56277403b9dfc742d90ab5736be0ae8b7f6aa757ff05716624527baa49ef472'
+}
++ 3378 ms: pocIssuerEffects {
+  _links: {
+    operation: {
+      href: 'https://horizon-testnet.stellar.org/operations/3471918418104321'
+    },
+    succeeds: {
+      href: 'https://horizon-testnet.stellar.org/effects?order=desc&cursor=3471918418104321-2'
+    },
+    precedes: {
+      href: 'https://horizon-testnet.stellar.org/effects?order=asc&cursor=3471918418104321-2'
+    }
+  },
+  id: '0003471918418104321-0000000002',
+  paging_token: '3471918418104321-2',
+  account: 'GB7O3UDAZGSQM3ECKZU5KMBLJUPG2MHRZC3QDLB346UNHMMQTN4VLE64',
+  type: 'claimable_balance_claimant_created',
+  type_i: 51,
+  created_at: '2024-03-26T21:39:15Z',
+  asset: 'HEXA:GB7O3UDAZGSQM3ECKZU5KMBLJUPG2MHRZC3QDLB346UNHMMQTN4VLE64',
+  balance_id: '00000000d19479e1eb1e3c39cf857802fd5c969cf018e82a1969b69b08294f4e9f017caa',
+  amount: '1000.0000000',
+  predicate: { rel_before: '28800' },
+  operation: [Function (anonymous)],
+  succeeds: [Function (anonymous)],
+  precedes: [Function (anonymous)]
+}
++ 3 ms: onEffectAnn {
+  _links: {
+    operation: {
+      href: 'https://horizon-testnet.stellar.org/operations/3471918418104321'
+    },
+    succeeds: {
+      href: 'https://horizon-testnet.stellar.org/effects?order=desc&cursor=3471918418104321-1'
+    },
+    precedes: {
+      href: 'https://horizon-testnet.stellar.org/effects?order=asc&cursor=3471918418104321-1'
+    }
+  },
+  id: '0003471918418104321-0000000001',
+  paging_token: '3471918418104321-1',
+  account: 'GB6D4WE675PNXH6BAEPZDYGRWZKN4SZCPADR665X2EZHTAS2MCAVBXTM',
+  type: 'claimable_balance_created',
+  type_i: 50,
+  created_at: '2024-03-26T21:39:15Z',
+  asset: 'HEXA:GB7O3UDAZGSQM3ECKZU5KMBLJUPG2MHRZC3QDLB346UNHMMQTN4VLE64',
+  balance_id: '00000000d19479e1eb1e3c39cf857802fd5c969cf018e82a1969b69b08294f4e9f017caa',
+  amount: '1000.0000000',
+  operation: [Function (anonymous)],
+  succeeds: [Function (anonymous)],
+  precedes: [Function (anonymous)]
+}
++ 2 ms: onEffectAnn {
+  _links: {
+    operation: {
+      href: 'https://horizon-testnet.stellar.org/operations/3471918418104321'
+    },
+    succeeds: {
+      href: 'https://horizon-testnet.stellar.org/effects?order=desc&cursor=3471918418104321-3'
+    },
+    precedes: {
+      href: 'https://horizon-testnet.stellar.org/effects?order=asc&cursor=3471918418104321-3'
+    }
+  },
+  id: '0003471918418104321-0000000003',
+  paging_token: '3471918418104321-3',
+  account: 'GB6D4WE675PNXH6BAEPZDYGRWZKN4SZCPADR665X2EZHTAS2MCAVBXTM',
+  type: 'claimable_balance_claimant_created',
+  type_i: 51,
+  created_at: '2024-03-26T21:39:15Z',
+  asset: 'HEXA:GB7O3UDAZGSQM3ECKZU5KMBLJUPG2MHRZC3QDLB346UNHMMQTN4VLE64',
+  balance_id: '00000000d19479e1eb1e3c39cf857802fd5c969cf018e82a1969b69b08294f4e9f017caa',
+  amount: '1000.0000000',
+  predicate: { unconditional: true },
+  operation: [Function (anonymous)],
+  succeeds: [Function (anonymous)],
+  precedes: [Function (anonymous)]
+}
++ 2 ms: onEffectAnn {
+  _links: {
+    operation: {
+      href: 'https://horizon-testnet.stellar.org/operations/3471918418104321'
+    },
+    succeeds: {
+      href: 'https://horizon-testnet.stellar.org/effects?order=desc&cursor=3471918418104321-4'
+    },
+    precedes: {
+      href: 'https://horizon-testnet.stellar.org/effects?order=asc&cursor=3471918418104321-4'
+    }
+  },
+  id: '0003471918418104321-0000000004',
+  paging_token: '3471918418104321-4',
+  account: 'GB6D4WE675PNXH6BAEPZDYGRWZKN4SZCPADR665X2EZHTAS2MCAVBXTM',
+  type: 'account_debited',
+  type_i: 3,
+  created_at: '2024-03-26T21:39:15Z',
+  asset_type: 'credit_alphanum4',
+  asset_code: 'HEXA',
+  asset_issuer: 'GB7O3UDAZGSQM3ECKZU5KMBLJUPG2MHRZC3QDLB346UNHMMQTN4VLE64',
+  amount: '1000.0000000',
+  operation: [Function (anonymous)],
+  succeeds: [Function (anonymous)],
+  precedes: [Function (anonymous)]
+}
++ 3 ms: onEffectAnn {
+  _links: {
+    operation: {
+      href: 'https://horizon-testnet.stellar.org/operations/3471918418104321'
+    },
+    succeeds: {
+      href: 'https://horizon-testnet.stellar.org/effects?order=desc&cursor=3471918418104321-5'
+    },
+    precedes: {
+      href: 'https://horizon-testnet.stellar.org/effects?order=asc&cursor=3471918418104321-5'
+    }
+  },
+  id: '0003471918418104321-0000000005',
+  paging_token: '3471918418104321-5',
+  account: 'GB6D4WE675PNXH6BAEPZDYGRWZKN4SZCPADR665X2EZHTAS2MCAVBXTM',
+  type: 'claimable_balance_sponsorship_created',
+  type_i: 69,
+  created_at: '2024-03-26T21:39:15Z',
+  balance_id: '00000000d19479e1eb1e3c39cf857802fd5c969cf018e82a1969b69b08294f4e9f017caa',
+  sponsor: 'GB6D4WE675PNXH6BAEPZDYGRWZKN4SZCPADR665X2EZHTAS2MCAVBXTM',
+  operation: [Function (anonymous)],
+  succeeds: [Function (anonymous)],
+  precedes: [Function (anonymous)]
+}
++ 16 ms: onEffectAnn {
+  _links: {
+    operation: {
+      href: 'https://horizon-testnet.stellar.org/operations/3471918418104322'
+    },
+    succeeds: {
+      href: 'https://horizon-testnet.stellar.org/effects?order=desc&cursor=3471918418104322-1'
+    },
+    precedes: {
+      href: 'https://horizon-testnet.stellar.org/effects?order=asc&cursor=3471918418104322-1'
+    }
+  },
+  id: '0003471918418104322-0000000001',
+  paging_token: '3471918418104322-1',
+  account: 'GB6D4WE675PNXH6BAEPZDYGRWZKN4SZCPADR665X2EZHTAS2MCAVBXTM',
+  type: 'data_created',
+  type_i: 40,
+  created_at: '2024-03-26T21:39:15Z',
+  name: 'data0',
+  value: 'RnJlc2ggcmVkIHNuYXBwZXIgZm9yIDQgcGVyc29ucyBHR1MuIEhFWEEgMTAwMA==',
+  operation: [Function (anonymous)],
+  succeeds: [Function (anonymous)],
+  precedes: [Function (anonymous)]
+}
++ 16 ms: onEffectAnn {
+  _links: {
+    operation: {
+      href: 'https://horizon-testnet.stellar.org/operations/3471918418104323'
+    },
+    succeeds: {
+      href: 'https://horizon-testnet.stellar.org/effects?order=desc&cursor=3471918418104323-1'
+    },
+    precedes: {
+      href: 'https://horizon-testnet.stellar.org/effects?order=asc&cursor=3471918418104323-1'
+    }
+  },
+  id: '0003471918418104323-0000000001',
+  paging_token: '3471918418104323-1',
+  account: 'GB6D4WE675PNXH6BAEPZDYGRWZKN4SZCPADR665X2EZHTAS2MCAVBXTM',
+  type: 'data_removed',
+  type_i: 41,
+  created_at: '2024-03-26T21:39:15Z',
+  name: 'data0',
+  operation: [Function (anonymous)],
+  succeeds: [Function (anonymous)],
+  precedes: [Function (anonymous)]
 }
 [ { tag: 'Ann' }, { tag: 'Bob' }, { tag: 'Cyn' } ]
-+ 2 ms: poc.cleanup closing 4 streams...
++ 7563 ms: poc.cleanup closing 4 streams...
 + 1 ms: poc.cleanup closed stream issuer's effects
-+ 1 ms: poc.cleanup closed stream Ann's effects
++ 0 ms: poc.cleanup closed stream Ann's effects
 + 1 ms: poc.cleanup closed stream Bob's effects
-+ 0 ms: poc.cleanup closed stream Cyn's effects
-+ 0 ms: ready
++ 1 ms: poc.cleanup closed stream Cyn's effects
+{
+  s: [
+    { tag: "issuer's effects", close: [Function (anonymous)] },
+    { tag: "Ann's effects", close: [Function (anonymous)] },
+    { tag: "Bob's effects", close: [Function (anonymous)] },
+    { tag: "Cyn's effects", close: [Function (anonymous)] }
+  ],
+  e: {
+    log: [Function: ts],
+    nw: 'Test SDF Network ; September 2015',
+    server: Server {
+      serverURL: URI {
+        _string: '',
+        _parts: {
+          protocol: 'https',
+          username: null,
+          password: null,
+          hostname: 'horizon-testnet.stellar.org',
+          urn: null,
+          port: null,
+          path: '/',
+          query: null,
+          fragment: null,
+          preventInvalidHostname: false,
+          duplicateQueryParameters: false,
+          escapeQuerySpace: true
+        },
+        _deferred_build: true
+      }
+    }
+  },
+  c: {
+    account: AccountResponse {
+      _baseAccount: Account {
+        _accountId: 'GB6NRTT5OMBBKTB53FXDZAPBEG2VDP3TINCKTLXBCFV3OX3WPMLOJZE4',
+        sequence: BigNumber { s: 1, e: 15, c: [ 34, 71845403656197 ] }
+      },
+      _links: {
+        self: {
+          href: 'https://horizon-testnet.stellar.org/accounts/GB6NRTT5OMBBKTB53FXDZAPBEG2VDP3TINCKTLXBCFV3OX3WPMLOJZE4'
+        },
+        transactions: {
+          href: 'https://horizon-testnet.stellar.org/accounts/GB6NRTT5OMBBKTB53FXDZAPBEG2VDP3TINCKTLXBCFV3OX3WPMLOJZE4/transactions{?cursor,limit,order}',
+          templated: true
+        },
+        operations: {
+          href: 'https://horizon-testnet.stellar.org/accounts/GB6NRTT5OMBBKTB53FXDZAPBEG2VDP3TINCKTLXBCFV3OX3WPMLOJZE4/operations{?cursor,limit,order}',
+          templated: true
+        },
+        payments: {
+          href: 'https://horizon-testnet.stellar.org/accounts/GB6NRTT5OMBBKTB53FXDZAPBEG2VDP3TINCKTLXBCFV3OX3WPMLOJZE4/payments{?cursor,limit,order}',
+          templated: true
+        },
+        effects: {
+          href: 'https://horizon-testnet.stellar.org/accounts/GB6NRTT5OMBBKTB53FXDZAPBEG2VDP3TINCKTLXBCFV3OX3WPMLOJZE4/effects{?cursor,limit,order}',
+          templated: true
+        },
+        offers: {
+          href: 'https://horizon-testnet.stellar.org/accounts/GB6NRTT5OMBBKTB53FXDZAPBEG2VDP3TINCKTLXBCFV3OX3WPMLOJZE4/offers{?cursor,limit,order}',
+          templated: true
+        },
+        trades: {
+          href: 'https://horizon-testnet.stellar.org/accounts/GB6NRTT5OMBBKTB53FXDZAPBEG2VDP3TINCKTLXBCFV3OX3WPMLOJZE4/trades{?cursor,limit,order}',
+          templated: true
+        },
+        data: {
+          href: 'https://horizon-testnet.stellar.org/accounts/GB6NRTT5OMBBKTB53FXDZAPBEG2VDP3TINCKTLXBCFV3OX3WPMLOJZE4/data/{key}',
+          templated: true
+        }
+      },
+      id: 'GB6NRTT5OMBBKTB53FXDZAPBEG2VDP3TINCKTLXBCFV3OX3WPMLOJZE4',
+      account_id: 'GB6NRTT5OMBBKTB53FXDZAPBEG2VDP3TINCKTLXBCFV3OX3WPMLOJZE4',
+      sequence: '3471845403656197',
+      subentry_count: 0,
+      last_modified_ledger: 808352,
+      last_modified_time: '2024-03-26T21:37:44Z',
+      thresholds: { low_threshold: 0, med_threshold: 0, high_threshold: 0 },
+      flags: {
+        auth_required: false,
+        auth_revocable: false,
+        auth_immutable: false,
+        auth_clawback_enabled: false
+      },
+      balances: [
+        {
+          balance: '10000.0000000',
+          buying_liabilities: '0.0000000',
+          selling_liabilities: '0.0000000',
+          asset_type: 'native'
+        }
+      ],
+      signers: [
+        {
+          weight: 1,
+          key: 'GB6NRTT5OMBBKTB53FXDZAPBEG2VDP3TINCKTLXBCFV3OX3WPMLOJZE4',
+          type: 'ed25519_public_key'
+        }
+      ],
+      data: [Function (anonymous)],
+      num_sponsoring: 0,
+      num_sponsored: 0,
+      paging_token: 'GB6NRTT5OMBBKTB53FXDZAPBEG2VDP3TINCKTLXBCFV3OX3WPMLOJZE4',
+      self: [Function (anonymous)],
+      transactions: [Function (anonymous)],
+      operations: [Function (anonymous)],
+      payments: [Function (anonymous)],
+      effects: [Function (anonymous)],
+      offers: [Function (anonymous)],
+      trades: [Function (anonymous)],
+      data_attr: {}
+    }
+  },
+  d: {
+    keys: [
+      'SBMLEY7DTTLIPFQ3GPLV3DYE3O24BEE7E4B7JG2AOOW7XALJJKQF4DRE',
+      'GB6NRTT5OMBBKTB53FXDZAPBEG2VDP3TINCKTLXBCFV3OX3WPMLOJZE4'
+    ],
+    kp: Keypair {
+      type: 'ed25519',
+      _secretSeed: Buffer(32) [Uint8Array] [
+         88, 178,  99, 227, 156, 214, 135, 150,
+         27,  51, 215,  93, 143,   4, 219, 181,
+        192, 144, 159,  39,   3, 244, 155,  64,
+        115, 173, 251, 129, 105,  74, 160,  94
+      ],
+      _publicKey: Buffer(32) [Uint8Array] [
+        124, 216, 206, 125, 115,   2,  21,  76,
+         61, 217, 110,  60, 129, 225,  33, 181,
+         81, 191, 115,  67,  68, 169, 174, 225,
+         17, 107, 183,  95, 118, 123,  22, 228
+      ],
+      _secretKey: Buffer(64) [Uint8Array] [
+         88, 178,  99, 227, 156, 214, 135, 150,  27,  51, 215,
+         93, 143,   4, 219, 181, 192, 144, 159,  39,   3, 244,
+        155,  64, 115, 173, 251, 129, 105,  74, 160,  94, 124,
+        216, 206, 125, 115,   2,  21,  76,  61, 217, 110,  60,
+        129, 225,  33, 181,  81, 191, 115,  67,  68, 169, 174,
+        225,  17, 107, 183,  95, 118, 123,  22, 228
+      ]
+    },
+    ClawableHexa: Asset {
+      code: 'ClawableHexa',
+      issuer: 'GB7O3UDAZGSQM3ECKZU5KMBLJUPG2MHRZC3QDLB346UNHMMQTN4VLE64'
+    },
+    HEXA: Asset {
+      code: 'HEXA',
+      issuer: 'GB7O3UDAZGSQM3ECKZU5KMBLJUPG2MHRZC3QDLB346UNHMMQTN4VLE64'
+    },
+    agent: AccountResponse {
+      _baseAccount: Account {
+        _accountId: 'GC77UAN4XCUPBOOJ4BZ3JWMV4FAK2RUZOIFPKPGYY7EC4UCTGA4B67JF',
+        sequence: BigNumber { s: 1, e: 15, c: [ 34, 71853993590786 ] }
+      },
+      _links: {
+        self: {
+          href: 'https://horizon-testnet.stellar.org/accounts/GC77UAN4XCUPBOOJ4BZ3JWMV4FAK2RUZOIFPKPGYY7EC4UCTGA4B67JF'
+        },
+        transactions: {
+          href: 'https://horizon-testnet.stellar.org/accounts/GC77UAN4XCUPBOOJ4BZ3JWMV4FAK2RUZOIFPKPGYY7EC4UCTGA4B67JF/transactions{?cursor,limit,order}',
+          templated: true
+        },
+        operations: {
+          href: 'https://horizon-testnet.stellar.org/accounts/GC77UAN4XCUPBOOJ4BZ3JWMV4FAK2RUZOIFPKPGYY7EC4UCTGA4B67JF/operations{?cursor,limit,order}',
+          templated: true
+        },
+        payments: {
+          href: 'https://horizon-testnet.stellar.org/accounts/GC77UAN4XCUPBOOJ4BZ3JWMV4FAK2RUZOIFPKPGYY7EC4UCTGA4B67JF/payments{?cursor,limit,order}',
+          templated: true
+        },
+        effects: {
+          href: 'https://horizon-testnet.stellar.org/accounts/GC77UAN4XCUPBOOJ4BZ3JWMV4FAK2RUZOIFPKPGYY7EC4UCTGA4B67JF/effects{?cursor,limit,order}',
+          templated: true
+        },
+        offers: {
+          href: 'https://horizon-testnet.stellar.org/accounts/GC77UAN4XCUPBOOJ4BZ3JWMV4FAK2RUZOIFPKPGYY7EC4UCTGA4B67JF/offers{?cursor,limit,order}',
+          templated: true
+        },
+        trades: {
+          href: 'https://horizon-testnet.stellar.org/accounts/GC77UAN4XCUPBOOJ4BZ3JWMV4FAK2RUZOIFPKPGYY7EC4UCTGA4B67JF/trades{?cursor,limit,order}',
+          templated: true
+        },
+        data: {
+          href: 'https://horizon-testnet.stellar.org/accounts/GC77UAN4XCUPBOOJ4BZ3JWMV4FAK2RUZOIFPKPGYY7EC4UCTGA4B67JF/data/{key}',
+          templated: true
+        }
+      },
+      id: 'GC77UAN4XCUPBOOJ4BZ3JWMV4FAK2RUZOIFPKPGYY7EC4UCTGA4B67JF',
+      account_id: 'GC77UAN4XCUPBOOJ4BZ3JWMV4FAK2RUZOIFPKPGYY7EC4UCTGA4B67JF',
+      sequence: '3471853993590786',
+      subentry_count: 0,
+      last_modified_ledger: 808354,
+      last_modified_time: '2024-03-26T21:37:55Z',
+      thresholds: { low_threshold: 0, med_threshold: 0, high_threshold: 0 },
+      flags: {
+        auth_required: false,
+        auth_revocable: false,
+        auth_immutable: false,
+        auth_clawback_enabled: false
+      },
+      balances: [
+        {
+          balance: '9.0000000',
+          buying_liabilities: '0.0000000',
+          selling_liabilities: '0.0000000',
+          asset_type: 'native'
+        }
+      ],
+      signers: [
+        {
+          weight: 1,
+          key: 'GC77UAN4XCUPBOOJ4BZ3JWMV4FAK2RUZOIFPKPGYY7EC4UCTGA4B67JF',
+          type: 'ed25519_public_key'
+        }
+      ],
+      data: [Function (anonymous)],
+      num_sponsoring: 0,
+      num_sponsored: 0,
+      paging_token: 'GC77UAN4XCUPBOOJ4BZ3JWMV4FAK2RUZOIFPKPGYY7EC4UCTGA4B67JF',
+      self: [Function (anonymous)],
+      transactions: [Function (anonymous)],
+      operations: [Function (anonymous)],
+      payments: [Function (anonymous)],
+      effects: [Function (anonymous)],
+      offers: [Function (anonymous)],
+      trades: [Function (anonymous)],
+      data_attr: {}
+    },
+    keysAgent: [
+      'SDHQNSVTPMX3HDZEDZ7UE5QATBN64V7JYNQ3GVIBJX6TOUAF6E2D3SIX',
+      'GC77UAN4XCUPBOOJ4BZ3JWMV4FAK2RUZOIFPKPGYY7EC4UCTGA4B67JF'
+    ],
+    keysIssuer: [
+      'SDTBBVVGPDWFYTGDTFUM3VJ3OK72WB6UYKCKVGDAVVVMMR7CRTNJ3Q7C',
+      'GB7O3UDAZGSQM3ECKZU5KMBLJUPG2MHRZC3QDLB346UNHMMQTN4VLE64'
+    ],
+    issuer: AccountResponse {
+      _baseAccount: Account {
+        _accountId: 'GB7O3UDAZGSQM3ECKZU5KMBLJUPG2MHRZC3QDLB346UNHMMQTN4VLE64',
+        sequence: BigNumber { s: 1, e: 15, c: [ 34, 71849698623492 ] }
+      },
+      _links: {
+        self: {
+          href: 'https://horizon-testnet.stellar.org/accounts/GB7O3UDAZGSQM3ECKZU5KMBLJUPG2MHRZC3QDLB346UNHMMQTN4VLE64'
+        },
+        transactions: {
+          href: 'https://horizon-testnet.stellar.org/accounts/GB7O3UDAZGSQM3ECKZU5KMBLJUPG2MHRZC3QDLB346UNHMMQTN4VLE64/transactions{?cursor,limit,order}',
+          templated: true
+        },
+        operations: {
+          href: 'https://horizon-testnet.stellar.org/accounts/GB7O3UDAZGSQM3ECKZU5KMBLJUPG2MHRZC3QDLB346UNHMMQTN4VLE64/operations{?cursor,limit,order}',
+          templated: true
+        },
+        payments: {
+          href: 'https://horizon-testnet.stellar.org/accounts/GB7O3UDAZGSQM3ECKZU5KMBLJUPG2MHRZC3QDLB346UNHMMQTN4VLE64/payments{?cursor,limit,order}',
+          templated: true
+        },
+        effects: {
+          href: 'https://horizon-testnet.stellar.org/accounts/GB7O3UDAZGSQM3ECKZU5KMBLJUPG2MHRZC3QDLB346UNHMMQTN4VLE64/effects{?cursor,limit,order}',
+          templated: true
+        },
+        offers: {
+          href: 'https://horizon-testnet.stellar.org/accounts/GB7O3UDAZGSQM3ECKZU5KMBLJUPG2MHRZC3QDLB346UNHMMQTN4VLE64/offers{?cursor,limit,order}',
+          templated: true
+        },
+        trades: {
+          href: 'https://horizon-testnet.stellar.org/accounts/GB7O3UDAZGSQM3ECKZU5KMBLJUPG2MHRZC3QDLB346UNHMMQTN4VLE64/trades{?cursor,limit,order}',
+          templated: true
+        },
+        data: {
+          href: 'https://horizon-testnet.stellar.org/accounts/GB7O3UDAZGSQM3ECKZU5KMBLJUPG2MHRZC3QDLB346UNHMMQTN4VLE64/data/{key}',
+          templated: true
+        }
+      },
+      id: 'GB7O3UDAZGSQM3ECKZU5KMBLJUPG2MHRZC3QDLB346UNHMMQTN4VLE64',
+      account_id: 'GB7O3UDAZGSQM3ECKZU5KMBLJUPG2MHRZC3QDLB346UNHMMQTN4VLE64',
+      sequence: '3471849698623492',
+      subentry_count: 0,
+      home_domain: 'hex.didalik.workers.dev',
+      last_modified_ledger: 808353,
+      last_modified_time: '2024-03-26T21:37:50Z',
+      thresholds: { low_threshold: 0, med_threshold: 0, high_threshold: 0 },
+      flags: {
+        auth_required: false,
+        auth_revocable: true,
+        auth_immutable: false,
+        auth_clawback_enabled: true
+      },
+      balances: [
+        {
+          balance: '9.0000000',
+          buying_liabilities: '0.0000000',
+          selling_liabilities: '0.0000000',
+          asset_type: 'native'
+        }
+      ],
+      signers: [
+        {
+          weight: 1,
+          key: 'GB7O3UDAZGSQM3ECKZU5KMBLJUPG2MHRZC3QDLB346UNHMMQTN4VLE64',
+          type: 'ed25519_public_key'
+        }
+      ],
+      data: [Function (anonymous)],
+      num_sponsoring: 0,
+      num_sponsored: 0,
+      paging_token: 'GB7O3UDAZGSQM3ECKZU5KMBLJUPG2MHRZC3QDLB346UNHMMQTN4VLE64',
+      self: [Function (anonymous)],
+      transactions: [Function (anonymous)],
+      operations: [Function (anonymous)],
+      payments: [Function (anonymous)],
+      effects: [Function (anonymous)],
+      offers: [Function (anonymous)],
+      trades: [Function (anonymous)],
+      data_attr: {}
+    },
+    limit: '10000',
+    XLM: Asset { code: 'XLM', issuer: null }
+  }
+}
++ 7 ms: ready
 
-</pre><samp><h3>The PoC demo stopped on Mon Mar 25 01:46:51 PM UTC 2024</h3></samp></body></html> 
+</pre><samp><h3>The PoC demo stopped on Tue Mar 26 09:39:28 PM UTC 2024</h3></samp></body></html> 
