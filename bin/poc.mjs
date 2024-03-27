@@ -47,7 +47,8 @@ const execute =  { // {{{1
     await addHEX_Agent.call(secd, amountHEXA)
     await pocAgentSellHEXA.call(secd)
     await pocSetup.call(secd).
-      then(poc => poc.run.call(secd)).then(ns => ns.cleanup.call(secd)).
+      //then(poc => poc.run.call(secd)).then(ns => ns.cleanup.call(secd)).
+      then(poc => poc.run()).then(ns => ns.cleanup()).
       catch(e => { throw e; })
     secd.c.account != null && console.dir(secd, { depth: null })
     log('ready')
