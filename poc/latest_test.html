@@ -14,7 +14,7 @@
     }
   </script>
   <body>
-    <samp><h3>The PoC demo started on Thu Mar 28 2024 12:54:32 GMT+0000 (Coordinated Universal Time)</h3></samp>
+    <samp><h3>The PoC demo started on Fri Mar 29 2024 19:03:16 GMT+0000 (Coordinated Universal Time)</h3></samp>
     <pre>
 
 - process.argv [
@@ -24,384 +24,60 @@
   'poc',
   'demo'
 ]
-+ 440 ms: addHEX_Agent loaded agent GDS2COXK2G2ZKAP4THGNJHOQIQ34BDHW5WYRRA2HNPQPCIQ4SSFOHOYE
-+ 179 ms: addHEX_Agent loaded issuer GDHF4EZD25XIYDT3LHLO7SCXVI77CTJFQ4BZK42O3HUY2I564EIDGQKV
-+ 224 ms: pocSetup loaded Ann GCBHCIGOEJ7DZ4P7F2JXYMFX6IK3JL4XS3LN3B2ZVGZD4ERT7HUIL7N4
-+ 171 ms: pocSetup loaded Bob GALJNZTNNBJJGVQHGXY3H5J44WAIEE2Y5NCDQZ3TCYW5UE33E27VTWSF
-+ 230 ms: pocSetup loaded Cyn GDMTKSOX2ABL6H2IFA4MWLPTONV67AYN3XX4PRVJK4PKFMQBQUZN3YX7
-+ 33 ms: Bob buyingHEXA 10
-+ 1 ms: makeBuyOffer GALJNZTNNBJJGVQHGXY3H5J44WAIEE2Y5NCDQZ3TCYW5UE33E27VTWSF buying HEXA selling XLM buyAmount 10 price 0.9 offerId 0
-+ 6498 ms: demoAnn makeRequest Fresh red snapper for 4 persons GGS. HEXA 1000 00000000993a9c948d131ca2ef360733225df94d3c9e754aa278364272793ebe5d00997c 77683ac2e3389842bf3b3b2c1d20fc9fcce3ce230b9e8ad865a50f013acb7164
-+ 2 ms: makeBuyOffer GALJNZTNNBJJGVQHGXY3H5J44WAIEE2Y5NCDQZ3TCYW5UE33E27VTWSF d47f9fe685c136d7eb8fa98c1b14daba15eefa201a268897917ef7cefeeb1a64 37130
-+ 1310 ms: makeBuyOffer GALJNZTNNBJJGVQHGXY3H5J44WAIEE2Y5NCDQZ3TCYW5UE33E27VTWSF buying HEXA selling XLM buyAmount 10 price 1 offerId 37130
-+ 2477 ms: pocIssuerEffects {
-  _links: {
-    operation: {
-      href: 'https://horizon-testnet.stellar.org/operations/3587448743415809'
-    },
-    succeeds: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=desc&cursor=3587448743415809-2'
-    },
-    precedes: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=asc&cursor=3587448743415809-2'
-    }
-  },
-  id: '0003587448743415809-0000000002',
-  paging_token: '3587448743415809-2',
-  account: 'GDHF4EZD25XIYDT3LHLO7SCXVI77CTJFQ4BZK42O3HUY2I564EIDGQKV',
-  type: 'claimable_balance_claimant_created',
-  type_i: 51,
-  created_at: '2024-03-28T12:54:39Z',
-  asset: 'HEXA:GDHF4EZD25XIYDT3LHLO7SCXVI77CTJFQ4BZK42O3HUY2I564EIDGQKV',
-  balance_id: '00000000993a9c948d131ca2ef360733225df94d3c9e754aa278364272793ebe5d00997c',
-  amount: '1000.0000100',
-  predicate: { rel_before: '28800' },
-  operation: [Function (anonymous)],
-  succeeds: [Function (anonymous)],
-  precedes: [Function (anonymous)]
++ 377 ms: addHEX_Agent loaded agent GBLMTBIR6WJTQJ7PDID3AEY3IWWUU6XIXVQHS452UJTSEBV6RKKARJRF
++ 202 ms: addHEX_Agent loaded issuer GCV7EUEL4KEPGZF6WNMSES7G7MEQD5ZWXCWJGSI6HFN7UJ5OWVXJT22S
++ 226 ms: pocSetup loaded Ann GCTOXEJMFU6HBNKBIBSEN7PUF3EO2CLC66FW7GDVRZRFMFWRNQSZRILO
++ 169 ms: pocSetup loaded Bob GBW2HT6Y4R5O4IA4PRBXS4BREIX2HGDUAQY7SCPE3B4M2J6WCGC24V5R
++ 166 ms: pocSetup loaded Cyn GDJTAY6NPJGSCTWWWMSI4L64CIOV3LUC5EV7FJFHXJXKJSFST6PS4U32
++ 32 ms: Bob buyingHEXA 10
++ 0 ms: makeBuyOffer GBW2HT6Y4R5O4IA4PRBXS4BREIX2HGDUAQY7SCPE3B4M2J6WCGC24V5R buying HEXA selling XLM buyAmount 10 price 0.9 offerId 0
++ 3564 ms: demoAnn makeRequest Fresh red snapper for 4 persons GGS. HEXA 1000 00000000751e30d033c0166c87d26b00da152b0f49dc5ffeebce9c1f2cc235927cf5426e 855cca45168df831e7e86910d2069a476f69e0d934bc78b50a07120d14c1d051
++ 1 ms: onIssuerEffectCyn take {
+  balanceId: '000000003c591041ff22ce364d63a5d7fb5343df9810bf538b7c9ce8c7689bf6c1b12f39',
+  txId: '98c18f00222ff3aab69e15aa92c81781c453f77ad9440335c1c5d4ce11d00cad'
 }
-+ 4 ms: onEffectAnn {
-  _links: {
-    operation: {
-      href: 'https://horizon-testnet.stellar.org/operations/3587448743415809'
-    },
-    succeeds: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=desc&cursor=3587448743415809-1'
-    },
-    precedes: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=asc&cursor=3587448743415809-1'
-    }
-  },
-  id: '0003587448743415809-0000000001',
-  paging_token: '3587448743415809-1',
-  account: 'GCBHCIGOEJ7DZ4P7F2JXYMFX6IK3JL4XS3LN3B2ZVGZD4ERT7HUIL7N4',
-  type: 'claimable_balance_created',
-  type_i: 50,
-  created_at: '2024-03-28T12:54:39Z',
-  asset: 'HEXA:GDHF4EZD25XIYDT3LHLO7SCXVI77CTJFQ4BZK42O3HUY2I564EIDGQKV',
-  balance_id: '00000000993a9c948d131ca2ef360733225df94d3c9e754aa278364272793ebe5d00997c',
-  amount: '1000.0000100',
-  operation: [Function (anonymous)],
-  succeeds: [Function (anonymous)],
-  precedes: [Function (anonymous)]
++ 17 ms: makeBuyOffer GBW2HT6Y4R5O4IA4PRBXS4BREIX2HGDUAQY7SCPE3B4M2J6WCGC24V5R 2032101fb2d3a020ef2d7544db603d42e61af39ce9af4573f4ea87f9ee0029fc 37260
++ 1260 ms: makeBuyOffer GBW2HT6Y4R5O4IA4PRBXS4BREIX2HGDUAQY7SCPE3B4M2J6WCGC24V5R buying HEXA selling XLM buyAmount 10 price 1 offerId 37260
++ 4761 ms: makeBuyOffer GBW2HT6Y4R5O4IA4PRBXS4BREIX2HGDUAQY7SCPE3B4M2J6WCGC24V5R 5f89aeba7d435bb929f403d253d26f4d5c913c4b7a3265b7f05773586a411865 null
++ 17 ms: onIssuerEffectCyn take {
+  balanceId: '000000002986a5263aa8ccdb59793eb69f3c53d5318ea6b91e54a43b2d54104cf8db62f3',
+  txId: '158bc3f3384700d4c80d2d83cb0862e7d0fadd43bfb58f728c25bb1f4551978b'
 }
-+ 2 ms: onEffectAnn {
-  _links: {
-    operation: {
-      href: 'https://horizon-testnet.stellar.org/operations/3587448743415809'
-    },
-    succeeds: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=desc&cursor=3587448743415809-3'
-    },
-    precedes: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=asc&cursor=3587448743415809-3'
-    }
-  },
-  id: '0003587448743415809-0000000003',
-  paging_token: '3587448743415809-3',
-  account: 'GCBHCIGOEJ7DZ4P7F2JXYMFX6IK3JL4XS3LN3B2ZVGZD4ERT7HUIL7N4',
-  type: 'claimable_balance_claimant_created',
-  type_i: 51,
-  created_at: '2024-03-28T12:54:39Z',
-  asset: 'HEXA:GDHF4EZD25XIYDT3LHLO7SCXVI77CTJFQ4BZK42O3HUY2I564EIDGQKV',
-  balance_id: '00000000993a9c948d131ca2ef360733225df94d3c9e754aa278364272793ebe5d00997c',
-  amount: '1000.0000100',
-  predicate: { unconditional: true },
-  operation: [Function (anonymous)],
-  succeeds: [Function (anonymous)],
-  precedes: [Function (anonymous)]
++ 4997 ms: onIssuerEffectCyn take {
+  balanceId: '000000002f79fac48abd090a7b0ef520fa7f0f52b169ea55936db27ca677f793d67cb119',
+  txId: 'fccb5219b7334ac3207f73414e34bc88e8a8b6c6e1d57a1bd14480717205fe78'
 }
-+ 3 ms: onEffectAnn {
-  _links: {
-    operation: {
-      href: 'https://horizon-testnet.stellar.org/operations/3587448743415809'
-    },
-    succeeds: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=desc&cursor=3587448743415809-4'
-    },
-    precedes: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=asc&cursor=3587448743415809-4'
-    }
-  },
-  id: '0003587448743415809-0000000004',
-  paging_token: '3587448743415809-4',
-  account: 'GCBHCIGOEJ7DZ4P7F2JXYMFX6IK3JL4XS3LN3B2ZVGZD4ERT7HUIL7N4',
-  type: 'account_debited',
-  type_i: 3,
-  created_at: '2024-03-28T12:54:39Z',
-  asset_type: 'credit_alphanum4',
-  asset_code: 'HEXA',
-  asset_issuer: 'GDHF4EZD25XIYDT3LHLO7SCXVI77CTJFQ4BZK42O3HUY2I564EIDGQKV',
-  amount: '1000.0000100',
-  operation: [Function (anonymous)],
-  succeeds: [Function (anonymous)],
-  precedes: [Function (anonymous)]
-}
-+ 3 ms: onEffectAnn {
-  _links: {
-    operation: {
-      href: 'https://horizon-testnet.stellar.org/operations/3587448743415809'
-    },
-    succeeds: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=desc&cursor=3587448743415809-5'
-    },
-    precedes: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=asc&cursor=3587448743415809-5'
-    }
-  },
-  id: '0003587448743415809-0000000005',
-  paging_token: '3587448743415809-5',
-  account: 'GCBHCIGOEJ7DZ4P7F2JXYMFX6IK3JL4XS3LN3B2ZVGZD4ERT7HUIL7N4',
-  type: 'claimable_balance_sponsorship_created',
-  type_i: 69,
-  created_at: '2024-03-28T12:54:39Z',
-  balance_id: '00000000993a9c948d131ca2ef360733225df94d3c9e754aa278364272793ebe5d00997c',
-  sponsor: 'GCBHCIGOEJ7DZ4P7F2JXYMFX6IK3JL4XS3LN3B2ZVGZD4ERT7HUIL7N4',
-  operation: [Function (anonymous)],
-  succeeds: [Function (anonymous)],
-  precedes: [Function (anonymous)]
-}
-+ 14 ms: onEffectAnn {
-  _links: {
-    operation: {
-      href: 'https://horizon-testnet.stellar.org/operations/3587448743415810'
-    },
-    succeeds: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=desc&cursor=3587448743415810-1'
-    },
-    precedes: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=asc&cursor=3587448743415810-1'
-    }
-  },
-  id: '0003587448743415810-0000000001',
-  paging_token: '3587448743415810-1',
-  account: 'GCBHCIGOEJ7DZ4P7F2JXYMFX6IK3JL4XS3LN3B2ZVGZD4ERT7HUIL7N4',
-  type: 'data_created',
-  type_i: 40,
-  created_at: '2024-03-28T12:54:39Z',
-  name: 'data0',
-  value: 'RnJlc2ggcmVkIHNuYXBwZXIgZm9yIDQgcGVyc29ucyBHR1MuIEhFWEEgMTAwMA==',
-  operation: [Function (anonymous)],
-  succeeds: [Function (anonymous)],
-  precedes: [Function (anonymous)]
-}
-+ 2 ms: onEffectAnn {
-  _links: {
-    operation: {
-      href: 'https://horizon-testnet.stellar.org/operations/3587448743415811'
-    },
-    succeeds: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=desc&cursor=3587448743415811-1'
-    },
-    precedes: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=asc&cursor=3587448743415811-1'
-    }
-  },
-  id: '0003587448743415811-0000000001',
-  paging_token: '3587448743415811-1',
-  account: 'GCBHCIGOEJ7DZ4P7F2JXYMFX6IK3JL4XS3LN3B2ZVGZD4ERT7HUIL7N4',
-  type: 'data_removed',
-  type_i: 41,
-  created_at: '2024-03-28T12:54:39Z',
-  name: 'data0',
-  operation: [Function (anonymous)],
-  succeeds: [Function (anonymous)],
-  precedes: [Function (anonymous)]
-}
-+ 1206 ms: makeBuyOffer GALJNZTNNBJJGVQHGXY3H5J44WAIEE2Y5NCDQZ3TCYW5UE33E27VTWSF d4f042d7781781633d488579dc4a9c9f447cca8025b2852f6fc5b43c03f03c4d null
-+ 5016 ms: demoBob makeOffer Freshly caught red snapper 4lb. HEXA 800 00000000624715217a6da57e47c01d689031ac317c3986f86d8c4b022e1b3820b981ec72 e063bdae887988dd1aa16f4e93de36bdbd0f10cc1ef836abbc49e6a6698e597e
-+ 3681 ms: onEffectBob {
-  _links: {
-    operation: {
-      href: 'https://horizon-testnet.stellar.org/operations/3587457333342209'
-    },
-    succeeds: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=desc&cursor=3587457333342209-1'
-    },
-    precedes: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=asc&cursor=3587457333342209-1'
-    }
-  },
-  id: '0003587457333342209-0000000001',
-  paging_token: '3587457333342209-1',
-  account: 'GALJNZTNNBJJGVQHGXY3H5J44WAIEE2Y5NCDQZ3TCYW5UE33E27VTWSF',
-  type: 'claimable_balance_created',
-  type_i: 50,
-  created_at: '2024-03-28T12:54:49Z',
-  asset: 'HEXA:GDHF4EZD25XIYDT3LHLO7SCXVI77CTJFQ4BZK42O3HUY2I564EIDGQKV',
-  balance_id: '00000000624715217a6da57e47c01d689031ac317c3986f86d8c4b022e1b3820b981ec72',
-  amount: '0.0000100',
-  operation: [Function (anonymous)],
-  succeeds: [Function (anonymous)],
-  precedes: [Function (anonymous)]
-}
-+ 1 ms: onEffectBob {
-  _links: {
-    operation: {
-      href: 'https://horizon-testnet.stellar.org/operations/3587457333342209'
-    },
-    succeeds: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=desc&cursor=3587457333342209-3'
-    },
-    precedes: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=asc&cursor=3587457333342209-3'
-    }
-  },
-  id: '0003587457333342209-0000000003',
-  paging_token: '3587457333342209-3',
-  account: 'GALJNZTNNBJJGVQHGXY3H5J44WAIEE2Y5NCDQZ3TCYW5UE33E27VTWSF',
-  type: 'claimable_balance_claimant_created',
-  type_i: 51,
-  created_at: '2024-03-28T12:54:49Z',
-  asset: 'HEXA:GDHF4EZD25XIYDT3LHLO7SCXVI77CTJFQ4BZK42O3HUY2I564EIDGQKV',
-  balance_id: '00000000624715217a6da57e47c01d689031ac317c3986f86d8c4b022e1b3820b981ec72',
-  amount: '0.0000100',
-  predicate: { unconditional: true },
-  operation: [Function (anonymous)],
-  succeeds: [Function (anonymous)],
-  precedes: [Function (anonymous)]
-}
-+ 3 ms: onEffectBob {
-  _links: {
-    operation: {
-      href: 'https://horizon-testnet.stellar.org/operations/3587457333342209'
-    },
-    succeeds: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=desc&cursor=3587457333342209-4'
-    },
-    precedes: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=asc&cursor=3587457333342209-4'
-    }
-  },
-  id: '0003587457333342209-0000000004',
-  paging_token: '3587457333342209-4',
-  account: 'GALJNZTNNBJJGVQHGXY3H5J44WAIEE2Y5NCDQZ3TCYW5UE33E27VTWSF',
-  type: 'account_debited',
-  type_i: 3,
-  created_at: '2024-03-28T12:54:49Z',
-  asset_type: 'credit_alphanum4',
-  asset_code: 'HEXA',
-  asset_issuer: 'GDHF4EZD25XIYDT3LHLO7SCXVI77CTJFQ4BZK42O3HUY2I564EIDGQKV',
-  amount: '0.0000100',
-  operation: [Function (anonymous)],
-  succeeds: [Function (anonymous)],
-  precedes: [Function (anonymous)]
-}
-+ 2 ms: onEffectBob {
-  _links: {
-    operation: {
-      href: 'https://horizon-testnet.stellar.org/operations/3587457333342209'
-    },
-    succeeds: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=desc&cursor=3587457333342209-5'
-    },
-    precedes: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=asc&cursor=3587457333342209-5'
-    }
-  },
-  id: '0003587457333342209-0000000005',
-  paging_token: '3587457333342209-5',
-  account: 'GALJNZTNNBJJGVQHGXY3H5J44WAIEE2Y5NCDQZ3TCYW5UE33E27VTWSF',
-  type: 'claimable_balance_sponsorship_created',
-  type_i: 69,
-  created_at: '2024-03-28T12:54:49Z',
-  balance_id: '00000000624715217a6da57e47c01d689031ac317c3986f86d8c4b022e1b3820b981ec72',
-  sponsor: 'GALJNZTNNBJJGVQHGXY3H5J44WAIEE2Y5NCDQZ3TCYW5UE33E27VTWSF',
-  operation: [Function (anonymous)],
-  succeeds: [Function (anonymous)],
-  precedes: [Function (anonymous)]
-}
-+ 19 ms: onEffectBob {
-  _links: {
-    operation: {
-      href: 'https://horizon-testnet.stellar.org/operations/3587457333342210'
-    },
-    succeeds: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=desc&cursor=3587457333342210-1'
-    },
-    precedes: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=asc&cursor=3587457333342210-1'
-    }
-  },
-  id: '0003587457333342210-0000000001',
-  paging_token: '3587457333342210-1',
-  account: 'GALJNZTNNBJJGVQHGXY3H5J44WAIEE2Y5NCDQZ3TCYW5UE33E27VTWSF',
-  type: 'data_created',
-  type_i: 40,
-  created_at: '2024-03-28T12:54:49Z',
-  name: 'data0',
-  value: 'RnJlc2hseSBjYXVnaHQgcmVkIHNuYXBwZXIgNGxiLiBIRVhBIDgwMA==',
-  operation: [Function (anonymous)],
-  succeeds: [Function (anonymous)],
-  precedes: [Function (anonymous)]
-}
-+ 15 ms: onEffectBob {
-  _links: {
-    operation: {
-      href: 'https://horizon-testnet.stellar.org/operations/3587457333342211'
-    },
-    succeeds: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=desc&cursor=3587457333342211-1'
-    },
-    precedes: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=asc&cursor=3587457333342211-1'
-    }
-  },
-  id: '0003587457333342211-0000000001',
-  paging_token: '3587457333342211-1',
-  account: 'GALJNZTNNBJJGVQHGXY3H5J44WAIEE2Y5NCDQZ3TCYW5UE33E27VTWSF',
-  type: 'data_removed',
-  type_i: 41,
-  created_at: '2024-03-28T12:54:49Z',
-  name: 'data0',
-  operation: [Function (anonymous)],
-  succeeds: [Function (anonymous)],
-  precedes: [Function (anonymous)]
-}
-+ 0 ms: pocIssuerEffects {
-  _links: {
-    operation: {
-      href: 'https://horizon-testnet.stellar.org/operations/3587457333342209'
-    },
-    succeeds: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=desc&cursor=3587457333342209-2'
-    },
-    precedes: {
-      href: 'https://horizon-testnet.stellar.org/effects?order=asc&cursor=3587457333342209-2'
-    }
-  },
-  id: '0003587457333342209-0000000002',
-  paging_token: '3587457333342209-2',
-  account: 'GDHF4EZD25XIYDT3LHLO7SCXVI77CTJFQ4BZK42O3HUY2I564EIDGQKV',
-  type: 'claimable_balance_claimant_created',
-  type_i: 51,
-  created_at: '2024-03-28T12:54:49Z',
-  asset: 'HEXA:GDHF4EZD25XIYDT3LHLO7SCXVI77CTJFQ4BZK42O3HUY2I564EIDGQKV',
-  balance_id: '00000000624715217a6da57e47c01d689031ac317c3986f86d8c4b022e1b3820b981ec72',
-  amount: '0.0000100',
-  predicate: { rel_before: '100000' },
-  operation: [Function (anonymous)],
-  succeeds: [Function (anonymous)],
-  precedes: [Function (anonymous)]
-}
-+ 7273 ms: poc.run.demo done [
++ 2 ms: demoBob makeOffer Freshly caught red snapper 4lb. HEXA 800 000000008b432a1576d539cae8af04c2ef09dd2b624c05a093c1d2c4a96e491c4b9b636d e25cfe7c993d2b937ca31dec21610f9e1add8ffa63e74eb83ca25cc1241e2ccb
++ 16391 ms: poc.run.demo done [
   { tag: 'Ann', timeout: '17s' },
   { tag: 'Bob', timeout: '16s' },
-  { tag: 'Cyn', timeout: '1s' }
+  { tag: 'Cyn', timeout: '31s' }
 ]
-+ 6 ms: poc.cleanup closing 4 streams...
-+ 1 ms: poc.cleanup closed stream issuer's effects
++ 4604 ms: reclaim {
+  balanceId: '000000003c591041ff22ce364d63a5d7fb5343df9810bf538b7c9ce8c7689bf6c1b12f39',
+  txId: '55be348ea9fd779029f0006a0ca3f1bc47c2b23167b5a5114069c0a7359887f2'
+}
++ 8 ms: reclaim {
+  balanceId: '00000000751e30d033c0166c87d26b00da152b0f49dc5ffeebce9c1f2cc235927cf5426e',
+  txId: '3b843b15e30107143935bc7404eec023b209fa2380a8e3a49118de67f1268285'
+}
++ 3 ms: reclaim {
+  balanceId: '000000008b432a1576d539cae8af04c2ef09dd2b624c05a093c1d2c4a96e491c4b9b636d',
+  txId: 'd1c50007a79ca0f80565f50005f1c51a9b05997cb03b81abad7e9aec5e8c008e'
+}
++ 4995 ms: reclaim {
+  balanceId: '000000002986a5263aa8ccdb59793eb69f3c53d5318ea6b91e54a43b2d54104cf8db62f3',
+  txId: '196bc5ad8e970d166b5f3c97e87fed6539499c8f9c3718f75cf6a535bb8f710e'
+}
++ 5943 ms: reclaim {
+  balanceId: '000000002f79fac48abd090a7b0ef520fa7f0f52b169ea55936db27ca677f793d67cb119',
+  txId: '7be23cb682f7c8f83e0fd8f3c0a136bb8da878c2f42d1e98a40ef8a1de8efdbb'
+}
++ 1 ms: poc.cleanup closing 4 streams...
++ 0 ms: poc.cleanup closed stream issuer's effects
 + 1 ms: poc.cleanup closed stream Ann's effects
 + 1 ms: poc.cleanup closed stream Bob's effects
-+ 1 ms: poc.cleanup closed stream Cyn's effects
-+ 11 ms: ready
-+ 3931 ms: makeOfferUndo {
-  balanceId: '00000000624715217a6da57e47c01d689031ac317c3986f86d8c4b022e1b3820b981ec72',
-  txId: '8948d4a3d68b3e269594d7e49ea754c83e0a890e2607f9240a5c8bb48f35fb5a'
-}
-+ 1 ms: makeRequestUndo {
-  balanceId: '00000000993a9c948d131ca2ef360733225df94d3c9e754aa278364272793ebe5d00997c',
-  txId: 'f4b2a1b0718add4d7bce7d129134e0ea58335aadac2bbfbc83e3882475a80d6c'
-}
++ 0 ms: poc.cleanup closed stream Cyn's effects
++ 1 ms: ready
 
-</pre><samp><h3>The PoC demo stopped on Thu Mar 28 12:55:05 PM UTC 2024</h3></samp></body></html> 
+</pre><samp><h3>The PoC demo stopped on Fri Mar 29 07:04:04 PM UTC 2024</h3></samp></body></html> 
