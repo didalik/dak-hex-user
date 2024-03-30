@@ -49,7 +49,6 @@ const execute =  { // {{{1
     await pocSetup.call(secd).
       then(poc => poc.run()).then(async ns => await ns.cleanup()).
       catch(e => { throw e; })
-    secd.c.account != null && console.dir(secd, { depth: null })
     log('ready')
   },
   run: async (script, ...args) => await execute[script]( // {{{2

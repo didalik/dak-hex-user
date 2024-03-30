@@ -14,7 +14,7 @@
     }
   </script>
   <body>
-    <samp><h3>The PoC demo started on Fri Mar 29 2024 19:03:16 GMT+0000 (Coordinated Universal Time)</h3></samp>
+    <samp><h3>The PoC demo started on Sat Mar 30 2024 20:27:13 GMT+0000 (Coordinated Universal Time)</h3></samp>
     <pre>
 
 - process.argv [
@@ -24,60 +24,160 @@
   'poc',
   'demo'
 ]
-+ 377 ms: addHEX_Agent loaded agent GBLMTBIR6WJTQJ7PDID3AEY3IWWUU6XIXVQHS452UJTSEBV6RKKARJRF
-+ 202 ms: addHEX_Agent loaded issuer GCV7EUEL4KEPGZF6WNMSES7G7MEQD5ZWXCWJGSI6HFN7UJ5OWVXJT22S
-+ 226 ms: pocSetup loaded Ann GCTOXEJMFU6HBNKBIBSEN7PUF3EO2CLC66FW7GDVRZRFMFWRNQSZRILO
-+ 169 ms: pocSetup loaded Bob GBW2HT6Y4R5O4IA4PRBXS4BREIX2HGDUAQY7SCPE3B4M2J6WCGC24V5R
-+ 166 ms: pocSetup loaded Cyn GDJTAY6NPJGSCTWWWMSI4L64CIOV3LUC5EV7FJFHXJXKJSFST6PS4U32
-+ 32 ms: Bob buyingHEXA 10
-+ 0 ms: makeBuyOffer GBW2HT6Y4R5O4IA4PRBXS4BREIX2HGDUAQY7SCPE3B4M2J6WCGC24V5R buying HEXA selling XLM buyAmount 10 price 0.9 offerId 0
-+ 3564 ms: demoAnn makeRequest Fresh red snapper for 4 persons GGS. HEXA 1000 00000000751e30d033c0166c87d26b00da152b0f49dc5ffeebce9c1f2cc235927cf5426e 855cca45168df831e7e86910d2069a476f69e0d934bc78b50a07120d14c1d051
-+ 1 ms: onIssuerEffectCyn take {
-  balanceId: '000000003c591041ff22ce364d63a5d7fb5343df9810bf538b7c9ce8c7689bf6c1b12f39',
-  txId: '98c18f00222ff3aab69e15aa92c81781c453f77ad9440335c1c5d4ce11d00cad'
++ 5169 ms: the HEX_CREATOR account created txId 06d7dee3820d0f29181c025f5eccda2532f197819bdb467425d8c245fb161a16
++ 382 ms: loaded HEX_CREATOR GCM6CTAPWWCJAMTD7QXNLMVBDD3VX2H5YUFG56L2ELYEYFLRT6HCPHEB
++ 2 ms: addHEX_Issuer...
++ 4519 ms: addHEX_Issuer GBC7X4CWXO46H6ZBCD3EEUVOHY5SB7I27PWL6MPQEOMZOVJQGJKTY63A txId b6d4a8278a9f6a07b83572bcac70c797e1e6052097a6d652fd820954c36eaa08
++ 0 ms: addHEX_Agent...
++ 5016 ms: addHEX_Agent GDDVZXMTPO7NYN26HWUQJM73GODCUNCN6ECX5BZAQJGM7X4COEQZJY2P txId 1bb0a4af87763dbc346bbbfed304210f62078ebf2ace2e03030e0bd9a408d17d
++ 208 ms: addHEX_Agent loaded agent GDDVZXMTPO7NYN26HWUQJM73GODCUNCN6ECX5BZAQJGM7X4COEQZJY2P
++ 202 ms: addHEX_Agent loaded issuer GBC7X4CWXO46H6ZBCD3EEUVOHY5SB7I27PWL6MPQEOMZOVJQGJKTY63A
++ 5630 ms: addHEX_Agent agent trusts HEXA limit 10000 txId 875f7c66953f8debd7712b60e6311766bbe97dbee3724bb16dfa443fbbb3844f
++ 9934 ms: pocAgentSellHEXA is selling HEXA 10000 5495af9a986b4f8511eb449fab165a965724e1fc265f4cae5ad34fbef528afb3 37388
++ 5938 ms: pocSetup created Ann txId c4a3a6a760628b0a9375f94096b9e52396670d8a16d52013e3a10987cf76d573
++ 170 ms: pocSetup loaded Ann GCIG5ACHJWBJNWVD5ERWTLQB4AXHLRLN6XM3NO7HIALQQE3GK5SCLTZ7
++ 4850 ms: Ann trusts ClawableHexa, HEXA: limit 10000 txId cac904d355e9b42e2489d9c07fbaf45dbf03b0c9b067be8471eb0ad6d75e6dd6
++ 5015 ms: Ann : HEXA trustline updated, txId e1aa98e9f08c08d85dbdd6d1a4e5a44a1947bfdf110853873337e37c28ee25bf
++ 5019 ms: pocSetup created Bob txId 7b58fc1c2a2a04caf962f2ef7f9232e49ff26b2db9f548a49ecc13a22460f61f
++ 157 ms: pocSetup loaded Bob GCQDTU2RKG5CLHJ4UCU3C2YDPX66DWS5P6Q2WV3IMDMKOJR6IV3LXDRN
++ 5881 ms: Bob trusts ClawableHexa, HEXA: limit 10000 txId b7e282c95181e917e8cf335792631b7b765f2c7eb158b069ce38050a793344d7
++ 5125 ms: Bob : HEXA trustline updated, txId c25616c391a71b104d5e7ed07340771d1f1515206de66b5c1c17e9e32d3be20e
++ 5832 ms: pocSetup created Cyn txId b66168d489c44e1657549cb511502da8ab8ef6d15dd88467ecdccc9d9a7ca596
++ 158 ms: pocSetup loaded Cyn GA4DF6SRGL6K4A2A5LPTH3PXAQFNRN6ANSF2CNDSGAXZIQZPSVWHQWO5
++ 4862 ms: Cyn trusts ClawableHexa, HEXA: limit 10000 txId bad8a86edbbfcb31e64b4e1c48c3db8801bb3ac862d6323498865a2c931e054c
++ 6042 ms: Cyn : HEXA trustline updated, txId 9c594e310f17ad9f6a224913f47ab5bd8f9b7157e133ecc69d8de11094ef83a9
++ 15 ms: Ann buyingHEXA 1200
++ 1 ms: makeBuyOffer GCIG5ACHJWBJNWVD5ERWTLQB4AXHLRLN6XM3NO7HIALQQE3GK5SCLTZ7 buying HEXA selling XLM buyAmount 1200 price 0.9 offerId 0
++ 4 ms: Bob buyingHEXA 10
++ 0 ms: makeBuyOffer GCQDTU2RKG5CLHJ4UCU3C2YDPX66DWS5P6Q2WV3IMDMKOJR6IV3LXDRN buying HEXA selling XLM buyAmount 10 price 0.9 offerId 0
++ 2 ms: Cyn buyingHEXA 1200
++ 0 ms: makeBuyOffer GA4DF6SRGL6K4A2A5LPTH3PXAQFNRN6ANSF2CNDSGAXZIQZPSVWHQWO5 buying HEXA selling XLM buyAmount 1200 price 0.9 offerId 0
++ 4893 ms: makeBuyOffer GA4DF6SRGL6K4A2A5LPTH3PXAQFNRN6ANSF2CNDSGAXZIQZPSVWHQWO5 e14be88a74a85161c9807ac91f8b5ff0ad67f35e65b2fa520ee9f4370e357491 37389
++ 24 ms: makeBuyOffer GCQDTU2RKG5CLHJ4UCU3C2YDPX66DWS5P6Q2WV3IMDMKOJR6IV3LXDRN 05c1eee8c3043fe54f7b71d9a29b72c75b451ed31551a0f376ee34349cff3aac 37391
++ 2 ms: makeBuyOffer GCIG5ACHJWBJNWVD5ERWTLQB4AXHLRLN6XM3NO7HIALQQE3GK5SCLTZ7 7435117fe616a1c86035e267f21047b80da3fd4dded720b79a353eeef226bdf1 37390
++ 1005 ms: makeBuyOffer GA4DF6SRGL6K4A2A5LPTH3PXAQFNRN6ANSF2CNDSGAXZIQZPSVWHQWO5 buying HEXA selling XLM buyAmount 1200 price 1 offerId 37389
++ 243 ms: makeBuyOffer GCQDTU2RKG5CLHJ4UCU3C2YDPX66DWS5P6Q2WV3IMDMKOJR6IV3LXDRN buying HEXA selling XLM buyAmount 10 price 1 offerId 37391
++ 179 ms: makeBuyOffer GCIG5ACHJWBJNWVD5ERWTLQB4AXHLRLN6XM3NO7HIALQQE3GK5SCLTZ7 buying HEXA selling XLM buyAmount 1200 price 1 offerId 37390
++ 3568 ms: makeBuyOffer GCIG5ACHJWBJNWVD5ERWTLQB4AXHLRLN6XM3NO7HIALQQE3GK5SCLTZ7 21aec49eedb6f4cf366e0237acb35fdecc48da181825f3ea3c5e8e98735fd59c null
++ 12 ms: makeBuyOffer GCQDTU2RKG5CLHJ4UCU3C2YDPX66DWS5P6Q2WV3IMDMKOJR6IV3LXDRN fa4ae656949476251d044daa31acc4fe4c1eeb7a28407becece2125bb5f70ecc null
++ 11 ms: makeBuyOffer GA4DF6SRGL6K4A2A5LPTH3PXAQFNRN6ANSF2CNDSGAXZIQZPSVWHQWO5 7a897990642fe77941bf6513c2b34315358c4917a4b89eb3d9eafa5f126a9209 null
++ 4994 ms: demoAnn makeRequest Fresh red snapper for 4 persons GGS. HEXA 1000 00000000db6b896f0d9eb81ba767a0f79cddfa3305df330c1705ef355dd5dcc987499989 6e568033cd8b824121dae377652a295389f2d5efe1e3d933813d41989ab125e8
++ 2 ms: demoBob makeOffer Freshly caught red snapper 4lb. HEXA 800 000000009c55104ee475f7b3d9b123cba85eb6417556bd6bc2da3b3b8ee7ed75c7471bff 77a7b1ca44576d1104615457a920908ce7d49a9a6e3a0d1cd4bf585fbc9c14c9
++ 308 ms: onIssuerEffectIssuer effect {
+  _links: {
+    operation: {
+      href: 'https://horizon-testnet.stellar.org/operations/3750910903717889'
+    },
+    succeeds: {
+      href: 'https://horizon-testnet.stellar.org/effects?order=desc&cursor=3750910903717889-2'
+    },
+    precedes: {
+      href: 'https://horizon-testnet.stellar.org/effects?order=asc&cursor=3750910903717889-2'
+    }
+  },
+  id: '0003750910903717889-0000000002',
+  paging_token: '3750910903717889-2',
+  account: 'GBC7X4CWXO46H6ZBCD3EEUVOHY5SB7I27PWL6MPQEOMZOVJQGJKTY63A',
+  type: 'claimable_balance_claimant_created',
+  type_i: 51,
+  created_at: '2024-03-30T20:28:47Z',
+  asset: 'HEXA:GBC7X4CWXO46H6ZBCD3EEUVOHY5SB7I27PWL6MPQEOMZOVJQGJKTY63A',
+  balance_id: '000000009c55104ee475f7b3d9b123cba85eb6417556bd6bc2da3b3b8ee7ed75c7471bff',
+  amount: '0.0000100',
+  predicate: { rel_before: '100000' },
+  operation: [Function (anonymous)],
+  succeeds: [Function (anonymous)],
+  precedes: [Function (anonymous)]
 }
-+ 17 ms: makeBuyOffer GBW2HT6Y4R5O4IA4PRBXS4BREIX2HGDUAQY7SCPE3B4M2J6WCGC24V5R 2032101fb2d3a020ef2d7544db603d42e61af39ce9af4573f4ea87f9ee0029fc 37260
-+ 1260 ms: makeBuyOffer GBW2HT6Y4R5O4IA4PRBXS4BREIX2HGDUAQY7SCPE3B4M2J6WCGC24V5R buying HEXA selling XLM buyAmount 10 price 1 offerId 37260
-+ 4761 ms: makeBuyOffer GBW2HT6Y4R5O4IA4PRBXS4BREIX2HGDUAQY7SCPE3B4M2J6WCGC24V5R 5f89aeba7d435bb929f403d253d26f4d5c913c4b7a3265b7f05773586a411865 null
-+ 17 ms: onIssuerEffectCyn take {
-  balanceId: '000000002986a5263aa8ccdb59793eb69f3c53d5318ea6b91e54a43b2d54104cf8db62f3',
-  txId: '158bc3f3384700d4c80d2d83cb0862e7d0fadd43bfb58f728c25bb1f4551978b'
++ 169 ms: onIssuerEffectIssuer effect {
+  _links: {
+    operation: {
+      href: 'https://horizon-testnet.stellar.org/operations/3750910903730177'
+    },
+    succeeds: {
+      href: 'https://horizon-testnet.stellar.org/effects?order=desc&cursor=3750910903730177-2'
+    },
+    precedes: {
+      href: 'https://horizon-testnet.stellar.org/effects?order=asc&cursor=3750910903730177-2'
+    }
+  },
+  id: '0003750910903730177-0000000002',
+  paging_token: '3750910903730177-2',
+  account: 'GBC7X4CWXO46H6ZBCD3EEUVOHY5SB7I27PWL6MPQEOMZOVJQGJKTY63A',
+  type: 'claimable_balance_claimant_created',
+  type_i: 51,
+  created_at: '2024-03-30T20:28:47Z',
+  asset: 'HEXA:GBC7X4CWXO46H6ZBCD3EEUVOHY5SB7I27PWL6MPQEOMZOVJQGJKTY63A',
+  balance_id: '00000000db6b896f0d9eb81ba767a0f79cddfa3305df330c1705ef355dd5dcc987499989',
+  amount: '1000.0000100',
+  predicate: { rel_before: '28800' },
+  operation: [Function (anonymous)],
+  succeeds: [Function (anonymous)],
+  precedes: [Function (anonymous)]
 }
-+ 4997 ms: onIssuerEffectCyn take {
-  balanceId: '000000002f79fac48abd090a7b0ef520fa7f0f52b169ea55936db27ca677f793d67cb119',
-  txId: 'fccb5219b7334ac3207f73414e34bc88e8a8b6c6e1d57a1bd14480717205fe78'
++ 4534 ms: onIssuerEffectCyn take {
+  balanceId: '000000006b3ee4a9f90771c893559d2342f37ee977cd4aa55228b5a7089764439a9bef6a',
+  txId: 'cb239eb94d426742b5b59f327be0f455e0568447d9aa5775a0e0773c6f490549'
 }
-+ 2 ms: demoBob makeOffer Freshly caught red snapper 4lb. HEXA 800 000000008b432a1576d539cae8af04c2ef09dd2b624c05a093c1d2c4a96e491c4b9b636d e25cfe7c993d2b937ca31dec21610f9e1add8ffa63e74eb83ca25cc1241e2ccb
-+ 16391 ms: poc.run.demo done [
-  { tag: 'Ann', timeout: '17s' },
-  { tag: 'Bob', timeout: '16s' },
++ 849 ms: onEffectBob GA4DF6SRGL6K4A2A5LPTH3PXAQFNRN6ANSF2CNDSGAXZIQZPSVWHQWO5 800.0000100 77a7b1ca44576d1104615457a920908ce7d49a9a6e3a0d1cd4bf585fbc9c14c9
++ 5091 ms: onIssuerEffectCyn take {
+  balanceId: '000000007adad3e5f07af3afa22e0310f611fbd943ad1c029b42bfa189aec6d685323f9d',
+  txId: 'b1c8c9a4423a0f9922b8f98b129c45a600a980d1efbd6d784cb71e0ca6e1cabb'
+}
++ 10036 ms: deal makerPK GCIG5ACHJWBJNWVD5ERWTLQB4AXHLRLN6XM3NO7HIALQQE3GK5SCLTZ7 takerPK GA4DF6SRGL6K4A2A5LPTH3PXAQFNRN6ANSF2CNDSGAXZIQZPSVWHQWO5 {
+  balanceId: '000000006eb65d51f03eb8743c862fa363cd17839c6ea9584eb708125e48beb8dca01442',
+  txId: 'be7b52247223f4caf7616bc62ffeec72c50e307bd2b6893a0a2d2a48459913b3'
+}
++ 4653 ms: onIssuerEffectIssuer effect {
+  _links: {
+    operation: {
+      href: 'https://horizon-testnet.stellar.org/operations/3750928083591169'
+    },
+    succeeds: {
+      href: 'https://horizon-testnet.stellar.org/effects?order=desc&cursor=3750928083591169-2'
+    },
+    precedes: {
+      href: 'https://horizon-testnet.stellar.org/effects?order=asc&cursor=3750928083591169-2'
+    }
+  },
+  id: '0003750928083591169-0000000002',
+  paging_token: '3750928083591169-2',
+  account: 'GBC7X4CWXO46H6ZBCD3EEUVOHY5SB7I27PWL6MPQEOMZOVJQGJKTY63A',
+  type: 'claimable_balance_claimant_created',
+  type_i: 51,
+  created_at: '2024-03-30T20:29:08Z',
+  asset: 'HEXA:GBC7X4CWXO46H6ZBCD3EEUVOHY5SB7I27PWL6MPQEOMZOVJQGJKTY63A',
+  balance_id: '000000006eb65d51f03eb8743c862fa363cd17839c6ea9584eb708125e48beb8dca01442',
+  amount: '0.0000100',
+  predicate: { unconditional: true },
+  operation: [Function (anonymous)],
+  succeeds: [Function (anonymous)],
+  precedes: [Function (anonymous)]
+}
++ 1363 ms: poc.run.demo done [
+  { tag: 'Ann', timeout: '31s' },
+  { tag: 'Bob', timeout: '32s' },
   { tag: 'Cyn', timeout: '31s' }
 ]
-+ 4604 ms: reclaim {
-  balanceId: '000000003c591041ff22ce364d63a5d7fb5343df9810bf538b7c9ce8c7689bf6c1b12f39',
-  txId: '55be348ea9fd779029f0006a0ca3f1bc47c2b23167b5a5114069c0a7359887f2'
++ 4018 ms: reclaim {
+  balanceId: '000000006b3ee4a9f90771c893559d2342f37ee977cd4aa55228b5a7089764439a9bef6a',
+  txId: '6de391e7374fd6806eedd49153dcd05ef0902d30d876b38598c623c681d75186'
 }
-+ 8 ms: reclaim {
-  balanceId: '00000000751e30d033c0166c87d26b00da152b0f49dc5ffeebce9c1f2cc235927cf5426e',
-  txId: '3b843b15e30107143935bc7404eec023b209fa2380a8e3a49118de67f1268285'
++ 925 ms: reclaim {
+  balanceId: '000000009c55104ee475f7b3d9b123cba85eb6417556bd6bc2da3b3b8ee7ed75c7471bff',
+  txId: '41c714bb6a3353feb8437ef515a34c411b8ab95af3aa35cabf49497360fb485c'
 }
-+ 3 ms: reclaim {
-  balanceId: '000000008b432a1576d539cae8af04c2ef09dd2b624c05a093c1d2c4a96e491c4b9b636d',
-  txId: 'd1c50007a79ca0f80565f50005f1c51a9b05997cb03b81abad7e9aec5e8c008e'
++ 0 ms: reclaim {
+  balanceId: '00000000db6b896f0d9eb81ba767a0f79cddfa3305df330c1705ef355dd5dcc987499989',
+  txId: 'b5d5c4a7e8bff2d658f1321ab5cb61d1a26a82c82cbb156e81336f16d84d3325'
 }
-+ 4995 ms: reclaim {
-  balanceId: '000000002986a5263aa8ccdb59793eb69f3c53d5318ea6b91e54a43b2d54104cf8db62f3',
-  txId: '196bc5ad8e970d166b5f3c97e87fed6539499c8f9c3718f75cf6a535bb8f710e'
-}
-+ 5943 ms: reclaim {
-  balanceId: '000000002f79fac48abd090a7b0ef520fa7f0f52b169ea55936db27ca677f793d67cb119',
-  txId: '7be23cb682f7c8f83e0fd8f3c0a136bb8da878c2f42d1e98a40ef8a1de8efdbb'
-}
-+ 1 ms: poc.cleanup closing 4 streams...
++ 4092 ms: takeClaimableBalance balanceId NOT FOUND 000000007adad3e5f07af3afa22e0310f611fbd943ad1c029b42bfa189aec6d685323f9d
++ 1 ms: reclaim undefined
++ 0 ms: poc.cleanup closing 4 streams...
 + 0 ms: poc.cleanup closed stream issuer's effects
-+ 1 ms: poc.cleanup closed stream Ann's effects
++ 0 ms: poc.cleanup closed stream Ann's effects
 + 1 ms: poc.cleanup closed stream Bob's effects
-+ 0 ms: poc.cleanup closed stream Cyn's effects
-+ 1 ms: ready
++ 1 ms: poc.cleanup closed stream Cyn's effects
++ 0 ms: ready
 
-</pre><samp><h3>The PoC demo stopped on Fri Mar 29 07:04:04 PM UTC 2024</h3></samp></body></html> 
+</pre><samp><h3>The PoC demo stopped on Sat Mar 30 08:29:24 PM UTC 2024</h3></samp></body></html> 
