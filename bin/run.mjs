@@ -16,6 +16,7 @@ import { Asset, AuthClawbackEnabledFlag, AuthRevocableFlag,
 import { runTest, } from '../test/run.mjs'
 import { pGET, pGET_parms, timestamp, } from '../dak/util/public/lib/util.mjs'
 import { Orderbook, offerMade, offerDeleted, } from '../lib/hex.mjs'
+import { secdVm, } from '../dak/util/public/hex/lib/sdk.mjs'
 
 global.fetch = fetch // {{{1
 global.window = {
@@ -70,8 +71,22 @@ const _ts = (...a) => { // {{{1
 }
 
 const execute = { // {{{1
+  agent_trade: async (log, ...args) => { // {{{2
+    let config = configValidate(fs.readFileSync('agent_trade.json').toString())
+    let vm = await secdVm(
+      loadKeys(config.keys),       // keysIssuer
+      loadKeys(config.agent_keys), // keysAgent
+      log, config.limit, config.public
+    )
+    log('- agent_trade vm', vm)
+
+  },
+
   fund_agent: async log => { // {{{2
-    let config = configValidate(fs.readFileSync('fund_agent.json').toString(), log)
+    let lastArg = process.argv[process.argv.length - 1]
+    let config = configValidate(fs.readFileSync(
+      lastArg.endsWith('.json') ? lastArg : 'fund_agent.json'
+    ).toString(), log)
     const server = new Horizon.Server(
       config.public ? "https://horizon.stellar.org" 
       : "https://horizon-testnet.stellar.org"
@@ -153,8 +168,6 @@ const execute = { // {{{1
 
   run: async (script, ...args) => await execute[script](console.log, ...args), // {{{2
 
-  //run: async (script, ...args) => await execute[script](_ts, ...args), // {{{2
-
   setup_it: async _ => { // {{{2
     const rl = readline.createInterface({
       input: process.stdin,
@@ -198,7 +211,6 @@ const execute = { // {{{1
             console.log(_htmlHead('DEV TEST', 
               `<h3>DEV test started on ${Date()}</h3>`
             ))
-            //console.log('- HUH? url', url)
             console.log('- setup_ut args', args)
 
             process.exit(0)
@@ -708,7 +720,7 @@ async function setupProdFix (exe, server, log) { // {{{1
     agent_keys: `${process.env.PWD}/build/testnet/HEX_Agent.keys`,
     creator_keys: `${process.env.PWD}/build/testnet.keys`, 
     keys: `${process.env.PWD}/build/testnet/HEX_Issuer.keys`,
-    limit: '100000',
+    limit: '10000000', // 10 million 
   }
   switch (exe) {
     case 'issuer': {
@@ -725,6 +737,7 @@ async function setupProdFix (exe, server, log) { // {{{1
       config.todelete_keys = `${process.env.PWD}/build/testnet/HEX_Issuer_todelete.keys` 
       break
     }
+    case 'agent_trade':
     case 'fund_agent':
       break
     default:

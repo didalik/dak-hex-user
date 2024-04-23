@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+# Copyright (c) 2023-present, Дід Alik and the Kids {{{1
+#
+# This script is licensed under the Apache License, Version 2.0, found in the
+# LICENSE file in the root directory of this source tree.
+##
+
+ERR=err.log # {{{1
+OUT=out.log
+
+teardown () { # {{{1
+  [ -e .pids2kill ] && while read;do kill $REPLY;done <.pids2kill
+  kill $PID_OF_TAIL
+  echo "- teardown killed PID_OF_TAIL $PID_OF_TAIL" >> $ERR
+}
+trap teardown EXIT
+
+rm -f .pids2kill $OUT $ERR # {{{1 
+touch $OUT
+tail -n 999999 -f $OUT &
+PID_OF_TAIL=$!
+
+. ../config.env
+DIR=$(dirname $1)
+RUN=$(basename $1)
+
+$RUN_MJS setup_ut $@ >> $OUT 2>>$ERR # {{{1
+shift
+cd ..
+rm -rf dev/build
+echo "- $0 $? $#: $@" >>test/$ERR
+
+npm run dev --dir=$DIR --run=$RUN -- $@ >> test/$OUT 2>>test/$ERR
+EXIT_CODE=$?
+cd -
+
+cat >> $OUT << HTML_TAIL
+
+</pre><samp><h3>DEV test stopped on $(date)</h3></samp></body></html> 
+HTML_TAIL
+exit $EXIT_CODE
+
+# With thanks to: {{{1
+# - https://stackoverflow.com/questions/1521462/looping-through-the-content-of-a-file-in-bash
+#
+##

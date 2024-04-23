@@ -1,2 +1,4 @@
-- loop_requests 6: .test.fifo alik@localhost /home/alik/people/didalik/dak/hex/user/test ./handle_request.sh 8000 test1 PWD /home/alik/people/didalik/dak/hex/user/test
-GET /dynamic/test1 200
+- ./agent_trade.test-in 5: s100@1 s1000@2 s10000@4 s100000@8 s1000000@16
+- utest 11: .p.fifo alik@u22 hex/user/test ./handle_agent_trade 8000 prod/fix/agent_trade s100@1 s1000@2 s10000@4 s100000@8 s1000000@16 PWD /home/alik/people/didalik/dak/hex/user/test
+GET /test/prod/fix/agent_trade 200
+- ./agent_trade.sh exiting with EXIT_CODE 0...
