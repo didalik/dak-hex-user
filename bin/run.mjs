@@ -15,8 +15,9 @@ import { Asset, AuthClawbackEnabledFlag, AuthRevocableFlag,
 } from '@stellar/stellar-sdk'
 import { runTest, } from '../test/run.mjs'
 import { pGET, pGET_parms, timestamp, } from '../dak/util/public/lib/util.mjs'
-import { Orderbook, offerMade, offerDeleted, } from '../lib/hex.mjs'
-import { secdVm, } from '../dak/util/public/hex/lib/sdk.mjs'
+import { 
+  makeBuyOffer, makeSellOffer, secdVm, 
+} from '../dak/util/public/hex/lib/sdk.mjs'
 
 global.fetch = fetch // {{{1
 global.window = {
@@ -78,8 +79,12 @@ const execute = { // {{{1
       loadKeys(config.agent_keys), // keysAgent
       log, config.limit, config.public
     )
-    log('- agent_trade vm', vm)
-
+    let offers = []
+    for (let s of args) {
+      let r = /(b|s)(\d+)@(\d+)/.exec(s); if (!r) continue
+      r.shift()
+      await makeOffer.call(vm, ...r).then(o => log('- agent_trade', o)) 
+    }
   },
 
   fund_agent: async log => { // {{{2
@@ -356,7 +361,7 @@ function loadKeys (dirname, basename = null) { // {{{1
   return [pair[0].trim(), pair[1].trim()];
 }
 
-async function makeBuyOffer( // {{{1
+/*async function makeBuyOffer( // {{{1
   buying, selling, buyAmount, price, offerId = 0
 ) {
   let [nw, server, log, kp, account] = this.env
@@ -381,8 +386,20 @@ async function makeBuyOffer( // {{{1
   log('- makeBuyOffer', account.id, tx.id, made.offer.id)
   return Promise.resolve([tx.id, made.offer.id]);
 }
+*/
+async function makeOffer (kind, amount, price) { // {{{1
+  let { s, e, c, d } = this
+  let args = [
+    Keypair.fromSecret(d.keysAgent[0]), d.agent, d.HEXA, d.XLM, amount, price
+  ]
+  if (kind == 'b') {
+    return await makeBuyOffer.call(this, ...args);
+  } else {
+    return await makeSellOffer.call(this, ...args);
+  }
+}
 
-async function makeSellOffer( // {{{1
+/*async function makeSellOffer( // {{{1
   selling, buying, amount, price, offerId = 0
 ) {
   let [nw, server, log, kp, account] = this.env
@@ -401,7 +418,7 @@ async function makeSellOffer( // {{{1
   let made = offerMade(tx.result_xdr, 'manageSellOfferResult')
   return Promise.resolve([tx.id, made.offer.id]);
 }
-
+*/
 async function mergeAccount ( // {{{1
   source, destination, networkPassphrase, server, ...keypairs
 ) {
@@ -584,7 +601,7 @@ async function setup (kp, creator, server, log) { // {{{1
     HEX_Issuer_SK = SK; HEX_Issuer_PK = PK
     txId = await createAccount(creator, HEX_Issuer_PK, '9', server,
       {
-        homeDomain: 'hex.didalik.workers.dev',
+        homeDomain: 'svc-hex.didalik.workers.dev',
         setFlags: AuthClawbackEnabledFlag | AuthRevocableFlag,
         source: HEX_Issuer_PK,
       },
