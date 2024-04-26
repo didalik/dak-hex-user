@@ -14,6 +14,13 @@ teardown () { # {{{1
 }
 trap teardown EXIT
 
+# USAGE {{{1
+#
+# cp prod/fix/fund_agent.json prod/fix/agent_trade.json
+# sudo systemctl restart ntp; sleep 5; ntpq -p
+# npm run prod --dir=fix --run=agent_trade s100@1 s1000@2 s10000@4 s100000@8 s1000000@16
+##
+
 . ../../config.env # {{{1
 . config.env
 

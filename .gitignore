@@ -6,6 +6,9 @@ dist
 env.*
 screenshot.*
 
+# PROD {{{1
+prod/fix/*.json
+
 # QA {{{1
 qa/.pids2kill
 qa/config.env
